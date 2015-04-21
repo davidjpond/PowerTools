@@ -200,7 +200,7 @@ var PowerTools = {
       dataOptions.reportid + '">Current Year</option>' + '</select>';
   },
   ActivitiesLink: function (elCell, oRecord, oColumn, oData) {
-
+    adminLink(elCell, oRecord, oData, 'activitiessetup/edit.html?frn=006', 'dcid');
   },
   AllEnrollmentsLink: function (elCell, oRecord, oColumn, oData) {
     studentLink(elCell, oRecord, oData, 'allenrollments.html', 'dcid');
