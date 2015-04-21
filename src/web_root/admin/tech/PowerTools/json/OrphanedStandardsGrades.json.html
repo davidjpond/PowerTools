@@ -1,0 +1,39 @@
+{"ResultSet":[
+~[tlist_sql;
+SELECT s1.dcid
+, s1.id
+, s2.lastfirst
+, s1.studentid
+, s3.identifier
+, s1.standardsid
+, s4.name
+, s1.yearid yearid
+, s1.schoolid
+FROM standardsgrades s1
+LEFT JOIN students s2
+ON s1.studentid = s2.id
+LEFT JOIN standards s3
+ON s1.standardsid = s3.id
+LEFT JOIN schools s4
+ON s1.schoolid = s4.school_number
+WHERE (s2.id IS NULL
+OR s3.id IS NULL
+OR s4.school_number IS NULL)
+~[if.is.a.school]AND s1.schoolid = ~[v.curschoolid][/if.is.a.school]
+ORDER BY s1.ID
+]
+{
+
+"dcid" : "~(s1.dcid)",
+"id" : "~(s1.id)",
+"student" : "~(s2.lastfirst;js)",
+"studentid" : "~(s1.studentid;js)",
+"standard" : "~(s3.standard;js)",
+"standardId" : "~(s1.standardid;js)",
+"schoolName" : "~(s4.schoolname;js)",
+"yearId" : "~(s1.yearid;js)",
+"schoolId" : "~(s1.schoolid;js)"
+},
+[/tlist_sql]
+{}
+]}

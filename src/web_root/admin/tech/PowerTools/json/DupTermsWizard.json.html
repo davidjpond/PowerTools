@@ -1,0 +1,21 @@
+[
+~[tlist_sql;
+SELECT t2.dcid BadDCID
+FROM ps.terms t1
+INNER JOIN ps.terms t2
+ON t1.schoolid = t2.schoolid
+AND t1.id = t2.id
+AND t1.dcid < t2.dcid
+AND t1.dcid = (
+SELECT MIN(DCID)
+FROM ps.terms
+WHERE schoolid = t2.schoolid
+AND id = t2.id)
+~[if.is.a.school]AND t1.schoolid = ~[v.curschoolid][/if.is.a.school]
+]
+    {
+      "dcid" : "~(t2.dcid)"
+    },
+[/tlist_sql]
+    {}
+]

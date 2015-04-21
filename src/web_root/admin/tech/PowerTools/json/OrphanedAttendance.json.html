@@ -1,0 +1,88 @@
+{"ResultSet":[
+	~[tlist_sql;
+SELECT a1.dcid
+, a1.id
+, s1.lastfirst
+, a1.studentid
+, a2.att_code
+, a2.id
+, a1.attendance_codeid
+, CASE
+  WHEN c1.id IS NULL
+  AND a1.ccid != 0
+  THEN 'CCID ' || a1.ccid || ' does not exist'
+  WHEN a1.ccid = 0
+  THEN 'Daily Record'
+  WHEN s3.id IS NULL
+  THEN 'Section ID ' || abs(c1.sectionid) || ' does
+                                 not exist'
+  WHEN c2.course_number IS NULL
+  THEN 'Course Number ' || c1.course_number || '
+                                 does not exist'
+  ELSE c1.course_number || '.' || c1.section_number
+  END course_section
+, CASE
+  WHEN c1.id IS NULL
+  AND a1.ccid != 0
+  THEN 'CCID ' || a1.ccid || ' Does Not Exist'
+  WHEN a1.ccid = 0
+  THEN 'Daily Record'
+  WHEN s3.id IS NULL
+  THEN 'Section ID ' || abs(c1.sectionid) || ' Does Not Exist'
+  WHEN c2.course_number IS NULL
+  THEN 'Course Number ' || c1.course_number || ' Does Not Exist'
+  ELSE c1.course_number || '.' || c1.section_number
+  END course_sectionsort
+, p1.period_number
+, a1.periodid
+, s2.name
+, a1.schoolid
+FROM ps.attendance a1
+LEFT JOIN ps.students s1
+ON a1.studentid = s1.id
+LEFT JOIN PS.attendance_code a2
+ON a1.attendance_codeid = a2.id
+LEFT JOIN ps.cc c1
+ON a1.ccid = c1.id
+LEFT JOIN ps.period p1
+ON a1.periodid = p1.id
+LEFT JOIN ps.schools s2
+ON a1.schoolid = s2.school_number
+LEFT JOIN ps.sections s3
+ON abs(c1.sectionid) = s3.id
+AND c1.sectionid != 0
+LEFT JOIN ps.courses c2
+ON c1.course_number = c2.course_number
+WHERE (s1.id IS NULL
+  OR a2.id IS NULL
+  OR (c1.id IS NULL
+    AND a1.ccid != 0)
+  OR (p1.id IS NULL
+    AND a1.periodid != 0)
+  OR s2.id IS NULL
+  OR (s3.ID IS NULL
+    AND abs(c1.sectionid) != 0)
+  OR (c2.course_number IS NULL
+    AND c1.course_number IS NOT NULL)
+)
+~[if.is.a.school]AND a1.schoolid = ~[v.curschoolid][/if.is.a.school]
+ORDER BY a1.ID
+	]
+{
+		"attendanceDcid" : "~(a1.dcid)",
+		"attendanceId" : "~(a1.id)",
+		"student" : "~(s1.lastfirst;js)",
+		"studentid" : "~(a1.studentid;js)",
+		"attendanceCode" : "~(a1.att_code;js)",
+		"attendanceCodeId" : "~(a2.id;js)",
+		"attendanceRecordCodeId" : "~(a1.att_codesort;js)",
+		"courseSection" : "~(c1.course_section;js)",
+		"courseSectionSort" : "~(c1.course_sectionsort;js)",
+		"period" : "~(p1.period;js)",
+		"periodId" : "~(a1.periodid)",
+		"schoolName" : "~(s2.Schoolname;js)",
+		"schoolNumber" : "~(s2.schoolid;js)"
+    },
+			[/tlist_sql]
+{}
+    ]}

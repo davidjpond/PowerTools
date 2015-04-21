@@ -1,0 +1,77 @@
+{"ResultSet":[
+~[if.~[displaypref:PowerTools-Hide-Blank-Stored-Grades]<1]
+{
+    "report" : "Blank Stored Grades *",
+    "reportName" : "BlankStoredGrades"
+},
+[/if]
+{
+"report" : "Duplicate Grade Scale Cutoff Percentages",
+"reportName" : "GradeScaleDupCutoff"
+},
+~[if.~[displaypref:PowerTools-Hide-Duplicate-Stored-Grades]<1]
+{
+"report" : "Duplicate Stored Grades *",
+"reportName" : "DupStoredGrades"
+},
+    [/if]
+{
+"report" : "Incorrect Stored Grades *",
+"reportName" : "IncorrectStoredGrades"
+},
+{
+"report" : "Misaligned Standards",
+"reportName" : "MisalignedStandards"
+},
+{
+"report" : "Standard Conversion Scales Having Grades Over 8 Characters",
+"reportName" : "StdConversionLongGrade"
+},
+{
+"report" : "Duplicate Attendance Records *",
+"reportName" : "DupAttendance"
+},
+{
+"report" : "Non-Session Attendance *",
+"reportName" : "NonInSessionAttendance"
+},
+{
+"report" : "Students with no Full Time Equivalencies *",
+"reportName" : "MissingFTEStudent"
+},
+{
+"report" : "Students with Incomplete Scheduling Setup",
+"reportName" : "IncompleteSched"
+},
+{
+"report" : "Sections Missing Section Meeting Records *",
+"reportName" : "SectionInvalidSM"
+},
+{
+"report" : "Invalid Meal Transactions",
+"reportName" : "InvalidLunch"
+},
+{
+"report" : "Incorrect Lunch Balances",
+"reportName" : "IncorrectLunchBal"
+},
+{
+"report" : "Reports Ending in a Space",
+"reportName" : "ReportsWithSpaces"
+},
+{
+"report" : "Activities with Spaces",
+"reportName" : "ActivitiesWithSpaces"
+},
+~[if.is.a.school]
+{
+"report" : "Calendar Issues *",
+"reportName" : "CalendarIssues"
+},
+[/if]
+{
+"report" : "Course Groups Ending in a Space",
+"reportName" : "CourseGroupsWithSpaces"
+},
+{}
+]}

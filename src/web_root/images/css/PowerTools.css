@@ -1,0 +1,60 @@
+#paginated {
+  text-align: center;
+}
+
+#paginated table {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#paginated, #paginated .yui-dt-loading {
+  text-align: center;
+  background-color: transparent;
+}
+
+#logo {
+  margin-left: auto;
+  margin-right: auto;
+  border: 0;
+  width: 400pt;
+}
+
+#version, #ptinfo {
+  text-align: center;
+  display: block;
+}
+
+#menu-mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  background-color: #000;
+  opacity: 0.25;
+  filter: alpha(opacity=25);
+}
+
+.errorField {
+  color: #f00;
+}
+
+#recordCount {
+  text-align: center;
+}
+
+#checkboxNote {
+  text-align: center;
+  color: #f00;
+}
+
+.prefValue {
+  width: 188pt;
+}
+
+.redText {
+  color: #f00;
+}
+
+.menubold {
+  padding-left: 5px;
+}

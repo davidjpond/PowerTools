@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8"/>
+<html>
+<head>
+<title>PowerTools</title>
+~[wc:commonscripts]
+</head>
+
+<frameset id="frameSet" cols="210,*" border="0">
+<frame id="frameMenu" src="/admin/tech/PowerTools/menu.html?curyearonly=~[if.~[displaypref:PowerTools-curyearonly-U~[x:userid]]>=0]~[displaypref:PowerTools-curyearonly-U~[x:userid]][else]0[/if]&maxlines=~[if.~[displaypref:PowerTools-maxlines-U~[x:userid]]>0]~[displaypref:PowerTools-maxlines-U~[x:userid]][else]25[/if]" name="menu">
+<frame id="frameContent" src="/admin/tech/PowerTools/more.html" name="content">
+</frameset>
+</html>

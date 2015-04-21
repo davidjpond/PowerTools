@@ -1,0 +1,37 @@
+{"ResultSet" : [
+	~[tlist_sql;
+SELECT f1.dcid
+, f1.id
+, s1.lastfirst
+, f1.studentid
+, f2.description
+, f1.feeid
+, s2.Name
+, f1.schoolid
+FROM PS.fee_transaction f1
+LEFT JOIN ps.students s1
+ON f1.studentid = s1.id
+LEFT JOIN ps.fee f2
+ON f1.feeid = f2.id
+LEFT JOIN ps.schools s2
+ON f1.schoolid = s2.school_number
+WHERE (s1.id IS NULL
+OR f2.ID IS NULL
+OR s2.id IS NULL
+)
+~[if.is.a.school]AND f1.schoolid = ~[v.curschoolid][/if.is.a.school]
+ORDER BY f1.ID
+	]
+{
+"dcid" : "~(f1.dcid)",
+"feeTransactionId" : "~(f1.id)",
+"student" : "~(s1.lastfirst;js)",
+"studentid" : "~(f1.studentid)",
+"feeName" : "~(f2.feename;js)",
+"feeId" : "~(f1.feeid)",
+"schoolName" : "~(s2.name;js)",
+"schoolNumber" : "~(f1.schoolid;js)"
+    },
+			[/tlist_sql]
+{}
+]}

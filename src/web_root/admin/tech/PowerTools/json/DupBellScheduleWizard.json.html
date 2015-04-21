@@ -1,0 +1,28 @@
+[
+~[tlist_sql;
+SELECT b2.dcid BadDCID
+, b1.id GoodID
+, b2.id BadID
+FROM ps.bell_schedule b1
+INNER JOIN PS.bell_schedule b2
+ON b1.schoolid = b2.schoolid
+AND b1.year_id = b2.year_id
+AND b1.name = b2.name
+AND b1.id < b2.id
+AND b1.id = (
+SELECT MIN(ID)
+FROM ps.bell_schedule
+WHERE schoolid = b2.schoolid
+AND year_id = b2.year_id
+AND name = b2.name)
+~[if.is.a.school]AND b2.Schoolid = ~[v.curschoolid][/if]
+ORDER BY b2.id
+]
+{
+    "dcid" : "~(b2.dcid)",
+    "goodval" : "~(b1.id)",
+    "badval" : "~(b2.id)"
+},
+[/tlist_sql]
+{}
+]

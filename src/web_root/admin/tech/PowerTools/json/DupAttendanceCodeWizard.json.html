@@ -1,0 +1,34 @@
+[
+~[tlist_sql;
+SELECT a1.id GoodID
+, a2.id BadID
+FROM ps.attendance_code a1
+INNER JOIN ps.attendance_code a2
+ON a1.schoolid = a2.schoolid
+AND a1.yearid = a2.yearid
+AND (
+a1.att_code = a2.att_code
+OR (
+a1.att_Code IS NULL
+AND a2.att_Code IS NULL)
+)
+AND a1.id < a2.id
+WHERE a1.id = (
+SELECT MIN(ID)
+FROM ps.attendance_code
+WHERE (att_code = a2.att_code
+OR (att_code IS NULL
+AND a2.att_code IS NULL)
+)
+AND schoolid = a1.schoolid
+AND yearid = a2.yearid)
+~[if.is.a.school]AND a2.Schoolid = ~[v.curschoolid][/if]
+ORDER BY a2.id
+]
+    {
+      "goodval" : "~(a1.id)",
+      "badval" : "~(a2.id)"
+    },
+[/tlist_sql]
+    {}
+]

@@ -1,0 +1,29 @@
+[
+~[tlist_sql;
+SELECT s1.dcid
+FROM ps.sections s1
+LEFT JOIN ps.courses c1
+ON s1.course_number = c1.course_number
+LEFT JOIN ps.teachers t1
+ON s1.teacher = t1.id
+LEFT JOIN ps.schools s2
+ON s1.schoolid = s2.school_number
+LEFT JOIN ps.terms t2
+ON s1.termid = t2.id
+AND s1.schoolid = t2.schoolid
+WHERE (s1.id IS NULL
+~[if.~(gpv.noCourse)=1]OR c1.course_number IS NULL[/if]
+~[if.~(gpv.noTeacher)=1]OR t1.id IS NULL[/if]
+~[if.~(gpv.noTerm)=1]OR t2.id IS NULL[/if]
+~[if#curschool.~(v.curschoolid)=0]
+~[if#noSchool.~(gpv.noSchool)=1]OR s2.school_number IS NULL[/if#noSchool]
+[/if#curschool])
+~[if.is.a.school]AND s1.schoolid = ~[v.curschoolid][/if.is.a.school]
+ORDER BY s1.ID
+]
+{
+"dcid" : "~(dcid)"
+},
+[/tlist_sql]
+{}
+]

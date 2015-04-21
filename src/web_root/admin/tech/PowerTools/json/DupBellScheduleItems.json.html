@@ -1,0 +1,66 @@
+{"ResultSet":[
+~[tlist_sql;
+SELECT (SELECT name
+FROM bell_schedule
+WHERE id = b1.bell_Schedule_id) BellScheduleName
+, CASE
+WHEN b1.period_id IN (
+SELECT id
+FROM period)
+THEN (
+SELECT to_char(period_number)
+FROM period
+WHERE id = b1.period_id)
+ELSE 'Period does not exist'
+END PeriodNumber
+, CASE
+WHEN b2.schoolid IN (
+SELECT school_number
+FROM schools)
+THEN (
+SELECT name
+FROM schools
+WHERE school_number = b2.schoolid)
+ELSE 'School does not exist'
+END SchoolName
+, CASE
+WHEN b1.bell_schedule_id IN (
+SELECT ID
+FROM bell_schedule)
+THEN (
+SELECT (year_id + 1990)||'-'||(year_id + 1991)
+FROM bell_schedule
+WHERE id = b1.bell_Schedule_id)
+ELSE 'Bell Schedule does not exist'
+END BellScheduleYear
+, b1.bell_schedule_id
+,(SELECT dcid
+FROM bell_schedule
+WHERE id = b1.bell_Schedule_id)
+, Count(*)
+FROM bell_schedule_items b1
+LEFT JOIN bell_schedule b2
+ON b1.bell_schedule_id = b2.id
+WHERE b1.bell_schedule_id IN (
+SELECT ID
+FROM bell_schedule)
+~[if.is.a.school]AND b2.schoolid = ~[v.curschoolid][/if]
+GROUP BY b1.bell_schedule_id
+, b1.period_id
+, b2.schoolid
+HAVING COUNT(*) > 1
+ORDER BY SchoolName
+, BellScheduleName
+]
+{
+"name" : "~(b2.name;js)",
+"period" : "~(p1.period_number;js)",
+"schoolName" : "~(b2.schoolid;js)",
+"yearId" : "~(b2.yearid;js)",
+"bellScheduleItemDcid" : "~(b1.dcid;js)",
+"bellScheduleItemId" : "~(b1.id;js)",
+"count" : "~(count;js)"
+},
+[/tlist_sql]
+{}
+]}

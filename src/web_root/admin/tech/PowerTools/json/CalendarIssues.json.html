@@ -1,0 +1,41 @@
+{"ResultSet":[
+~[tlist_sql;
+SELECT to_char(c1.Date_value, 'YYYY-MM-DD') dateSort
+, CASE
+WHEN c1.cycle_day_id = 0 THEN ''
+ELSE (Select Day_name from cycle_day where id = c1.cycle_day_id) END
+, CASE
+WHEN c1.bell_schedule_id = 0 THEN ''
+ELSE (Select name from bell_schedule where id = c1.bell_schedule_id) END
+, c1.membershipvalue
+FROM calendar_day c1
+WHERE insession = 1
+AND (cycle_day_id =0
+OR bell_schedule_id = 0
+OR membershipvalue = 0)
+AND c1.schoolid = ~[v.curschoolid]
+~[if.~(gpv.curyearonly)=1]
+AND c1.date_value >= (
+SELECT t1.firstday
+FROM terms t1
+WHERE t1.yearid = trunc(~[v.curtermid]/100)
+AND t1.id like '%00'
+AND t1.schoolid = ~[v.curschoolid])
+AND c1.date_value <= (
+SELECT t1.lastday
+FROM terms t1
+WHERE t1.yearid = trunc(~[v.curtermid]/100)
+AND t1.id like '%00'
+AND t1.schoolid = ~[v.curschoolid])
+[/if]
+ORDER BY c1.Date_Value
+]
+{
+  "date" : "~(c1.Date_value;js)",
+  "cycleDay" : "~(cycle_day_id;js)",
+  "bellSchedule" : "~(bell_schedule_id;js)",
+  "membershipValue" : "~(membershipvalue;js)"
+},
+[/tlist_sql]
+{}
+]}

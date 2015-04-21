@@ -1,0 +1,26 @@
+{"ResultSet":[
+~[tlist_sql;
+	SELECT s1.dcid
+  , s1.id
+	, s1.lastfirst lastfirst
+	, s1.grade_level
+	, DECODE (s1.enroll_status,'-1','Pre-Registered','0','Active','1','Inactive','2','Transferred Out','3','Graduated','4','Imported as Historical','Inactive')
+	, to_char(s1.Enrollment_Transfer_Date_Pend, 'YYYY-MM-DD') penddate
+	FROM students s1
+	WHERE s1.Enrollment_Transfer_Date_Pend < CURRENT_TIMESTAMP
+	AND s1.enrollment_transfer_date_pend <> to_date('01-JAN-1900','DD-MON-YYYY')
+	~[if.is.a.school]AND s1.schoolid = ~[v.curschoolid][/if.is.a.school]
+]
+{
+"dcid" : "~(dcid)",
+"studentid" : "~(s1.id)",
+"student" : "~(lastfirst;js)",
+"gradeLevel" : "~(grade_level)",
+"enrollmentStatus" : "~(Enrollment Status;js)",
+"pendingDate" : "~(penddate;js)"
+},
+[/tlist_sql]
+{}
+]}
+
+

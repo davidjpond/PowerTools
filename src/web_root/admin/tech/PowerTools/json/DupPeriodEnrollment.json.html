@@ -1,0 +1,75 @@
+{"ResultSet":[
+~[tlist_sql;
+SELECT cc1.sdcid
+, cc1.studentid
+, cc1.lastfirst
+, cc1.schoolname
+, cc1.student_number
+, to_char(cc1.dateenrolled, 'YYYY-MM-DD')
+, cc1.abbreviation || '(' || cc1.cycle_day_letter || ')' expression
+FROM (
+SELECT c1.dcid dcid
+, s1.dcid sdcid
+, s1.id studentid
+, s1.lastfirst lastfirst
+, s1.student_number student_number
+, s1.schoolid schoolid
+, s2.name schoolname
+, c1.dateenrolled dateenrolled
+, c1.dateleft dateleft
+, p1.abbreviation abbreviation
+, s3.period_number period_number
+, s3.cycle_day_letter cycle_day_letter
+, c1.termid termid
+FROM ps.cc c1
+INNER JOIN ps.students s1
+ON c1.studentid = s1.id
+LEFT JOIN ps.section_meeting s3
+ON s3.sectionid = abs(c1.sectionid)
+LEFT JOIN ps.schools s2
+ON c1.schoolid = s2.school_number
+LEFT JOIN ps.period p1
+ON s3.period_number = p1.period_number
+AND s3.schoolid = p1.schoolid
+AND s3.year_id = p1.year_id
+) cc1
+, (
+SELECT c1.dcid dcid
+, s1.lastfirst
+, s1.student_number student_number
+, s1.schoolid schoolid
+, c1.dateenrolled dateenrolled
+, c1.dateleft dateleft
+, s3.period_number period_number
+, s3.cycle_day_letter cycle_day_letter
+FROM ps.cc c1
+INNER JOIN ps.students s1
+ON c1.studentid = s1.id
+LEFT JOIN ps.section_meeting s3
+ON s3.sectionid = abs(c1.sectionid)
+) cc2
+WHERE (cc1.dcid != cc2.dcid
+AND cc1.dateenrolled > cc2.dateenrolled
+OR cc1.dcid > cc2.dcid
+AND cc1.dateenrolled = cc2.dateenrolled)
+AND cc1.student_number = cc2.student_number
+AND cc1.period_number = cc2.period_number
+AND cc1.cycle_day_letter = cc2.cycle_day_letter
+AND cc1.dateenrolled >= cc2.dateenrolled
+AND cc1.dateenrolled < cc2.dateleft
+AND cc1.schoolid = cc2.schoolid
+~[if.is.a.school]AND cc1.schoolid = ~[v.curschoolid][/if.is.a.school]
+~[if.~(gpv.curyearonly)=1]AND trunc(cc1.termid/100) = trunc(~[v.curtermid]/100)[/if]
+ORDER BY cc1.lastfirst]
+{
+"dcid" : "~(cc1.dcid)",
+"studentid" : "~(cc1.studentid)",
+"student" : "~(cc1.lastfirst;js)",
+"schoolName" : "~(cc1.schoolname;js)",
+"studentNumber" : "~(cc1.student_number)",
+"dateEnrolled" : "~(cc1.dateenrolled;js)",
+"periodNumber" : "~(cc1.period_number;js)"
+},
+[/tlist_sql]
+{}
+]}

@@ -1,0 +1,30 @@
+{"ResultSet":[
+~[tlist_sql;
+SELECT h1.dcid
+, h1.id
+, s1.lastfirst
+, h1.studentid
+, s2.name
+, h1.schoolid
+FROM ps.honorroll h1
+LEFT JOIN ps.students s1
+ON h1.studentid = s1.id
+LEFT JOIN ps.schools s2
+ON h1.schoolid = s2.school_number
+WHERE (s1.id IS NULL
+OR s2.ID IS NULL
+)
+~[if.is.a.school]AND h1.schoolid = ~[v.curschoolid][/if.is.a.school]
+ORDER BY h1.ID
+]
+{
+"dcid" : "~(h1.dcid)",
+"honorRollId" : "~(h1.id)",
+"student" : "~(s1.lastfirst;js)",
+"studentid" : "~(h1.studentid;js)",
+"schoolName" : "~(s2.name;js)",
+"schoolId" : "~(h1.schoolid;js)"
+},
+[/tlist_sql]
+{}
+]}

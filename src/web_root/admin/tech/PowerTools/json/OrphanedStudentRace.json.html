@@ -1,0 +1,30 @@
+{"ResultSet":[
+	~[tlist_sql;
+SELECT s1.dcid
+, s1.id
+, s2.lastfirst
+, s1.studentid
+, g1.Name
+, s1.racecd
+FROM studentrace s1
+LEFT JOIN students s2
+ON s1.studentid = s2.id
+LEFT JOIN gen g1
+ON s1.racecd = g1.Name
+AND g1.cat = 'race'
+WHERE (s2.id IS NULL
+OR g1.Name IS NULL)
+~[if.is.a.school]AND s2.schoolid = ~[v.curschoolid][/if.is.a.school]
+ORDER BY s1.DCID
+	]
+{
+"dcid" : "~(s1.dcid)",
+"id" : "~(s1.id)",
+"student" : "~(s2.lastfirst;js)",
+"studentid" : "~(s1.studentid;js)",
+"raceCode" : "~(g1.name;js)",
+"raceCodeId" : "~(s1.racecd;js)"
+},
+			[/tlist_sql]
+{}
+]}

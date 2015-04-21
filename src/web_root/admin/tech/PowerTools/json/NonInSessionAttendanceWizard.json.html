@@ -1,0 +1,86 @@
+[
+~[tlist_sql;
+SELECT a1.dcid
+FROM ps.attendance a1
+INNER JOIN ps.students s1
+ON a1.studentid = s1.id
+LEFT JOIN ps.schools s2
+ON a1.schoolid = s2.school_number
+LEFT JOIN ps.attendance_code a2
+ON a1.attendance_codeid = a2.id
+LEFT JOIN ps.calendar_day c1
+ON a1.att_date = c1.date_value
+AND a1.schoolid = c1.schoolid
+LEFT JOIN ps.cc c2
+ON a1.ccid = c2.id
+LEFT JOIN ps.cycle_day c3
+ON c1.cycle_day_id = c3.id
+WHERE a2.att_code IS NOT NULL
+~[if.is.a.school]AND a1.schoolid = ~[v.curschoolid][/if.is.a.school]
+AND (
+lower(a1.att_mode_code) like 'att_modemeeting'
+AND (
+a1.dcid IS NULL
+~[if.~(gpv.noSectionDay)=1]
+OR c3.letter NOT IN (
+SELECT cycle_day_letter
+FROM ps.section_meeting s2
+WHERE s2.sectionid = ABS(c2.sectionid)
+)
+[/if]
+~[if.~(gpv.noSectionPeriod)=1]
+OR (
+a1.periodid NOT IN (
+SELECT p1.id
+FROM ps.period p1
+, ps.section_meeting s2
+WHERE s2.sectionid = ABS(c2.sectionid)
+AND s2.period_number = p1.period_number
+AND s2.schoolid = p1.schoolid
+)
+)
+OR (
+a1.periodid NOT IN (
+SELECT period_id
+FROM ps.bell_schedule_items b1
+WHERE b1.bell_schedule_id = c1.bell_schedule_id
+)
+)
+[/if]
+~[if.~(gpv.noStudentSection)=1]
+OR (
+a1.att_date < c2.dateenrolled
+OR a1.att_date > c2.dateleft
+)
+[/if]
+)
+~[if.~(gpv.noStudentDay)=1]
+OR (
+lower(a1.att_mode_code) = 'att_modedaily'
+AND (
+a1.att_date < s1.entrydate
+OR a1.att_date >= s1.exitdate
+)
+AND NOT EXISTS (
+SELECT *
+FROM ps.reenrollments r1
+WHERE a1.studentid = r1.studentid
+AND a1.att_date > r1.entrydate
+AND r1.exitdate > a1.att_date
+)
+)
+[/if]
+~[if.~(gpv.noSchoolDay)=1]
+OR c1.insession = 0
+OR (
+c1.insession IS NULL
+AND a2.att_code IS NOT NULL
+)[/if]
+)
+]
+{
+"dcid" : "~(dcid)"
+},
+[/tlist_sql]
+{}
+]

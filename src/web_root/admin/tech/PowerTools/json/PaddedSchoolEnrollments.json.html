@@ -1,0 +1,135 @@
+{"ResultSet":[
+~[tlist_sql;
+SELECT * FROM (
+SELECT s1.dcid
+, s1.id
+, s1.lastfirst lastfirst
+, s1.student_number
+, to_char(s1.entrydate, 'YYYY-MM-DD')
+, to_char(s1.exitdate, 'YYYY-MM-DD')
+, CASE
+WHEN (
+SELECT to_char(MIN(dateenrolled), 'YYYY-MM-DD')
+FROM cc c1
+WHERE c1.studentid = s1.id
+AND c1.dateenrolled >= s1.entrydate
+AND c1.dateleft <= s1.exitdate) IS NULL THEN ''
+ELSE (
+SELECT to_char(MIN(dateenrolled), 'YYYY-MM-DD')
+FROM cc c1
+WHERE c1.studentid = s1.id
+AND c1.dateenrolled >= s1.entrydate
+AND c1.dateleft <= s1.exitdate)
+END
+, CASE
+WHEN (
+SELECT to_char(MAX(dateleft), 'YYYY-MM-DD')
+FROM cc c2
+WHERE c2.studentid = s1.id
+AND c2.dateenrolled >= s1.entrydate
+AND c2.dateleft <= s1.exitdate) IS NULL THEN ''
+ELSE (
+SELECT to_char(MAX(dateleft), 'YYYY-MM-DD')
+FROM cc c2
+WHERE c2.studentid = s1.id
+AND c2.dateenrolled >= s1.entrydate
+AND c2.dateleft <= s1.exitdate)
+END
+FROM students s1
+WHERE s1.entrydate < s1.exitdate
+~[if.is.a.school]AND s1.schoolid = ~[v.curschoolid][/if.is.a.school]
+AND (
+NOT EXISTS (
+SELECT *
+FROM cc c3
+WHERE c3.dateenrolled = s1.entrydate
+AND c3.studentid = s1.id)
+OR NOT EXISTS (
+SELECT *
+FROM cc c4
+WHERE c4.dateleft = s1.exitdate
+AND c4.studentid = s1.id))
+~[if#curyearonly.~(gpv.curyearonly)=1]AND s1.entrydate >= (SELECT FIRSTDAY
+FROM terms
+WHERE id = (TRUNC(~[v.curtermid]/100)*100)
+AND Schoolid=s1.schoolid)
+AND (s1.exitdate-1) <= (SELECT LastDay
+FROM terms
+WHERE id = (TRUNC(~[v.curtermid]/100)*100)
+AND Schoolid=s1.schoolid)
+[/if#curyearonly]
+UNION ALL
+SELECT s1.dcid
+, s1.id
+, s1.lastfirst lastfirst
+, s1.student_number
+, to_char(r1.entrydate, 'YYYY-MM-DD')
+, to_char(r1.exitdate, 'YYYY-MM-DD')
+, CASE
+WHEN (
+SELECT to_char(MIN(dateenrolled), 'YYYY-MM-DD')
+FROM cc c1
+WHERE c1.studentid = s1.id
+AND c1.dateenrolled >= r1.entrydate
+AND c1.dateleft <= r1.exitdate) IS NULL THEN ''
+ELSE (
+SELECT to_char(MIN(dateenrolled), 'YYYY-MM-DD')
+FROM cc c1
+WHERE c1.studentid = s1.id
+AND c1.dateenrolled >= r1.entrydate
+AND c1.dateleft <= r1.exitdate)
+END
+, CASE
+WHEN (
+SELECT to_char(MAX(dateleft), 'YYYY-MM-DD')
+FROM cc c2
+WHERE c2.studentid = s1.id
+AND c2.dateenrolled >= r1.entrydate
+AND c2.dateleft <= r1.exitdate) IS NULL THEN ''
+ELSE (
+SELECT to_char(MAX(dateleft), 'YYYY-MM-DD')
+FROM cc c2
+WHERE c2.studentid = s1.id
+AND c2.dateenrolled >= r1.entrydate
+AND c2.dateleft <= r1.exitdate)
+END
+FROM reenrollments r1
+INNER JOIN students s1
+on r1.studentid = s1.id
+WHERE r1.entrydate < r1.exitdate
+~[if.is.a.school]AND r1.schoolid = ~[v.curschoolid][/if.is.a.school]
+AND (
+NOT EXISTS (
+SELECT *
+FROM cc c3
+WHERE c3.dateenrolled = r1.entrydate)
+OR NOT EXISTS (
+SELECT *
+FROM cc c4
+WHERE c4.dateleft = r1.exitdate))
+~[if#curyearonly.~(gpv.curyearonly)=1]AND r1.entrydate >= (SELECT FIRSTDAY
+FROM terms
+WHERE id = (TRUNC(~[v.curtermid]/100)*100)
+AND Schoolid=r1.schoolid)
+AND (r1.exitdate-1) <= (SELECT LastDay
+FROM terms
+WHERE id = (TRUNC(~[v.curtermid]/100)*100)
+AND Schoolid=r1.schoolid)
+[/if#curyearonly]
+)
+ORDER BY lastfirst
+]
+
+  {
+    "dcid" : "~(s1.dcid)",
+    "studentid" : "~(s1.id)",
+    "student" :  "~(cc1.lastfirst;js)",
+    "studentNumber" : "~(cc1.student_number;js)",
+    "entryDate" : "~(s1.entrydate;js)",
+    "exitDate" : "~(s1.exitdate)",
+    "firstCC" : "~(c1.dateenrolled;js)",
+    "lastCC" : "~(c1.dateleft;js)"
+  },
+[/tlist_sql]
+  {}
+]}

@@ -1,0 +1,48 @@
+{"ResultSet" : [
+~[tlist_sql;
+SELECT s1.dcid
+, s1.id
+, s1.lastfirst
+, s2.name
+, to_char(s1.balance2)
+, CASE
+WHEN to_char(
+(SELECT SUM(neteffect)
+FROM ps.gldetail g1
+WHERE g1.studentid = s1.id)) IS NULL THEN '0'
+ELSE
+to_char(
+(SELECT SUM(neteffect)
+FROM ps.gldetail g1
+WHERE g1.studentid = s1.id))
+END
+, s1.balance1
+FROM ps.students s1
+LEFT JOIN ps.schools s2
+ON s1.schoolid = s2.school_number
+WHERE s1.balance1 - s1.balance2 != (
+SELECT SUM(neteffect)
+FROM ps.gldetail g1
+WHERE g1.studentid = s1.id)
+~[if.is.a.school]AND s1.schoolid = ~[v.curschoolid][/if.is.a.school]
+OR s1.balance1 != s1.balance2
+AND NOT EXISTS (
+SELECT *
+FROM ps.gldetail g1
+WHERE g1.studentid = s1.id)
+~[if.is.a.school]AND s1.schoolid = ~[v.curschoolid][/if.is.a.school]
+ORDER BY s1.lastfirst
+]
+
+{
+"dcid" : "~(s1.dcid)",
+"studentid" : "~(s1.id)",
+"student" : "~(s1.lastfirst;js)",
+"schoolName" : "~(s2.name;js)",
+"startingBalance" : "~(s1.balance2;js)",
+"runningBalance" : "~(transactions;js)",
+"currentBalance" : "~(s1.balance1;js)"
+},
+[/tlist_sql]
+{}
+]}

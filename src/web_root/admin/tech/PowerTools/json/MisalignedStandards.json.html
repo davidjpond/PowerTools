@@ -1,0 +1,41 @@
+{"ResultSet":[
+~[tlist_sql;
+SELECT dcid
+, identifier
+, calculationparent
+, listparent
+, CASE
+WHEN calculationparent NOT IN (
+SELECT identifier
+FROM ps.standards)
+THEN 'Calculation Parent does not exist'
+WHEN listparent NOT IN (
+SELECT identifier
+FROM ps.standards)
+THEN 'List Parent does not exist'
+WHEN calculationparent = identifier
+THEN 'Calculation Parent cannot match identifier'
+WHEN listparent = identifier
+THEN 'List Parent cannot match identifier'
+END issue
+FROM ps.standards
+WHERE Calculationparent NOT IN (
+SELECT identifier
+FROM ps.standards)
+OR listparent NOT IN (
+SELECT identifier
+FROM ps.standards)
+OR calculationparent = identifier
+OR listparent = identifier
+ORDER BY identifier
+]
+{
+"dcid" : "~(dcid)",
+"identifier" : "~(identifier;js)",
+"calculationParent" : "~(calculationparent;js)",
+"listParent" : "~(listparent;js)",
+"issue" : "~(issue;js)",
+},
+[/tlist_sql]
+{}
+]}

@@ -1,0 +1,41 @@
+{"ResultSet":[
+	~[tlist_sql;
+SELECT t1.Storecode
+, (SELECT abbreviation
+  FROM ps.terms
+  WHERE id = t1.termid
+  AND schoolid = t1.schoolid) Term
+, (Trunc(t1.termid/100) + 1990)||'-'||(Trunc(t1.termid/100) + 1991) SchoolYear
+, CASE
+  WHEN t1.schoolid = '0'
+  THEN 'District Office'
+  WHEN t1.schoolid IN (
+    SELECT School_Number
+    FROM ps.schools)
+  THEN (
+    SELECT name
+    FROM ps.schools
+    WHERE school_number = t1.schoolid)
+  ELSE 'School Does Not Exist'
+  END SchoolName
+, count(*)
+FROM ps.termbins t1
+~[if.is.a.school]WHERE t1.schoolid = ~[v.curschoolid][/if.is.a.school]
+GROUP BY t1.storecode
+, t1.termid
+, t1.schoolid
+HAVING COUNT(*) > 1
+ORDER BY SchoolName
+, t1.termid
+, t1.storecode
+  ]
+{
+"storeCode" : "~(storecode;js)",
+"termId" : "~(term;js)",
+"schoolYear" : "~(schoolyear;js)",
+"schoolName" : "~(schoolid;js)",
+"count" : "~(count;js)"
+},
+[/tlist_sql]
+{}
+    ]}

@@ -1,0 +1,9 @@
+<script type="text/javascript">
+         $j('tr').removeAttr('class');
+         $j('table').prop('class','linkDescList');
+         $j("tr:contains('Photo Management')").after(
+           '<tr>' +
+             '<td><a href="/admin/tech/PowerTools/home.html">PowerTools</a></td>' +
+             '<td>PowerTools Data Diagnostics</td>' +
+           '</tr>');
+</script>

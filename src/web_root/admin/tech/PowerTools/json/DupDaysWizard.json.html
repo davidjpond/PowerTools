@@ -1,0 +1,28 @@
+[
+~[tlist_sql;
+SELECT d2.dcid BadDCID
+, d1.id GoodID
+, d2.id BadID
+FROM ps.cycle_day d1
+INNER JOIN ps.cycle_day d2
+ON d1.schoolid = d2.schoolid
+AND d1.year_id = d2.year_id
+AND d1.letter = d2.letter
+AND d1.id < d2.id
+WHERE d1.id = (
+SELECT MIN(ID)
+FROM ps.cycle_day
+WHERE schoolid = d2.schoolid
+AND year_id = d2.year_id
+AND letter = d2.letter)
+~[if.is.a.school]AND d2.Schoolid = ~[v.curschoolid][/if]
+ORDER BY d2.id
+]
+    {
+      "dcid" : "~(d2.dcid)",
+      "goodval" : "~(d1.id)",
+      "badval" : "~(d2.id)"
+    },
+[/tlist_sql]
+{}
+]

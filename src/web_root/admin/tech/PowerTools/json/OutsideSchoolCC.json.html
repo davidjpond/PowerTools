@@ -1,0 +1,55 @@
+{"ResultSet":[
+~[tlist_sql;
+SELECT s1.dcid
+, s1.id
+, s1.lastfirst
+, s2.name
+, c1.course_number
+, c1.section_number
+, c2.course_name
+, to_char(c1.dateenrolled, 'YYYY-MM-DD')
+, to_char(c1.dateleft, 'YYYY-MM-DD')
+FROM cc c1
+INNER JOIN students s1
+ON c1.studentid = s1.id
+LEFT JOIN courses c2
+ON c1.course_number = c2.course_number
+LEFT JOIN schools s2
+ON s1.schoolid = s2.school_number
+WHERE NOT EXISTS (
+SELECT *
+FROM reenrollments r1
+WHERE c1.dateenrolled >= r1.entrydate
+AND c1.dateenrolled <= r1.exitdate
+AND c1.dateleft >= r1.entrydate
+AND c1.dateleft <= r1.exitdate
+AND c1.studentid = r1.studentid)
+~[if.is.a.school]AND c1.schoolid = ~[v.curschoolid][/if.is.a.school]
+~[if.~(gpv.curyearonly)=1]AND trunc(abs(c1.termid)/100) = trunc(~[v.curtermid]/100)[/if]
+AND NOT EXISTS (
+SELECT *
+FROM students s1
+WHERE c1.dateenrolled >= s1.entrydate
+AND c1.dateenrolled <= s1.exitdate
+AND c1.dateleft >= s1.entrydate
+AND c1.dateleft <= s1.exitdate
+AND c1.studentid = s1.id)
+AND c1.dateleft >= c1.dateenrolled
+~[if.is.a.school]AND c1.schoolid = ~[v.curschoolid][/if.is.a.school]
+~[if.~(gpv.curyearonly)=1]AND trunc(abs(c1.termid)/100) = trunc(~[v.curtermid]/100)[/if]
+ORDER BY s1.lastfirst
+]
+{
+"dcid" : "~(s1.dcid)",
+"studentid" : "~(s1.id)",
+"student" : "~(s1.lastfirst;js)",
+"schoolName" : "~(s2.name;js)",
+"courseNumber" : "~(c1.Course_number;js)",
+"sectionNumber" : "~(c1.Section_number;js)",
+"courseName" : "~(c2.course_name;js)",
+"dateEnrolled" : "~(c1.dateenrolled;js)",
+"dateLeft" : "~(c1.dateleft;js)"
+},
+[/tlist_sql]
+{}
+]}

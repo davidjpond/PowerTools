@@ -1,0 +1,24 @@
+{"ResultSet":[
+	~[tlist_sql;
+	SELECT id
+	, host_ip
+	, user_supplied_name
+	, server_state
+	FROM ps.server_instance
+	WHERE id IN (
+     SELECT ID
+    FROM ps.server_instance
+    GROUP BY ID
+    HAVING COUNT(id)>1
+		)
+	ORDER BY id
+  ]
+{
+"id" : "~(id)",
+"hostIp" : "~(host_ip;js)",
+"userSuppliedName" : "~(user_supplied_name;js)",
+"serverState" : "~(server_state;js)"
+},
+[/tlist_sql]
+{}
+    ]}

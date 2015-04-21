@@ -1,0 +1,20 @@
+[
+~[tlist_sql;
+SELECT c1.id
+, c1.course_number
+, c2.course_number
+FROM ps.cc c1
+LEFT JOIN ps.courses c2
+ON lower(c1.course_number) = lower(c2.course_number)
+WHERE c1.course_number != c2.course_number
+~[if.is.a.school]AND c1.schoolid = ~[v.curschoolid][/if]
+ORDER BY c1.id
+]
+    {
+      "id" : "~(c1.id)",
+      "badval" : "~(c1.course_number)",
+      "goodval" : "~(c2.course_number)"
+    },
+[/tlist_sql]
+    {}
+]

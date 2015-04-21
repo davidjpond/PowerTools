@@ -1,0 +1,19 @@
+[
+~[tlist_sql;
+SELECT s2.dcid
+FROM ps.server_instance s1
+INNER JOIN ps.server_instance s2
+ON  s1.id = s2.id
+WHERE s1.dcid < s2.dcid
+AND s1.dcid = (
+SELECT MIN(DCID)
+FROM ps.server_instance
+WHERE id = s2.id)
+ORDER BY s2.dcid
+]
+    {
+      "dcid" : "~(s2.dcid)"
+    },
+[/tlist_sql]
+{}
+]

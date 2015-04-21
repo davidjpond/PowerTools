@@ -1,0 +1,79 @@
+default:
+  - 'notify:codecheck'
+  - 'jshint'
+  - 'jscs'
+  - 'csslint'
+  - 'inlinelint'
+  - 'htmlhint'
+  - 'xml_validator'
+
+buildlib:
+  - 'notify:codecheck'
+  - 'jshint'
+  - 'jscs'
+  - 'notify:stage'
+  - 'clean'
+  - 'copy:jslibtotemp'
+  - 'notify:cleanandbuild'
+  - 'removelogging'
+  - 'file-creator:jsdocReadme'
+  - 'jsdoc:dist'
+  - 'uglify'
+  - 'copy:alltodist'
+  - 'clean:temp'
+  - 'notify:complete'
+
+stage:
+  - 'notify:stage'
+  - 'clean'
+  - 'copy:alltotemp'
+  - 'clean:examples'
+  - 'cleanempty:temp'
+  - 'copy:htmljsontodist'
+  - 'copy:minjstodist'
+  - 'copy:messagekeystodist'
+  - 'copy:schemaexttodist'
+  - 'copy:sqltoroot'
+  - 'copy:vendorjstodist'
+  - 'clean:tempjson'
+  - 'clean:tempminjs'
+  - 'clean:templtk'
+  - 'clean:schemaextensions'
+  - 'clean:tempvendorjs'
+
+cleanandbuild:
+  - 'notify:cleanandbuild'
+  - 'autoprefixer:ps7'
+  - 'removelogging'
+  - 'htmlmin:dist'
+  - 'prettify'
+  - 'imagemin'
+  - 'jsdoc:dist'
+  - 'copy:alltodist'
+  - 'clean:temp'
+
+createplugin:
+  - 'notify:createplugin'
+  - 'file-creator:pluginxml'
+  - 'cleanempty:dist'
+  - 'compress:doc'
+  - 'compress:plugin'
+
+build:
+  - 'notify:beginbuild'
+  - 'default'
+  - 'stage'
+  - 'cleanandbuild'
+  - 'createplugin'
+  - 'notify:complete'
+
+test:
+  - 'notify:test'
+  - 'connect'
+  - 'jasmine'
+
+stagedoc:
+  - 'clean'
+  - 'copy:alltotemp'
+  - 'file-creator:jsdocReadme'
+  - 'jsdoc:dist'

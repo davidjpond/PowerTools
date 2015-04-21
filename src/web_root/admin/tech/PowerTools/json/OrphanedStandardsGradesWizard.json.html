@@ -1,0 +1,26 @@
+[
+~[tlist_sql;
+SELECT s1.dcid
+FROM ps.standardsgrades s1
+LEFT JOIN ps.students s2
+ON s1.studentid = s2.id
+LEFT JOIN ps.standards s3
+ON s1.standardsid = s3.id
+LEFT JOIN ps.schools s4
+ON s1.schoolid = s4.school_number
+WHERE (s1.id IS NULL
+~[if.~(gpv.noStudent)=1]OR s2.id IS NULL[/if]
+~[if.~(gpv.noStandard)=1]OR s3.id IS NULL[/if]
+~[if#curschool.~(v.curschoolid)=0]
+~[if#noSchool.~(gpv.noSchool)=1]OR s4.school_number IS NULL[/if#noSchool]
+[/if#curschool]
+)
+~[if.is.a.school]AND s1.schoolid = ~[v.curschoolid][/if.is.a.school]
+ORDER BY s1.ID
+]
+{
+"dcid" : "~(dcid)"
+},
+[/tlist_sql]
+{}
+]

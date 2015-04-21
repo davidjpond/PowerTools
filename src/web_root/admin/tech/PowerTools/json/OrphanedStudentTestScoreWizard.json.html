@@ -1,0 +1,33 @@
+[
+~[tlist_sql;
+SELECT s1.dcid
+FROM ps.studenttestscore s1
+LEFT JOIN ps.students s2
+ON s1.studentid = s2.id
+LEFT JOIN ps.testscore t1
+ON s1.testscoreid = t1.id
+LEFT JOIN ps.studenttest s3
+ON s1.studenttestid = s3.id
+LEFT JOIN ps.schools s4
+ON s3.schoolid = s4.school_number
+LEFT JOIN ps.test t2
+ON s3.testid = t2.id
+WHERE (s1.dcid IS NULL
+~[if.~(gpv.noStudent)=1]OR s2.id IS NULL[/if]
+~[if.~(gpv.noTestScore)=1]OR t1.ID IS NULL[/if]
+~[if.~(gpv.noStudentTest)=1]OR s3.id IS NULL[/if]
+~[if.~(gpv.noTest)=1]OR t2.ID IS NULL[/if]
+~[if#curschool.~(v.curschoolid)=0]
+~[if#noSchool.~(gpv.noSchool)=1]OR (s4.name IS NULL
+and s3.schoolid != 0)[/if#noSchool]
+[/if#curschool]
+)
+~[if.is.a.school]AND s2.schoolid = ~[v.curschoolid][/if.is.a.school]
+ORDER BY s1.ID
+]
+{
+"dcid" : "~(dcid)"
+},
+[/tlist_sql]
+{}
+]

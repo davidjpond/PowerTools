@@ -1,0 +1,21 @@
+{"ResultSet":[
+~[tlist_sql;
+SELECT g1.dcid
+, g2.name gsname
+, g1.value grade
+FROM gen g1
+LEFT JOIN gen g2
+ON g1.valueli = g2.id
+WHERE g1.cat = 'stdconv'
+AND length(g1.value) > 8
+ORDER BY g2.name
+]
+
+{
+"dcid" : "~(g2.dcid)",
+"name" : "~(g2.g2name;js)",
+"grade" : "~(g1.grade;js)"
+},
+[/tlist_sql]
+{}
+]}

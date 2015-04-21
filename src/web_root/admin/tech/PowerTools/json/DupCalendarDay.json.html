@@ -1,0 +1,32 @@
+{"ResultSet":[
+	~[tlist_sql;
+SELECT to_char(c1.date_value, 'YYYY-MM-DD') datevalue
+, CASE
+  WHEN c1.schoolid = '0'
+  THEN 'District Office'
+  WHEN c1.schoolid IN (
+    SELECT School_Number
+    FROM ps.schools)
+  THEN (
+    SELECT name
+    FROM ps.schools
+    WHERE school_number = c1.schoolid)
+  ELSE 'School Does Not Exist'
+  END SchoolName
+, count(*)
+FROM ps.calendar_day c1
+~[if.is.a.school]WHERE c1.schoolid = ~[v.curschoolid][/if.is.a.school]
+GROUP BY c1.date_value
+, c1.schoolid
+HAVING COUNT(*) > 1
+ORDER BY SchoolName
+, c1.date_value
+  ]
+{
+"date" : "~(date_value;js)",
+"schoolName" : "~(schoolid;js)",
+"count" : "~(count;js)"
+},
+			[/tlist_sql]
+{}
+    ]}

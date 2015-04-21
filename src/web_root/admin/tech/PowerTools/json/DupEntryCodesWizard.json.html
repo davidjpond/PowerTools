@@ -1,0 +1,22 @@
+[
+~[tlist_sql;
+SELECT g2.dcid BadDCID
+FROM ps.gen g1
+LEFT JOIN ps.gen g2
+ON g1.cat = g2.cat
+AND g1.name = g2.name
+WHERE lower(g1.cat) = 'entrycodes'
+AND g1.id < g2.id
+AND g1.id = (
+SELECT MIN(ID)
+FROM ps.gen
+WHERE cat = g2.cat
+AND name = g2.name)
+ORDER BY g2.id;
+]
+    {
+      "dcid" : "~(g2.dcid)"
+    },
+[/tlist_sql]
+    {}
+]

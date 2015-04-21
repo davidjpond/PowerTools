@@ -1,0 +1,45 @@
+{"ResultSet":[
+~[tlist_sql;
+select g.cat
+, g.name
+, g.value
+, CASE
+WHEN (g.yearid = 0 OR g.yearid IS NULL)
+THEN 'N/A'
+ELSE ((g.yearid + 1990)||'-'||(g.yearid + 1991))
+END YearID
+, CASE
+WHEN g.schoolid = '0'
+THEN 'District Office'
+WHEN g.schoolid IN (
+SELECT school_number
+FROM ps.schools)
+THEN (
+SELECT name
+FROM ps.schools
+WHERE school_number = g.schoolid)
+ELSE 'School Does Not Exist'
+END schoolname
+, count(*)
+from gen g
+LEFT JOIN schools s
+ON g.schoolid = s.school_number
+group by g.cat
+, g.name
+, g.value
+, g.yearid
+, g.schoolid
+having count(*)>1
+ORDER BY cat
+]
+{
+  "cat" : "~(g.cat;js)",
+    "name" : "~(g.name;js)",
+    "value" : "~(g.value;js)",
+    "yearid" : "~(g.yearid)",
+    "schoolName" : "~(s.name;js)",
+    "count" : " ~(count)"
+},
+ [/tlist_sql]
+{}
+]}

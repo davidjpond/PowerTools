@@ -1,0 +1,39 @@
+{"ResultSet":[
+~[tlist_sql;
+SELECT s1.dcid
+, s1.lastfirst
+, s2.name
+, s1.schoolid
+, s1.grade_level
+, s2.high_grade
+, s2.low_grade
+FROM students s1
+LEFT JOIN schools s2
+ON s1.schoolid = s2.school_number
+WHERE (s1.schoolid NOT IN (
+SELECT school_number
+FROM schools)
+OR (s1.grade_level < s2.low_grade
+AND s1.schoolid != '999999')
+OR (
+s1.grade_level > s2.high_grade
+AND s1.schoolid != '999999')
+OR (
+s1.grade_level != '99'
+AND s1.schoolid = '999999'))
+AND s1.schoolid = s1.enrollment_schoolid
+~[if.is.a.school]AND s1.schoolid = ~[v.curschoolid][/if.is.a.school]
+ORDER BY s1.lastfirst
+]
+{
+"dcid" : "~(r1.dcid)",
+"student" : "~(s1.lastfirst;js)",
+"schoolName" : "~(s2.Schoolname;js)",
+"schoolId" : "~(s1.SchoolID;js)",
+"gradeLevel" : "~(s1.grade_level)",
+"lowGrade" : "~(s2.low_grade;js)",
+"highGrade" : "~(s2.high_grade;js)"
+},
+[/tlist_sql]
+{}
+]}

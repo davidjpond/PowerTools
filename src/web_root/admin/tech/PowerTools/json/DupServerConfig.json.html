@@ -1,0 +1,19 @@
+{"ResultSet":[
+	~[tlist_sql;
+	SELECT server_instanceid
+    , name
+    , count(ID)
+    FROM server_config
+    GROUP BY server_instanceid
+    , name
+    HAVING COUNT(*)>1
+	ORDER BY name
+  ]
+{
+"serverInstanceId" : "~(server_instanceid)",
+"name" : "~(name;js)",
+"count" : "~(count;js)"
+},
+[/tlist_sql]
+{}
+    ]}

@@ -1,0 +1,43 @@
+{
+  "name": "powertools",
+  "version": "3.3.0",
+  "author": {
+    "name": "David Pond",
+    "email": "powertoolsforpowerschool@gmail.com"
+  },
+  "description": "The PowerTools diagnostic utility",
+  "private": true,
+  "dependencies" : {
+    "cptLibrary": "git+ssh://git@devops-tools.pearson.com/cast/customizations-library.git"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-autoprefixer": "^1.0.1",
+    "grunt-cleanempty": "~1.0.0",
+    "grunt-contrib-clean": "~0.6.0",
+    "grunt-contrib-compress": "~0.10.0",
+    "grunt-contrib-copy": "~0.5.0",
+    "grunt-contrib-csslint": "~0.2.0",
+    "grunt-contrib-htmlmin": "~0.3.0",
+    "grunt-contrib-imagemin": "~0.8.0",
+    "grunt-contrib-jshint": "~0.8.0",
+    "grunt-contrib-watch": "~0.6.1",
+    "grunt-file-creator": "~0.1.1",
+    "grunt-htmlhint": "^0.4.0",
+    "grunt-jscs": "^0.7.1",
+    "grunt-jsdoc": "~0.5.1",
+    "grunt-lint-inline": "~0.4.0",
+    "grunt-newer": "~0.7.0",
+    "grunt-notify": "~0.2.20",
+    "grunt-prettify": "~0.3.4",
+    "grunt-remove-logging": "~0.2.0",
+    "grunt-xml-validator": "~1.1.1",
+    "load-grunt-config": "~0.8.0",
+    "load-grunt-tasks": "~0.4.0",
+    "time-grunt": "~0.3.1",
+    "grunt-contrib-uglify": "~0.5.0",
+    "grunt-contrib-jasmine": "~0.6.5",
+    "grunt-contrib-connect": "~0.8.0",
+    "grunt-bump": "~0.0.15"
+  }
+}

@@ -1,0 +1,2617 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>CPT Library Class: Number</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.cpt.css">
+
+</head>
+
+<body>
+<div class="container-fluid">
+	<div class="navbar navbar-fixed-top navbar-inverse">
+		<div class="navbar-inner">
+			<a class="brand" href="index.html">CPT Library</a>
+			<ul class="nav">
+				
+				<li class="dropdown">
+					<a href="modules.list.html" class="dropdown-toggle" data-toggle="dropdown">Modules<b
+						class="caret"></b></a>
+
+					<ul class="dropdown-menu ">
+						
+						<li>
+							<a href="module-datasource.html">datasource</a>
+						</li>
+						
+						<li>
+							<a href="module-datatable.html">datatable</a>
+						</li>
+						
+						<li>
+							<a href="module-paginator.html">paginator</a>
+						</li>
+						
+
+					</ul>
+				</li>
+				
+				<li class="dropdown">
+					<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b
+						class="caret"></b></a>
+
+					<ul class="dropdown-menu ">
+						
+						<li>
+							<a href="Date.html">Date</a>
+						</li>
+						
+						<li>
+							<a href="DateLocale.html">DateLocale</a>
+						</li>
+						
+						<li>
+							<a href="JSON.html">JSON</a>
+						</li>
+						
+						<li>
+							<a href="Number.html">Number</a>
+						</li>
+						
+						<li>
+							<a href="Sort.html">Sort</a>
+						</li>
+						
+						<li>
+							<a href="YAHOO.util.html">YAHOO.util</a>
+						</li>
+						
+						<li>
+							<a href="YAHOO.widget.html">YAHOO.widget</a>
+						</li>
+						
+						<li>
+							<a href="YAHOO.widget.Paginator.ui.html">YAHOO.widget.Paginator.ui</a>
+						</li>
+						
+
+					</ul>
+				</li>
+				
+				<li class="dropdown">
+					<a href="events.list.html" class="dropdown-toggle" data-toggle="dropdown">Events<b
+						class="caret"></b></a>
+
+					<ul class="dropdown-menu ">
+						
+						<li>
+							<a href="global.html#event:beforeDestroy">event:beforeDestroy</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:blurEvent">event:blurEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:buttonClickEvent">event:buttonClickEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:cacheFlushEvent">event:cacheFlushEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:cacheRequestEvent">event:cacheRequestEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:cacheResponseEvent">event:cacheResponseEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:cancelEvent">event:cancelEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:cellClickEvent">event:cellClickEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:cellDblclickEvent">event:cellDblclickEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:cellFormatEvent">event:cellFormatEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:cellHighlightEvent">event:cellHighlightEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:cellMousedownEvent">event:cellMousedownEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:cellMouseoutEvent">event:cellMouseoutEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:cellMouseoverEvent">event:cellMouseoverEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:cellMouseupEvent">event:cellMouseupEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:cellSelectEvent">event:cellSelectEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:cellUnhighlightEvent">event:cellUnhighlightEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:cellUnselectEvent">event:cellUnselectEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:cellUpdateEvent">event:cellUpdateEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:changeRequest">event:changeRequest</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:checkboxClickEvent">event:checkboxClickEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:columnHideEvent">event:columnHideEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:columnHighlightEvent">event:columnHighlightEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:columnInsertEvent">event:columnInsertEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:columnRemoveEvent">event:columnRemoveEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:columnReorderEvent">event:columnReorderEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:columnResizeEvent">event:columnResizeEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:columnSelectEvent">event:columnSelectEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:columnSetWidthEvent">event:columnSetWidthEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:columnShowEvent">event:columnShowEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:columnSortEvent">event:columnSortEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:columnUnhighlightEvent">event:columnUnhighlightEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:columnUnselectEvent">event:columnUnselectEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:columnUnsetWidthEvent">event:columnUnsetWidthEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:dataErrorEvent">event:dataErrorEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:dataReturnEvent">event:dataReturnEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:destroy">event:destroy</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:disableEvent">event:disableEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:dropdownChangeEvent">event:dropdownChangeEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:editorBlockEvent">event:editorBlockEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:editorBlurEvent">event:editorBlurEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:editorCancelEvent">event:editorCancelEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:editorKeydownEvent">event:editorKeydownEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:editorRevertEvent">event:editorRevertEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:editorSaveEvent">event:editorSaveEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:editorShowEvent">event:editorShowEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:editorUnblockEvent">event:editorUnblockEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:editorUpdateEvent">event:editorUpdateEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:end">event:end</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:headerCellClickEvent">event:headerCellClickEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:headerCellDblclickEvent">event:headerCellDblclickEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:headerCellMousedownEvent">event:headerCellMousedownEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:headerCellMouseoutEvent">event:headerCellMouseoutEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:headerCellMouseoverEvent">event:headerCellMouseoverEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:headerLabelClickEvent">event:headerLabelClickEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:headerLabelDbllickEvent">event:headerLabelDbllickEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:headerLabelMousedownEvent">event:headerLabelMousedownEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:headerLabelMouseoutEvent">event:headerLabelMouseoutEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:headerLabelMouseoverEvent">event:headerLabelMouseoverEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:headerRowClickEvent">event:headerRowClickEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:headerRowDblclickEvent">event:headerRowDblclickEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:headerRowMousedownEvent">event:headerRowMousedownEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:headerRowMouseoutEvent">event:headerRowMouseoutEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:headerRowMouseoverEvent">event:headerRowMouseoverEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:initEvent">event:initEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:invalidDataEvent">event:invalidDataEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:keydownEvent">event:keydownEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:keyUpdateEvent">event:keyUpdateEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:linkClickEvent">event:linkClickEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:pageChange">event:pageChange</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:postRenderEvent">event:postRenderEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:radioClickEvent">event:radioClickEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:recordAddEvent">event:recordAddEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:recordDeleteEvent">event:recordDeleteEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:recordsAddEvent">event:recordsAddEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:recordsDeleteEvent">event:recordsDeleteEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:recordSetEvent">event:recordSetEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:recordsSetEvent">event:recordsSetEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:recordUpdateEvent">event:recordUpdateEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:recordValueUpdateEvent">event:recordValueUpdateEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:render">event:render</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:rendered">event:rendered</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:renderEvent">event:renderEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:requestEvent">event:requestEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:resetEvent">event:resetEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:responseCacheEvent">event:responseCacheEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:responseEvent">event:responseEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:responseParseEvent">event:responseParseEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:revertEvent">event:revertEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:rowAddEvent">event:rowAddEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:rowClickEvent">event:rowClickEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:rowDblclickEvent">event:rowDblclickEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:rowDeleteEvent">event:rowDeleteEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:rowHighlightEvent">event:rowHighlightEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:rowMousedownEvent">event:rowMousedownEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:rowMouseoutEvent">event:rowMouseoutEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:rowMouseoverEvent">event:rowMouseoverEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:rowMouseupEvent">event:rowMouseupEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:rowsAddEvent">event:rowsAddEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:rowsDeleteEvent">event:rowsDeleteEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:rowSelectEvent">event:rowSelectEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:rowUnhighlightEvent">event:rowUnhighlightEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:rowUnselectEvent">event:rowUnselectEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:rowUpdateEvent">event:rowUpdateEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:saveEvent">event:saveEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:showEvent">event:showEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:tableBlurEvent">event:tableBlurEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:tableClickEvent">event:tableClickEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:tableDblclickEvent">event:tableDblclickEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:tableFocusEvent">event:tableFocusEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:tableKeyEvent">event:tableKeyEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:tableMousedownEvent">event:tableMousedownEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:tableMouseoutEvent">event:tableMouseoutEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:tableMouseoverEvent">event:tableMouseoverEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:tableMouseupEvent">event:tableMouseupEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:tableMsgHideEvent">event:tableMsgHideEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:tableMsgShowEvent">event:tableMsgShowEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:tableScrollEvent">event:tableScrollEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:tbodyBlurEvent">event:tbodyBlurEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:tbodyFocusEvent">event:tbodyFocusEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:tbodyKeyEvent">event:tbodyKeyEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:theadBlurEvent">event:theadBlurEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:theadCellClickEvent">event:theadCellClickEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:theadCellDblclickEvent">event:theadCellDblclickEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:theadCellMousedownEvent">event:theadCellMousedownEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:theadCellMouseoutEvent">event:theadCellMouseoutEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:theadCellMouseoverEvent">event:theadCellMouseoverEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:theadCellMouseupEvent">event:theadCellMouseupEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:theadFocusEvent">event:theadFocusEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:theadKeyEvent">event:theadKeyEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:theadLabelClickEvent">event:theadLabelClickEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:theadLabelDblclickEvent">event:theadLabelDblclickEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:theadLabelMousedownEvent">event:theadLabelMousedownEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:theadLabelMouseoutEvent">event:theadLabelMouseoutEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:theadLabelMouseoverEvent">event:theadLabelMouseoverEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:theadLabelMouseupEvent">event:theadLabelMouseupEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:theadRowClickEvent">event:theadRowClickEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:theadRowDblclickEvent">event:theadRowDblclickEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:theadRowMousedownEvent">event:theadRowMousedownEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:theadRowMouseoutEvent">event:theadRowMouseoutEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:theadRowMouseoverEvent">event:theadRowMouseoverEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:theadRowMouseupEvent">event:theadRowMouseupEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:undisableEvent">event:undisableEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:unselectAllCellsEvent">event:unselectAllCellsEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#event:unselectAllRowsEvent">event:unselectAllRowsEvent</a>
+						</li>
+						
+
+					</ul>
+				</li>
+				
+				<li class="dropdown">
+					<a href="global.html" class="dropdown-toggle" data-toggle="dropdown">Global<b
+						class="caret"></b></a>
+
+					<ul class="dropdown-menu ">
+						
+						<li>
+							<a href="global.html#_addRecord">_addRecord</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_char">_char</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_clearMinWidth">_clearMinWidth</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_clearTrTemplateEl">_clearTrTemplateEl</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_createTrEl">_createTrEl</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_defaultPaginatorContainers">_defaultPaginatorContainers</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_deleteRecord">_deleteRecord</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_deleteTrEl">_deleteTrEl</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_destroyBdTheadEl">_destroyBdTheadEl</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_destroyColgroupEl">_destroyColgroupEl</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_destroyColumnHelpers">_destroyColumnHelpers</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_destroyContainerEl">_destroyContainerEl</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_destroyDraggableColumns">_destroyDraggableColumns</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_destroyHdTableEl">_destroyHdTableEl</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_destroyMsgTbodyEl">_destroyMsgTbodyEl</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_destroyResizeableColumns">_destroyResizeableColumns</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_destroyTableEl">_destroyTableEl</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_destroyTbodyEl">_destroyTbodyEl</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_destroyTheadEl">_destroyTheadEl</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_firePageChange">_firePageChange</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_focusEl">_focusEl</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_formatTdEl">_formatTdEl</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_getColumnClassnames">_getColumnClassnames</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_getSelectionAnchor">_getSelectionAnchor</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_getSelectionTrigger">_getSelectionTrigger</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_getTrTemplateEl">_getTrTemplateEl</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_handleCellBlockSelectionByKey">_handleCellBlockSelectionByKey</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_handleCellBlockSelectionByMouse">_handleCellBlockSelectionByMouse</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_handleCellRangeSelectionByKey">_handleCellRangeSelectionByKey</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_handleCellRangeSelectionByMouse">_handleCellRangeSelectionByMouse</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_handlePaginatorChange">_handlePaginatorChange</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_handleSingleCellSelectionByKey">_handleSingleCellSelectionByKey</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_handleSingleCellSelectionByMouse">_handleSingleCellSelectionByMouse</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_handleSingleSelectionByKey">_handleSingleSelectionByKey</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_handleSingleSelectionByMouse">_handleSingleSelectionByMouse</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_handleStandardSelectionByKey">_handleStandardSelectionByKey</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_handleStandardSelectionByMouse">_handleStandardSelectionByMouse</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_handleStateChange">_handleStateChange</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_handleTotalRecordsChange">_handleTotalRecordsChange</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_init">_init</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_initBdTheadEl">_initBdTheadEl</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_initBdThEl">_initBdThEl</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_initCaptionEl">_initCaptionEl</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_initCellEditing">_initCellEditing</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_initCellEditorEl">_initCellEditorEl</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_initColgroupEl">_initColgroupEl</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_initColumnHelpers">_initColumnHelpers</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_initColumnSet">_initColumnSet</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_initColumnSort">_initColumnSort</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_initConfigs">_initConfigs</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_initContainerEl">_initContainerEl</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_initDataSource">_initDataSource</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_initDomElements">_initDomElements</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_initDraggableColumns">_initDraggableColumns</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_initEvents">_initEvents</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_initMsgTbodyEl">_initMsgTbodyEl</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_initRecordSet">_initRecordSet</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_initResizeableColumns">_initResizeableColumns</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_initTableEl">_initTableEl</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_initTbodyEl">_initTbodyEl</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_initTheadEl">_initTheadEl</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_initThEl">_initThEl</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_insertColgroupColEl">_insertColgroupColEl</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_isValid">_isValid</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_onDocumentClick">_onDocumentClick</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_onDropdownChange">_onDropdownChange</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_onEditorBlockEvent">_onEditorBlockEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_onEditorBlurEvent">_onEditorBlurEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_onEditorCancelEvent">_onEditorCancelEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_onEditorKeydownEvent">_onEditorKeydownEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_onEditorRevertEvent">_onEditorRevertEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_onEditorSaveEvent">_onEditorSaveEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_onEditorShowEvent">_onEditorShowEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_onEditorUnblockEvent">_onEditorUnblockEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_onRenderChainEnd">_onRenderChainEnd</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_onScroll">_onScroll</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_onTableDblclick">_onTableDblclick</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_onTableFocus">_onTableFocus</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_onTableKeypress">_onTableKeypress</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_onTableMousedown">_onTableMousedown</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_onTableMouseout">_onTableMouseout</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_onTableMouseover">_onTableMouseover</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_onTableMouseup">_onTableMouseup</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_onTbodyClick">_onTbodyClick</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_onTbodyFocus">_onTbodyFocus</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_onTbodyKeydown">_onTbodyKeydown</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_onTheadClick">_onTheadClick</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_onTheadFocus">_onTheadFocus</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_onTheadKeydown">_onTheadKeydown</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_prepare">_prepare</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_removeColgroupColEl">_removeColgroupColEl</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_reorderColgroupColEl">_reorderColgroupColEl</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_repaintGecko">_repaintGecko</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_repaintOpera">_repaintOpera</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_repaintWebkit">_repaintWebkit</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_restoreMinWidth">_restoreMinWidth</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_retoreScrollPositions">_retoreScrollPositions</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_revive">_revive</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_runRenderChain">_runRenderChain</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_selfSubscribe">_selfSubscribe</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_setColumnWidth">_setColumnWidth</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_setColumnWidthDynFunction">_setColumnWidthDynFunction</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_setColumnWidthDynStyles">_setColumnWidthDynStyles</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_setFirstRow">_setFirstRow</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_setLastRow">_setLastRow</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_setOverhangValue">_setOverhangValue</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_setRecord">_setRecord</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_setRowStripes">_setRowStripes</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_setSelections">_setSelections</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_storeScrollPositions">_storeScrollPositions</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_string">_string</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_stringify">_stringify</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_syncColWidths">_syncColWidths</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_syncRecordOffset">_syncRecordOffset</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_syncScroll">_syncScroll</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_syncScrollOverhang">_syncScrollOverhang</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_syncScrollX">_syncScrollX</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_syncScrollY">_syncScrollY</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_unselectAllTdEls">_unselectAllTdEls</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_unselectAllTrEls">_unselectAllTrEls</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_unsetFirstRow">_unsetFirstRow</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_unsetLastRow">_unsetLastRow</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_updatePaginator">_updatePaginator</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_updateTrEl">_updateTrEl</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_validateColumnWidth">_validateColumnWidth</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_xhrFailure">_xhrFailure</a>
+						</li>
+						
+						<li>
+							<a href="global.html#_xhrSuccess">_xhrSuccess</a>
+						</li>
+						
+						<li>
+							<a href="global.html#add">add</a>
+						</li>
+						
+						<li>
+							<a href="global.html#addRecord">addRecord</a>
+						</li>
+						
+						<li>
+							<a href="global.html#addRecords">addRecords</a>
+						</li>
+						
+						<li>
+							<a href="global.html#addRow">addRow</a>
+						</li>
+						
+						<li>
+							<a href="global.html#addRows">addRows</a>
+						</li>
+						
+						<li>
+							<a href="global.html#addToCache">addToCache</a>
+						</li>
+						
+						<li>
+							<a href="global.html#adminLink">adminLink</a>
+						</li>
+						
+						<li>
+							<a href="global.html#attach">attach</a>
+						</li>
+						
+						<li>
+							<a href="global.html#block">block</a>
+						</li>
+						
+						<li>
+							<a href="global.html#calculateRange">calculateRange</a>
+						</li>
+						
+						<li>
+							<a href="global.html#cancel">cancel</a>
+						</li>
+						
+						<li>
+							<a href="global.html#cancelCellEditor">cancelCellEditor</a>
+						</li>
+						
+						<li>
+							<a href="global.html#checkOptions">checkOptions</a>
+						</li>
+						
+						<li>
+							<a href="global.html#clearAllIntervals">clearAllIntervals</a>
+						</li>
+						
+						<li>
+							<a href="global.html#clearInterval">clearInterval</a>
+						</li>
+						
+						<li>
+							<a href="global.html#clearTextSelection">clearTextSelection</a>
+						</li>
+						
+						<li>
+							<a href="global.html#clickStudentSelects">clickStudentSelects</a>
+						</li>
+						
+						<li>
+							<a href="global.html#clickSubmit">clickSubmit</a>
+						</li>
+						
+						<li>
+							<a href="global.html#clickValidator">clickValidator</a>
+						</li>
+						
+						<li>
+							<a href="global.html#compare">compare</a>
+						</li>
+						
+						<li>
+							<a href="global.html#convertDate">convertDate</a>
+						</li>
+						
+						<li>
+							<a href="global.html#dateToString">dateToString</a>
+						</li>
+						
+						<li>
+							<a href="global.html#ddaChangeCase">ddaChangeCase</a>
+						</li>
+						
+						<li>
+							<a href="global.html#ddaLink">ddaLink</a>
+						</li>
+						
+						<li>
+							<a href="global.html#ddaSelectTableChangeCase">ddaSelectTableChangeCase</a>
+						</li>
+						
+						<li>
+							<a href="global.html#ddeLink">ddeLink</a>
+						</li>
+						
+						<li>
+							<a href="global.html#deleteRecord">deleteRecord</a>
+						</li>
+						
+						<li>
+							<a href="global.html#deleteRecords">deleteRecords</a>
+						</li>
+						
+						<li>
+							<a href="global.html#deleteRow">deleteRow</a>
+						</li>
+						
+						<li>
+							<a href="global.html#deleteRows">deleteRows</a>
+						</li>
+						
+						<li>
+							<a href="global.html#destroy">destroy</a>
+						</li>
+						
+						<li>
+							<a href="global.html#destroyCellEditor">destroyCellEditor</a>
+						</li>
+						
+						<li>
+							<a href="global.html#disable">disable</a>
+						</li>
+						
+						<li>
+							<a href="global.html#displayCount">displayCount</a>
+						</li>
+						
+						<li>
+							<a href="global.html#doAfterRender">doAfterRender</a>
+						</li>
+						
+						<li>
+							<a href="global.html#doBeforeCallback">doBeforeCallback</a>
+						</li>
+						
+						<li>
+							<a href="global.html#doBeforeGetScriptNode">doBeforeGetScriptNode</a>
+						</li>
+						
+						<li>
+							<a href="global.html#doBeforeLoadData">doBeforeLoadData</a>
+						</li>
+						
+						<li>
+							<a href="global.html#doBeforePaginatorChange">doBeforePaginatorChange</a>
+						</li>
+						
+						<li>
+							<a href="global.html#doBeforeParseData">doBeforeParseData</a>
+						</li>
+						
+						<li>
+							<a href="global.html#doBeforeShowCellEditor">doBeforeShowCellEditor</a>
+						</li>
+						
+						<li>
+							<a href="global.html#doBeforeSortColumn">doBeforeSortColumn</a>
+						</li>
+						
+						<li>
+							<a href="global.html#drDelete">drDelete</a>
+						</li>
+						
+						<li>
+							<a href="global.html#flushCache">flushCache</a>
+						</li>
+						
+						<li>
+							<a href="global.html#focus">focus</a>
+						</li>
+						
+						<li>
+							<a href="global.html#focusTbodyEl">focusTbodyEl</a>
+						</li>
+						
+						<li>
+							<a href="global.html#focusTheadEl">focusTheadEl</a>
+						</li>
+						
+						<li>
+							<a href="global.html#format">format</a>
+						</li>
+						
+						<li>
+							<a href="global.html#formatCell">formatCell</a>
+						</li>
+						
+						<li>
+							<a href="global.html#generateRequestCallback">generateRequestCallback</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getAboveTdEl">getAboveTdEl</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getBdContainerEl">getBdContainerEl</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getBdTableEl">getBdTableEl</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getBelowTdEl">getBelowTdEl</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getBody">getBody</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getCachedResponse">getCachedResponse</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getCell">getCell</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getCellEditor">getCellEditor</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getColEl">getColEl</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getColspan">getColspan</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getColumn">getColumn</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getColumnById">getColumnById</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getColumnSet">getColumnSet</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getColumnSortDir">getColumnSortDir</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getContainerEl">getContainerEl</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getContainerNodes">getContainerNodes</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getCount">getCount</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getCurrentPage">getCurrentPage</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getData">getData</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getDataSource">getDataSource</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getDataTable">getDataTable</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getDefinition">getDefinition</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getDefinitions">getDefinitions</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getDescendants">getDescendants</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getField">getField</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getFirstTdEl">getFirstTdEl</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getFirstTrEl">getFirstTrEl</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getHdContainerEl">getHdContainerEl</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getHdTableEl">getHdTableEl</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getId">getId</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getInputValue">getInputValue</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getKey">getKey</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getKeyIndex">getKeyIndex</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getLastSelectedCell">getLastSelectedCell</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getLastSelectedRecord">getLastSelectedRecord</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getLastTdEl">getLastTdEl</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getLastTrEl">getLastTrEl</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getLength">getLength</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getMsgTbodyEl">getMsgTbodyEl</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getMsgTdEl">getMsgTdEl</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getNextPage">getNextPage</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getNextTdEl">getNextTdEl</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getNextTrEl">getNextTrEl</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getPageRecords">getPageRecords</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getParent">getParent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getPreviousPage">getPreviousPage</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getPreviousTdEl">getPreviousTdEl</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getPreviousTrEl">getPreviousTrEl</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getRecord">getRecord</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getRecordIndex">getRecordIndex</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getRecords">getRecords</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getRecordSet">getRecordSet</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getResizerEl">getResizerEl</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getRow">getRow</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getRowspan">getRowspan</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getRowsPerPage">getRowsPerPage</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getSanitizedKey">getSanitizedKey</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getSelectedCells">getSelectedCells</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getSelectedColumns">getSelectedColumns</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getSelectedRows">getSelectedRows</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getSelectedTdEls">getSelectedTdEls</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getSelectedTrEls">getSelectedTrEls</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getStartIndex">getStartIndex</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getState">getState</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getTableEl">getTableEl</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getTbodyEl">getTbodyEl</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getTdEl">getTdEl</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getTdLinerEl">getTdLinerEl</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getTheadEl">getTheadEl</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getThEl">getThEl</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getThLInerEl">getThLInerEl</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getThLinerEl">getThLinerEl</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getTotalPages">getTotalPages</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getTotalRecords">getTotalRecords</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getTreeIndex">getTreeIndex</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getTrEl">getTrEl</a>
+						</li>
+						
+						<li>
+							<a href="global.html#getTrIndex">getTrIndex</a>
+						</li>
+						
+						<li>
+							<a href="global.html#handleDataReturnPayload">handleDataReturnPayload</a>
+						</li>
+						
+						<li>
+							<a href="global.html#handleDisabledBtns">handleDisabledBtns</a>
+						</li>
+						
+						<li>
+							<a href="global.html#handleResponse">handleResponse</a>
+						</li>
+						
+						<li>
+							<a href="global.html#hasNextPage">hasNextPage</a>
+						</li>
+						
+						<li>
+							<a href="global.html#hasPage">hasPage</a>
+						</li>
+						
+						<li>
+							<a href="global.html#hasPreviousPage">hasPreviousPage</a>
+						</li>
+						
+						<li>
+							<a href="global.html#hasRecords">hasRecords</a>
+						</li>
+						
+						<li>
+							<a href="global.html#hideColumn">hideColumn</a>
+						</li>
+						
+						<li>
+							<a href="global.html#hideTableMessage">hideTableMessage</a>
+						</li>
+						
+						<li>
+							<a href="global.html#highlightCell">highlightCell</a>
+						</li>
+						
+						<li>
+							<a href="global.html#highlightColumn">highlightColumn</a>
+						</li>
+						
+						<li>
+							<a href="global.html#highlightRow">highlightRow</a>
+						</li>
+						
+						<li>
+							<a href="global.html#init">init</a>
+						</li>
+						
+						<li>
+							<a href="global.html#initAttributes">initAttributes</a>
+						</li>
+						
+						<li>
+							<a href="global.html#initConfig">initConfig</a>
+						</li>
+						
+						<li>
+							<a href="global.html#initEvents">initEvents</a>
+						</li>
+						
+						<li>
+							<a href="global.html#initializeTable">initializeTable</a>
+						</li>
+						
+						<li>
+							<a href="global.html#initUIComponents">initUIComponents</a>
+						</li>
+						
+						<li>
+							<a href="global.html#insertColumn">insertColumn</a>
+						</li>
+						
+						<li>
+							<a href="global.html#isCacheHit">isCacheHit</a>
+						</li>
+						
+						<li>
+							<a href="global.html#isNumeric">isNumeric</a>
+						</li>
+						
+						<li>
+							<a href="global.html#issueCallback">issueCallback</a>
+						</li>
+						
+						<li>
+							<a href="global.html#isValid">isValid</a>
+						</li>
+						
+						<li>
+							<a href="global.html#loadWizardData">loadWizardData</a>
+						</li>
+						
+						<li>
+							<a href="global.html#makeConnection">makeConnection</a>
+						</li>
+						
+						<li>
+							<a href="global.html#move">move</a>
+						</li>
+						
+						<li>
+							<a href="global.html#nonAtomicDrDelete">nonAtomicDrDelete</a>
+						</li>
+						
+						<li>
+							<a href="global.html#nonAtomicDRDeletion">nonAtomicDRDeletion</a>
+						</li>
+						
+						<li>
+							<a href="global.html#onChange">onChange</a>
+						</li>
+						
+						<li>
+							<a href="global.html#onClick">onClick</a>
+						</li>
+						
+						<li>
+							<a href="global.html#onColumnChange">onColumnChange</a>
+						</li>
+						
+						<li>
+							<a href="global.html#onDataReturnAppendRows">onDataReturnAppendRows</a>
+						</li>
+						
+						<li>
+							<a href="global.html#onDataReturnInitializeTable">onDataReturnInitializeTable</a>
+						</li>
+						
+						<li>
+							<a href="global.html#onDataReturnInsertRows">onDataReturnInsertRows</a>
+						</li>
+						
+						<li>
+							<a href="global.html#onDataReturnReplaceRows">onDataReturnReplaceRows</a>
+						</li>
+						
+						<li>
+							<a href="global.html#onDataReturnSetRecords">onDataReturnSetRecords</a>
+						</li>
+						
+						<li>
+							<a href="global.html#onDataReturnSetRows">onDataReturnSetRows</a>
+						</li>
+						
+						<li>
+							<a href="global.html#onDataReturnUpdateRows">onDataReturnUpdateRows</a>
+						</li>
+						
+						<li>
+							<a href="global.html#onDrag">onDrag</a>
+						</li>
+						
+						<li>
+							<a href="global.html#onEditorBlockEvent">onEditorBlockEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#onEditorBlurEvent">onEditorBlurEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#onEditorUnblockEvent">onEditorUnblockEvent</a>
+						</li>
+						
+						<li>
+							<a href="global.html#onEventCancelCellEditor">onEventCancelCellEditor</a>
+						</li>
+						
+						<li>
+							<a href="global.html#onEventEditCell">onEventEditCell</a>
+						</li>
+						
+						<li>
+							<a href="global.html#onEventFormatCell">onEventFormatCell</a>
+						</li>
+						
+						<li>
+							<a href="global.html#onEventHighlightCell">onEventHighlightCell</a>
+						</li>
+						
+						<li>
+							<a href="global.html#onEventHighlightColumn">onEventHighlightColumn</a>
+						</li>
+						
+						<li>
+							<a href="global.html#onEventHighlightRow">onEventHighlightRow</a>
+						</li>
+						
+						<li>
+							<a href="global.html#onEventSaveCellEditor">onEventSaveCellEditor</a>
+						</li>
+						
+						<li>
+							<a href="global.html#onEventSelectCell">onEventSelectCell</a>
+						</li>
+						
+						<li>
+							<a href="global.html#onEventSelectColumn">onEventSelectColumn</a>
+						</li>
+						
+						<li>
+							<a href="global.html#onEventSelectRow">onEventSelectRow</a>
+						</li>
+						
+						<li>
+							<a href="global.html#onEventShowCellEditor">onEventShowCellEditor</a>
+						</li>
+						
+						<li>
+							<a href="global.html#onEventSortColumn">onEventSortColumn</a>
+						</li>
+						
+						<li>
+							<a href="global.html#onEventUnhighlightCell">onEventUnhighlightCell</a>
+						</li>
+						
+						<li>
+							<a href="global.html#onEventUnhighlightColumn">onEventUnhighlightColumn</a>
+						</li>
+						
+						<li>
+							<a href="global.html#onEventUnhighlightRow">onEventUnhighlightRow</a>
+						</li>
+						
+						<li>
+							<a href="global.html#onMouseDown">onMouseDown</a>
+						</li>
+						
+						<li>
+							<a href="global.html#onMouseUp">onMouseUp</a>
+						</li>
+						
+						<li>
+							<a href="global.html#onPaginatorChange">onPaginatorChange</a>
+						</li>
+						
+						<li>
+							<a href="global.html#onPaginatorChangeRequest">onPaginatorChangeRequest</a>
+						</li>
+						
+						<li>
+							<a href="global.html#onShow">onShow</a>
+						</li>
+						
+						<li>
+							<a href="global.html#parse">parse</a>
+						</li>
+						
+						<li>
+							<a href="global.html#parseArrayData">parseArrayData</a>
+						</li>
+						
+						<li>
+							<a href="global.html#parseData">parseData</a>
+						</li>
+						
+						<li>
+							<a href="global.html#parseHTMLTableData">parseHTMLTableData</a>
+						</li>
+						
+						<li>
+							<a href="global.html#parseJSONData">parseJSONData</a>
+						</li>
+						
+						<li>
+							<a href="global.html#parseTextData">parseTextData</a>
+						</li>
+						
+						<li>
+							<a href="global.html#parseXMLData">parseXMLData</a>
+						</li>
+						
+						<li>
+							<a href="global.html#parseXMLResult">parseXMLResult</a>
+						</li>
+						
+						<li>
+							<a href="global.html#pause">pause</a>
+						</li>
+						
+						<li>
+							<a href="global.html#rebuild">rebuild</a>
+						</li>
+						
+						<li>
+							<a href="global.html#refreshView">refreshView</a>
+						</li>
+						
+						<li>
+							<a href="global.html#removeColumn">removeColumn</a>
+						</li>
+						
+						<li>
+							<a href="global.html#render">render</a>
+						</li>
+						
+						<li>
+							<a href="global.html#renderBtns">renderBtns</a>
+						</li>
+						
+						<li>
+							<a href="global.html#renderForm">renderForm</a>
+						</li>
+						
+						<li>
+							<a href="global.html#renderPaginator">renderPaginator</a>
+						</li>
+						
+						<li>
+							<a href="global.html#reorderColumn">reorderColumn</a>
+						</li>
+						
+						<li>
+							<a href="global.html#reset">reset</a>
+						</li>
+						
+						<li>
+							<a href="global.html#resetCellEditor">resetCellEditor</a>
+						</li>
+						
+						<li>
+							<a href="global.html#resetForm">resetForm</a>
+						</li>
+						
+						<li>
+							<a href="global.html#resetResizerEl">resetResizerEl</a>
+						</li>
+						
+						<li>
+							<a href="global.html#reverseRecords">reverseRecords</a>
+						</li>
+						
+						<li>
+							<a href="global.html#run">run</a>
+						</li>
+						
+						<li>
+							<a href="global.html#save">save</a>
+						</li>
+						
+						<li>
+							<a href="global.html#saveCellEditor">saveCellEditor</a>
+						</li>
+						
+						<li>
+							<a href="global.html#select">select</a>
+						</li>
+						
+						<li>
+							<a href="global.html#selectAll">selectAll</a>
+						</li>
+						
+						<li>
+							<a href="global.html#selectCell">selectCell</a>
+						</li>
+						
+						<li>
+							<a href="global.html#selectColumn">selectColumn</a>
+						</li>
+						
+						<li>
+							<a href="global.html#selectRow">selectRow</a>
+						</li>
+						
+						<li>
+							<a href="global.html#selectStudents">selectStudents</a>
+						</li>
+						
+						<li>
+							<a href="global.html#sendRequest">sendRequest</a>
+						</li>
+						
+						<li>
+							<a href="global.html#setColumnWidth">setColumnWidth</a>
+						</li>
+						
+						<li>
+							<a href="global.html#setData">setData</a>
+						</li>
+						
+						<li>
+							<a href="global.html#setInterval">setInterval</a>
+						</li>
+						
+						<li>
+							<a href="global.html#setPage">setPage</a>
+						</li>
+						
+						<li>
+							<a href="global.html#setRecord">setRecord</a>
+						</li>
+						
+						<li>
+							<a href="global.html#setRecords">setRecords</a>
+						</li>
+						
+						<li>
+							<a href="global.html#setRowsPerPage">setRowsPerPage</a>
+						</li>
+						
+						<li>
+							<a href="global.html#setStartIndex">setStartIndex</a>
+						</li>
+						
+						<li>
+							<a href="global.html#setState">setState</a>
+						</li>
+						
+						<li>
+							<a href="global.html#setTotalRecords">setTotalRecords</a>
+						</li>
+						
+						<li>
+							<a href="global.html#show">show</a>
+						</li>
+						
+						<li>
+							<a href="global.html#showCellEditor">showCellEditor</a>
+						</li>
+						
+						<li>
+							<a href="global.html#showCellEditorBtns">showCellEditorBtns</a>
+						</li>
+						
+						<li>
+							<a href="global.html#showColumn">showColumn</a>
+						</li>
+						
+						<li>
+							<a href="global.html#showTableMessage">showTableMessage</a>
+						</li>
+						
+						<li>
+							<a href="global.html#sortColumn">sortColumn</a>
+						</li>
+						
+						<li>
+							<a href="global.html#sortRecords">sortRecords</a>
+						</li>
+						
+						<li>
+							<a href="global.html#sprintf">sprintf</a>
+						</li>
+						
+						<li>
+							<a href="global.html#startDrag">startDrag</a>
+						</li>
+						
+						<li>
+							<a href="global.html#stop">stop</a>
+						</li>
+						
+						<li>
+							<a href="global.html#stringify">stringify</a>
+						</li>
+						
+						<li>
+							<a href="global.html#stringToDate">stringToDate</a>
+						</li>
+						
+						<li>
+							<a href="global.html#studentLink">studentLink</a>
+						</li>
+						
+						<li>
+							<a href="global.html#toNumber">toNumber</a>
+						</li>
+						
+						<li>
+							<a href="global.html#toString">toString</a>
+						</li>
+						
+						<li>
+							<a href="global.html#unblock">unblock</a>
+						</li>
+						
+						<li>
+							<a href="global.html#undisable">undisable</a>
+						</li>
+						
+						<li>
+							<a href="global.html#unhighlightCell">unhighlightCell</a>
+						</li>
+						
+						<li>
+							<a href="global.html#unhighlightColumn">unhighlightColumn</a>
+						</li>
+						
+						<li>
+							<a href="global.html#unhighlightRow">unhighlightRow</a>
+						</li>
+						
+						<li>
+							<a href="global.html#unselectAllCells">unselectAllCells</a>
+						</li>
+						
+						<li>
+							<a href="global.html#unselectAllRows">unselectAllRows</a>
+						</li>
+						
+						<li>
+							<a href="global.html#unselectCell">unselectCell</a>
+						</li>
+						
+						<li>
+							<a href="global.html#unselectColumn">unselectColumn</a>
+						</li>
+						
+						<li>
+							<a href="global.html#unselectRow">unselectRow</a>
+						</li>
+						
+						<li>
+							<a href="global.html#update">update</a>
+						</li>
+						
+						<li>
+							<a href="global.html#updateCell">updateCell</a>
+						</li>
+						
+						<li>
+							<a href="global.html#updateKey">updateKey</a>
+						</li>
+						
+						<li>
+							<a href="global.html#updateRecord">updateRecord</a>
+						</li>
+						
+						<li>
+							<a href="global.html#updateRecordValue">updateRecordValue</a>
+						</li>
+						
+						<li>
+							<a href="global.html#updateRow">updateRow</a>
+						</li>
+						
+						<li>
+							<a href="global.html#updateRows">updateRows</a>
+						</li>
+						
+						<li>
+							<a href="global.html#updateVisibility">updateVisibility</a>
+						</li>
+						
+						<li>
+							<a href="global.html#validateColumnWidths">validateColumnWidths</a>
+						</li>
+						
+						<li>
+							<a href="global.html#wizardComplete">wizardComplete</a>
+						</li>
+						
+
+					</ul>
+				</li>
+				
+			</ul>
+			<div class="pearsonlogo">
+			  <img src="img/pearson-logo-transparent.png">
+			</div>
+		</div>
+	</div>
+
+	<div class="row-fluid">
+
+		
+		<div class="span8">
+			
+				<div id="main">
+					
+
+
+	<h1 class="page-title">Class: Number</h1>
+<section>
+
+<header>
+    <h2>
+    Number
+    </h2>
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+
+    
+        
+<dt>
+    <h4 class="name" id="Number"><span class="type-signature"></span>new Number<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>The static Number class provides helper functions to deal with data of type
+Number.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="datasource-debug.js.html">yui/datasource/datasource-debug.js</a>,
+				 <a href="datasource-debug.js.html#sunlight-1-line-2527">line 2527</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+    
+    </div>
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Requires</h3>
+
+        <ul>
+            <li>module:yahoo</li>
+        </ul>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+	<h1 class="page-title">Class: Number</h1>
+<section>
+
+<header>
+    <h2>
+    Number
+    </h2>
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+
+    
+        
+<dt>
+    <h4 class="name" id="Number"><span class="type-signature"></span>new Number<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>The static Number class provides helper functions to deal with data of type
+Number.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="datasource.js.html">yui/datasource/datasource.js</a>,
+				 <a href="datasource.js.html#sunlight-1-line-2456">line 2456</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+    
+    </div>
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Requires</h3>
+
+        <ul>
+            <li>module:yahoo</li>
+        </ul>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+				</div>
+
+				<div class="clearfix"></div>
+				<footer>
+					
+					
+		<span class="copyright">
+		Copyright© 2014 Pearson Curriculum and Product Tailoring. All rights reserved.
+		</span>
+					<br />
+					
+				</footer>
+			</div>
+
+			
+			<div class="span3">
+				<div id="toc"></div>
+			</div>
+			
+			<br clear="both">
+		</div>
+
+	</div>
+	<!--<script src="scripts/sunlight.js"></script>-->
+	<script src="scripts/docstrap.lib.js"></script>
+	<script src="scripts/bootstrap-dropdown.js"></script>
+	<script src="scripts/toc.js"></script>
+
+	<script>
+		$( function () {
+			$( "[id*='$']" ).each( function () {
+				var $this = $( this );
+
+				$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+			} );
+
+			$( "#toc" ).toc( {
+				anchorName  : function ( i, heading, prefix ) {
+					return $( heading ).attr( "id" ) || ( prefix + i );
+				},
+				selectors   : "h1,h2,h3,h4",
+				showAndHide : false,
+				scrollTo    : "100px"
+			} );
+
+			$( "#toc>ul" ).addClass( "nav nav-pills nav-stacked" );
+			$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+			$( '.dropdown-toggle' ).dropdown();
+//			$( ".tutorial-section pre, .readme-section pre" ).addClass( "sunlight-highlight-javascript" ).addClass( "linenums" );
+
+			$( ".tutorial-section pre, .readme-section pre" ).each( function () {
+				var $this = $( this );
+
+				var example = $this.find( "code" );
+				exampleText = example.html();
+				var lang = /{@lang (.*?)}/.exec( exampleText );
+				if ( lang && lang[1] ) {
+					exampleText = exampleText.replace( lang[0], "" );
+					example.html( exampleText );
+					lang = lang[1];
+				} else {
+					lang = "javascript";
+				}
+
+				if ( lang ) {
+
+					$this
+						.addClass( "sunlight-highlight-" + lang )
+						.addClass( "linenums" )
+						.html( example.html() );
+
+				}
+			} );
+
+			Sunlight.highlightAll( {
+				lineNumbers : true,
+				showMenu : true,
+				enableDoclinks : true
+			} );
+		} );
+	 </script>
+
+
+
+	<!--Navigation and Symbol Display-->
+	
+
+
+	<!--Google Analytics-->
+	
+
+</body>
+</html>

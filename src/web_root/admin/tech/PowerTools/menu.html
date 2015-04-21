@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<!--suppress XmlDuplicatedId, HtmlUnknownTag -->
+<html>
+<head>
+  <base target="content">
+  <title>PowerTools Menu</title>
+  ~[wc:commonscripts]
+  <link href="/images/css/PowerTools.css" rel="stylesheet">
+  <link href="/images/css/screen.css" rel="stylesheet" media="screen">
+  <link href="/images/css/print.css" rel="stylesheet" media="print">
+  <!--[if IE]>
+  <style>
+    #container-frame-menu {
+      width: 100%;
+    }
+  </style>
+  <![endif]-->
+  <script type="text/javascript">
+    $j(function () {
+      var reportGroups = [
+        {name: 'Enrollment'},
+        {name: 'Misc'},
+        {name: 'Orphan'},
+        {name: 'Maintenance'},
+        {name: 'SchoolNet'}
+      ];
+
+      var expandMenu = ('~[displaypref:PowerTools-navigation-menu-expanded-U~[x:userid]]');
+
+      function collapseAll() {
+        $j(reportGroups).each(function (index, reports) {
+          $j('#' + reports.name + 'Tools').hide();
+        });
+      }
+
+      function reportClick(report) {
+        $j('#' + report + 'Report').click(function () {
+          collapseAll();
+          $j('#' + report + 'Tools').show();
+        });
+      }
+
+      function showHideMenus(report) {
+        $j('#' + report + 'Display').click(function () {
+          if ($j('#' + report + 'Tools').is(':visible')) {
+            $j('#' + report + 'Tools').hide();
+            return false;
+          } else {
+            $j('#' + report + 'Tools').show();
+            return false;
+          }
+        });
+      }
+
+      if (expandMenu !== 'on') {
+        collapseAll();
+        $j(reportGroups).each(function (index, reports) {
+          showHideMenus(reports.name);
+          reportClick(reports.name);
+        });
+      }
+    });
+  </script>
+</head>
+<body class="frameMenu">
+<div id="container-frame-menu" class="group" style="height:100%;">
+<div id="nav-main-frame">
+<!-- start of links -->
+~[if#versioncheck.~[x:version]>=8.0]
+<h3>Diagnostic Reports</h3>
+
+<ul id="DiagnosticReports">
+  <li>
+    <a
+        href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=EnrollmentReport"
+        id="EnrollmentReport">Enrollment Report</a>
+  </li>
+  <li>
+    <a
+        href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=MiscReport"
+        id="MiscReport">Miscellaneous Report</a>
+  </li>
+  <li>
+    <a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=OrphanReport"
+        id="OrphanReport">Orphaned Records Report</a>
+  </li>
+  <li>
+    <a
+        href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=MaintReport"
+        id="MaintenanceReport">Maintenance Report</a>
+  </li>
+  ~[if.district.office]
+  ~[if#schoolnet.~[displaypref:PowerTools-Enable-SchoolNet-Prep]=on]
+  <li>
+    <a
+        href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=SchoolNetReport"
+        id="SchoolNetReport">SchoolNet Prep Report</a>
+  </li>
+  [/if#schoolnet]
+  [/if.district.office]
+</ul>
+
+<h3>Settings</h3>
+
+<ul id="Settings">
+  <li>
+    <a href="Preferences.html">Preferences</a>
+  </li>
+</ul>
+<h3>
+  <a href="#" target="_self" class="preference-g" id="EnrollmentDisplay">Enrollment Tools</a>
+</h3>
+
+<ul id="EnrollmentTools">
+  <li>
+    <h4 style="margin-left:0">School</h4>
+  </li>
+  <li>
+    <a href="report.html?maxlines=~(gpv.maxlines)&reportname=OverlappingSchool">Overlapping Enrollments</a>
+  </li>
+  <li>
+    <a href="report.html?maxlines=~(gpv.maxlines)&reportname=InvalidSchool">Reverse Enrollments</a>
+  </li>
+  <li>
+    <a href="report.html?maxlines=~(gpv.maxlines)&reportname=PastPending">Pending Transfers</a>
+  </li>
+  <li>
+    <a href="report.html?maxlines=~(gpv.maxlines)&reportname=FutureActiveSchool">Future Enrollments</a>
+  </li>
+  <li>
+    <a href="report.html?maxlines=~(gpv.maxlines)&reportname=OutsideYTSchool">Enrollments Outside Y&T</a>
+  </li>
+  <li>
+    <a href="report.html?maxlines=~(gpv.maxlines)&reportname=IncompleteTransfers">Incomplete Transfers</a>
+  </li>
+  <li>
+    <a href="report.html?maxlines=~(gpv.maxlines)&reportname=InvalidTrack">Invalid Tracks</a>
+  </li>
+  ~[if.~[displaypref:PowerTools-Hide-Padded-School-Enrollment-Report]#on]
+  <li>
+    <a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=PaddedSchoolEnrollments">Padded
+      Enrollments</a>
+  </li>
+  [/if]
+  <li>
+    <a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=MissingRace">Missing
+      Race/Ethnicity</a>
+  </li>
+  <li>
+    <h4 style="margin-left:0">Section</h4>
+  </li>
+  <li>
+    <a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=OverlappingCC">Overlapping
+      Enrollments</a>
+  </li>
+  <li>
+    <a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=InvalidCC">Reverse
+      Enrollments</a>
+  </li>
+  <li>
+    <a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=OutsideSchoolCC">Outside
+      School</a>
+  </li>
+  <li>
+    <a
+        href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=DupPeriodEnrollment">Duplicate
+      Period CC's</a>
+  </li>
+  <li>
+    <h4 style="margin-left:0">Special Program</h4>
+  </li>
+  <li>
+    <a href="report.html?maxlines=~(gpv.maxlines)&reportname=OverlappingSpEnrollments">Overlapping
+      Enrollments</a>
+  </li>
+  <li>
+    <a href="report.html?maxlines=~(gpv.maxlines)&reportname=InvalidSpEnrollments">Reverse Enrollments</a>
+    ~[if.~[displaypref:PowerTools-Hide-SPEnrollments-Reports]#on]
+  </li>
+  <li>
+    <a href="report.html?maxlines=~(gpv.maxlines)&reportname=OutsideSchoolSpEnrollments">Outside School</a>
+  </li>
+  <li>
+    <a href="report.html?maxlines=~(gpv.maxlines)&reportname=SpEnrollmentBadGrade">Invalid Grade Levels</a>
+    [/if]
+  </li>
+</ul>
+<h3>
+  <a href="#" target="_self" class="preference-g" id="MiscDisplay">Miscellaneous Tools</a>
+</h3>
+
+<ul id="MiscTools">
+  <li>
+    <h4 style="margin-left:0">Grading Tools</h4>
+  </li>
+  ~[if.~[displaypref:PowerTools-Hide-Blank-Stored-Grades]#on]
+  <li>
+    <a
+        href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=BlankStoredGrades">Blank
+      Stored Grades</a>
+  </li>
+  [/if]
+  <li>
+    <a href="report.html?maxlines=~(gpv.maxlines)&reportname=GradeScaleDupCutoff">Dup. Grade Scale Cutoff</a>
+  </li>
+  ~[if.~[displaypref:PowerTools-Hide-Duplicate-Stored-Grades]#on]
+  <li>
+    <a
+        href="report.html?curyearonly=curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=DupStoredGrades">Duplicate
+      Stored Grades</a>
+  </li>
+  [/if]
+  <li>
+    <a
+        href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=IncorrectStoredGrades">Incorrect
+      Stored Grades</a>
+  </li>
+  <li>
+    <a href="report.html?maxlines=~(gpv.maxlines)&reportname=StdConversionLongGrade">Long
+      Standard Grade</a>
+  </li>
+  <li>
+    <a href="report.html?maxlines=~(gpv.maxlines)&reportname=MisalignedStandards">Misaligned Standards</a>
+  </li>
+  <li>
+    <h4 style="margin-left:0">Attendance Tools</h4>
+  </li>
+  <li>
+    <a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=DupAttendance">Duplicate
+      Attendance</a>
+  </li>
+  <li>
+    <a
+        href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=NonInSessionAttendance">Non-session
+      Attendance</a>
+  </li>
+  <li>
+    <a
+        href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=MissingFTEStudent">Students
+      with no FTE's</a>
+  </li>
+  <li>
+    <h4 style="margin-left:0">Scheduling Tools</h4>
+  </li>
+  <li>
+    <a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=IncompleteSched">Incomplete
+      Setup</a>
+  </li>
+  <li>
+    <a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=SectionInvalidSM">Sections
+      w/o Expression</a>
+  </li>
+  <li>
+
+    <h4 style="margin-left:0">Transaction Tools</h4>
+  </li>
+  <li>
+    <a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=InvalidLunch">Invalid
+      Meals</a>
+  </li>
+  <li>
+    <a
+        href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=IncorrectLunchBal">Incorrect
+      Lunch Balances</a>
+  </li>
+  <li>
+
+    <h4 style="margin-left:0">Reports Tools</h4>
+  </li>
+  <li>
+    <a
+        href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=ReportsWithSpaces">Reports
+      with Spaces</a>
+  </li>
+  <li>
+    <h4 style="margin-left:0">School Setup Tools</h4>
+  </li>
+  <li>
+    <a
+        href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=ActivitiesWithSpaces">Activities
+      with Spaces</a>
+  </li>
+  ~[if.is.a.school]
+  <li><a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=CalendarIssues">Calendar
+    Issues</a>
+  </li>
+  [/if.is.a.school]
+  <li>
+    <a
+        href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=CourseGroupsWithSpaces">Course
+      Groups w/ Spaces</a>
+  </li>
+</ul>
+<h3>
+  <a href="#" target="_self" class="preference-g" id="OrphanDisplay">Orphan Record Tools</a>
+</h3>
+
+<ul id="OrphanTools">
+  <li>
+    <a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=OrphanedAttendance">Attendance</a>
+  </li>
+  ~[if.district.office]
+  <li>
+    <a
+        href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=OrphanedAttendanceTime">Attendance
+      Time</a>
+  </li>
+  [/if.district.office]
+  <li>
+    <a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=OrphanedCC">CC</a>
+  </li>
+  <li>
+    <a
+        href="report.html?curyearonly=curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=OrphanedFeeTransaction">Fee_Transactions</a>
+  </li>
+  <li>
+    <a
+        href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=OrphanedHonorRoll">HonorRoll</a>
+  </li>
+  <li>
+    <a
+        href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=OrphanedPGFinalGrades">PGFinalGrades</a>
+  </li>
+  <li>
+    <a
+        href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=OrphanedReenrollments">Reenrollments</a>
+  </li>
+  <li>
+    <a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=OrphanedSection">Sections</a>
+  </li>
+  <li>
+    <a
+        href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=OrphanedSpEnrollments">Special
+      Programs</a>
+  </li>
+  <li>
+    <a
+        href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=OrphanedStandardsGrades">Standards
+      Grades</a>
+  </li>
+  <li>
+    <a
+        href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=OrphanedStoredGrades">Stored
+      Grades</a>
+  </li>
+  <li>
+    <a
+        href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=OrphanedStudentRace">Student
+      Race</a>
+  </li>
+  <li>
+    <a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=OrphanedStudents">Students</a>
+  </li>
+  <li>
+    <a
+        href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=OrphanedStudentTestScore">Student
+      Test Scores</a>
+  </li>
+  <li>
+    <a
+        href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=OrphanedTeacherRace">Teacher
+      Race</a>
+  </li>
+  <li>
+    <a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=OrphanedTermBins">Termbins</a>
+  </li>
+</ul>
+<h3>
+  <a href="#" target="_self" class="preference-g" id="MaintenanceDisplay">Maintenance Tools</a>
+</h3>
+
+<ul id="MaintenanceTools">
+  <h4 style="margin-left:0">Duplicate Records</h4>
+
+  <li>
+    <a
+        href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=DupAttendanceCode">Att.
+      Codes</a>
+  </li>
+  <li>
+    <a
+        href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=DupAttendanceConversion">Att.
+      Conversion</a>
+  </li>
+  <li>
+    <a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=DupBellSchedule">Bell
+      Schedules</a>
+  </li>
+  <li>
+    <a
+        href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=DupBellScheduleItems">Bell
+      Schedule Items</a>
+  </li>
+  <li>
+    <a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=DupCalendarDay">Calendar
+      Days</a>
+  </li>
+  <li>
+    <a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=DupCourseNumbers">Course
+      Numbers</a>
+  </li>
+  <li>
+    <a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=DupDays">Cycle
+      Days</a>
+  </li>
+  <li>
+    <a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=DupEntryCodes">Entry
+      Codes</a>
+  </li>
+  <li>
+    <a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=DupExitCodes">Exit
+      Codes</a>
+  </li>
+  <li>
+    <a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=DupFTE">FTE's</a>
+  </li>
+  <li>
+    <a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=DupGen">Gen
+      Records</a>
+  </li>
+  <li>
+    <a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=DupPeriodNumber">Periods</a>
+  </li>
+  <li>
+    <a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=DupPrefs">Preferences</a>
+  </li>
+  <li>
+    <a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=DupServerConfig">Server
+      Config</a>
+  </li>
+  <li>
+    <a
+        href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=DupServerInstance">Server
+      Instance</a>
+  </li>
+  <li>
+    <a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=DupStudentID">Student ID</a>
+  </li>
+  <li>
+    <a
+        href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=DupStudentNumber">Student
+      Number</a>
+  </li>
+  <li>
+    <a
+        href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=DupTeacherNumber">Teacher
+      Number</a>
+  </li>
+  <li>
+    <a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=DupTermBins">Termbins</a>
+  </li>
+  <li>
+    <a
+        href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=DupTerms">Terms</a>
+  </li>
+  <li>
+    <h4 style="margin-left:0">Invalid Course Numbers</h4>
+  </li>
+  <li>
+    <a
+        href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=InvCourseNumberCC">CC
+      Records</a>
+  </li>
+  <li>
+    <a
+        href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=InvCourseNumberSections">Sections
+      Records</a>
+  </li>
+  <li>
+    <h4 style="margin-left:0">Miscellaneous</h4>
+  </li>
+  <li>
+    <a
+        href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=IncorrectStudYear">Incorrect
+      StudYear</a>
+  </li>
+  <li>
+    <a
+        href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=OverlappingTerms">Overlapping
+      Terms</a>
+  </li>
+  <li>
+    <a
+        href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=StudentNumberIssue">Student
+      No. Too High</a>
+  </li>
+</ul>
+~[if.district.office]
+~[if#schoolnetlinks.~[displaypref:PowerTools-Enable-SchoolNet-Prep]=on]
+<h3>
+  <a href="#" target="_self" class="preference-g" id="SchoolNetDisplay">SchoolNet Tools</a>
+</h3>
+
+<ul id="SchoolNetTools">
+  <li>
+    <a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=AttendanceOverview">Attendance
+      Overview</a>
+  </li>
+  <li>
+    <a
+        href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=PossibleDupStudents">Dup.
+      Students</a>
+  </li>
+  <li>
+    <a
+        href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=PossibleDupTeachers">Dup.
+      Teachers</a>
+  </li>
+  <li>
+    <a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=FutureDiscipline">Future
+      Log Entries</a>
+  </li>
+  <li>
+    <a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=FutureIncidents">Future
+      Incidents</a>
+  </li>
+</ul>
+[/if#schoolnetlinks]
+[/if.district.office]
+[else#versioncheck]
+<table>
+<tr>
+  <td>
+    <span class="preference-g">Diagnostic Reports</span>
+  </td>
+</tr>
+<tr id="DiagnosticReports">
+  <td>
+    &nbsp;<a
+      href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=EnrollmentReport"
+      id="EnrollmentReport">Enrollment Report</a>
+    <br>&nbsp;<a
+      href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=MiscReport"
+      id="MiscReport">Miscellaneous Report</a>
+    <br>&nbsp;<a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=OrphanReport"
+      id="OrphanReport">Orphaned Records Report</a>
+    <br>&nbsp;<a
+      href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=MaintReport"
+      id="MaintenanceReport">Maintenance Report</a>
+    ~[if.district.office]
+    ~[if#schoolnet.~[displaypref:PowerTools-Enable-SchoolNet-Prep]=on]
+    <br>&nbsp;<a
+      href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=SchoolNetReport"
+      id="SchoolNetReport">SchoolNet Prep Report</a>
+    [/if#schoolnet]
+    [/if.district.office]
+  </td>
+</tr>
+<tr>
+  <td>
+    <span class="preference-g">Settings</span>
+  </td>
+</tr>
+<tr id="Settings">
+  <td>
+    &nbsp;<a href="Preferences.html">Preferences</a>
+  </td>
+</tr>
+<tr>
+  <td>
+    <a href="#" target="_self" class="preference-g" id="EnrollmentDisplay">Enrollment Tools</a>
+  </td>
+</tr>
+<tr id="EnrollmentTools">
+  <td>
+    &nbsp;<b>School</b>
+    <br>&nbsp;
+    <a href="report.html?maxlines=~(gpv.maxlines)&reportname=OverlappingSchool">Overlapping Enrollments</a>
+    <br>&nbsp;
+    <a href="report.html?maxlines=~(gpv.maxlines)&reportname=InvalidSchool">Reverse Enrollments</a>
+    <br>&nbsp;
+    <a href="report.html?maxlines=~(gpv.maxlines)&reportname=PastPending">Pending Transfers</a>
+    <br>&nbsp;
+    <a href="report.html?maxlines=~(gpv.maxlines)&reportname=FutureActiveSchool">Future Enrollments</a>
+    <br>&nbsp;
+    <a href="report.html?maxlines=~(gpv.maxlines)&reportname=OutsideYTSchool">Enrollments Outside Y&T</a>
+    <br>&nbsp;
+    <a href="report.html?maxlines=~(gpv.maxlines)&reportname=IncompleteTransfers">Incomplete Transfers</a>
+    <br>&nbsp;
+    <a href="report.html?maxlines=~(gpv.maxlines)&reportname=InvalidTrack">Invalid Tracks</a>
+    ~[if.~[displaypref:PowerTools-Hide-Padded-School-Enrollment-Report]#on]
+    <br>&nbsp;
+    <a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=PaddedSchoolEnrollments">Padded
+      Enrollments</a>
+    [/if]
+    <br>&nbsp;
+    <a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=MissingRace">Missing
+      Race/Ethnicity</a>
+    <br>
+    <br><b>Section</b>
+    <br>&nbsp;<a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=OverlappingCC">Overlapping
+    Enrollments</a>
+    <br>&nbsp;<a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=InvalidCC">Reverse
+    Enrollments</a>
+    <br>&nbsp;<a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=OutsideSchoolCC">Outside
+    School</a>
+    <br>&nbsp;<a
+      href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=DupPeriodEnrollment">Duplicate
+    Period CC's</a>
+    <br>
+    <br><b>Special Program</b>
+    <br>&nbsp;<a href="report.html?maxlines=~(gpv.maxlines)&reportname=OverlappingSpEnrollments">Overlapping
+    Enrollments</a>
+    <br>&nbsp;<a href="report.html?maxlines=~(gpv.maxlines)&reportname=InvalidSpEnrollments">Reverse Enrollments</a>
+    ~[if.~[displaypref:PowerTools-Hide-SPEnrollments-Reports]#on]
+    <br>&nbsp;<a href="report.html?maxlines=~(gpv.maxlines)&reportname=OutsideSchoolSpEnrollments">Outside School</a>
+    <br>&nbsp;<a href="report.html?maxlines=~(gpv.maxlines)&reportname=SpEnrollmentBadGrade">Invalid Grade Levels</a>
+    [/if]
+  </td>
+</tr>
+<tr>
+  <td>
+    <a href="#" target="_self" class="preference-g" id="MiscDisplay">Miscellaneous Tools</a>
+  </td>
+</tr>
+<tr id="MiscTools">
+  <td>
+    <b>Grading Tools</b>
+    ~[if.~[displaypref:PowerTools-Hide-Blank-Stored-Grades]#on]
+    <br>&nbsp;<a
+      href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=BlankStoredGrades">Blank
+    Stored Grades</a>
+    [/if]
+    <br>&nbsp;<a href="report.html?maxlines=~(gpv.maxlines)&reportname=GradeScaleDupCutoff">Dup. Grade Scale Cutoff</a>
+    ~[if.~[displaypref:PowerTools-Hide-Duplicate-Stored-Grades]#on]
+    <br>&nbsp;<a
+      href="report.html?curyearonly=curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=DupStoredGrades">Duplicate
+    Stored Grades</a>
+    [/if]
+    <br>&nbsp;<a
+      href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=IncorrectStoredGrades">Incorrect
+    Stored Grades</a>
+    <br>&nbsp;<a href="report.html?maxlines=~(gpv.maxlines)&reportname=StdConversionLongGrade">Long
+    Standard Grade</a>
+    <br>&nbsp;<a href="report.html?maxlines=~(gpv.maxlines)&reportname=MisalignedStandards">Misaligned Standards</a>
+    <br>&nbsp
+    <br><b>Attendance Tools</b>
+    <br>&nbsp;<a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=DupAttendance">Duplicate
+    Attendance</a>
+    <br>&nbsp;<a
+      href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=NonInSessionAttendance">Non-session
+    Attendance</a>
+    <br>&nbsp;<a
+      href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=MissingFTEStudent">Students
+    with no FTE's</a>
+    <br>&nbsp;
+    <br><b>Scheduling Tools</b>
+    <br>&nbsp;<a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=IncompleteSched">Incomplete
+    Setup</a>
+    <br>&nbsp;<a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=SectionInvalidSM">Sections
+    w/o Expression</a>
+    <br>&nbsp;
+    <br><b>Transaction Tools</b>
+    <br>&nbsp;<a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=InvalidLunch">Invalid
+    Meals</a>
+    <br>&nbsp;<a
+      href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=IncorrectLunchBal">Incorrect
+    Lunch Balances</a>
+    <br>&nbsp;
+    <br><b>Reports Tools</b>
+    <br>&nbsp;<a
+      href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=ReportsWithSpaces">Reports
+    with Spaces</a>
+    <br>&nbsp;
+    <br><b>School Setup Tools</b>
+    <br>&nbsp;<a
+      href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=ActivitiesWithSpaces">Activities
+    with Spaces</a>
+    ~[if.is.a.school]
+    <br>&nbsp;<a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=CalendarIssues">Calendar
+    Issues</a>
+    [/if.is.a.school]
+    <br>&nbsp;<a
+      href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=CourseGroupsWithSpaces">Course
+    Groups w/ Spaces</a>
+  </td>
+</tr>
+<tr>
+  <td>
+    <a href="#" target="_self" class="preference-g" id="OrphanDisplay">Orphan Record Tools</a>
+  </td>
+</tr>
+<tr id="OrphanTools">
+  <td>
+    &nbsp;<a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=OrphanedAttendance">Attendance</a>
+    ~[if.district.office]
+    <br>&nbsp;<a
+      href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=OrphanedAttendanceTime">Attendance
+    Time</a>
+    [/if.district.office]
+    <br>&nbsp;<a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=OrphanedCC">CC</a>
+    <br>&nbsp;<a
+      href="report.html?curyearonly=curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=OrphanedFeeTransaction">Fee_Transactions</a>
+    <br>&nbsp;<a
+      href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=OrphanedHonorRoll">HonorRoll</a>
+    <br>&nbsp;<a
+      href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=OrphanedPGFinalGrades">PGFinalGrades</a>
+    <br>&nbsp;<a
+      href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=OrphanedReenrollments">Reenrollments</a>
+    <br>&nbsp;<a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=OrphanedSection">Sections</a>
+    <br>&nbsp;<a
+      href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=OrphanedSpEnrollments">Special
+    Programs</a>
+    <br>&nbsp;<a
+      href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=OrphanedStandardsGrades">Standards
+    Grades</a>
+    <br>&nbsp;<a
+      href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=OrphanedStoredGrades">Stored
+    Grades</a>
+    <br>&nbsp;<a
+      href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=OrphanedStudentRace">Student
+    Race</a>
+    <br>&nbsp;<a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=OrphanedStudents">Students</a>
+    <br>&nbsp;<a
+      href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=OrphanedStudentTestScore">Student
+    Test Scores</a>
+    <br>&nbsp;<a
+      href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=OrphanedTeacherRace">Teacher
+    Race</a>
+    <br>&nbsp;<a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=OrphanedTermBins">Termbins</a>
+  </td>
+</tr>
+<tr>
+  <td>
+    <a href="#" target="_self" class="preference-g" id="MaintenanceDisplay">Maintenance Tools</a>
+  </td>
+</tr>
+<tr id="MaintenanceTools">
+  <td>
+    <b>Duplicate Records</b>
+    <br>&nbsp;<a
+      href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=DupAttendanceCode">Att.
+    Codes</a>
+    <br>&nbsp;<a
+      href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=DupAttendanceConversion">Att.
+    Conversion</a>
+    <br>&nbsp;<a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=DupBellSchedule">Bell
+    Schedules</a>
+    <br>&nbsp;<a
+      href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=DupBellScheduleItems">Bell
+    Schedule Items</a>
+    <br>&nbsp;<a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=DupCalendarDay">Calendar
+    Days</a>
+    <br>&nbsp;<a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=DupCourseNumbers">Course
+    Numbers</a>
+    <br>&nbsp;<a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=DupDays">Cycle
+    Days</a>
+    <br>&nbsp;<a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=DupEntryCodes">Entry
+    Codes</a>
+    <br>&nbsp;<a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=DupExitCodes">Exit
+    Codes</a>
+    <br>&nbsp;<a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=DupFTE">FTE's</a>
+    <br>&nbsp;<a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=DupGen">Gen
+    Records</a>
+    <br>&nbsp;<a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=DupPeriodNumber">Periods</a>
+    <br>&nbsp;<a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=DupPrefs">Preferences</a>
+    <br>&nbsp;<a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=DupServerConfig">Server
+    Config</a>
+    <br>&nbsp;<a
+      href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=DupServerInstance">Server
+    Instance</a>
+    <br>&nbsp;<a
+      href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=DupStudentID">Student
+      ID</a>
+    <br>&nbsp;<a
+      href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=DupStudentNumber">Student Number</a>
+    <br>&nbsp;<a
+      href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=DupTeacherNumber">Teacher
+    Number</a>
+    <br>&nbsp;<a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=DupTermBins">Termbins</a>
+    <br>&nbsp;<a
+      href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=DupTerms">Terms</a>
+    <br>
+    <br><b>Invalid Course Numbers</b>
+    <br>&nbsp;<a
+      href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=InvCourseNumberCC">CC
+    Records</a>
+    <br>&nbsp;<a
+      href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=InvCourseNumberSections">Sections
+    Records</a>
+    <br>
+    <br><b>Miscellaneous</b>
+    <br>&nbsp;<a
+      href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=IncorrectStudYear">Incorrect
+    StudYear</a>
+    <br>&nbsp;<a
+      href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=OverlappingTerms">Overlapping Terms</a>
+    <br>&nbsp;<a
+      href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=StudentNumberIssue">Student
+    No. Too High</a>
+  </td>
+</tr>
+~[if.district.office]
+~[if#schoolnetlinks.~[displaypref:PowerTools-Enable-SchoolNet-Prep]=on]
+<tr>
+  <td>
+    <a href="#" target="_self" class="preference-g" id="SchoolNetDisplay">SchoolNet Tools</a>
+  </td>
+</tr>
+<tr id="SchoolNetTools">
+  <td>
+    &nbsp;<a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=AttendanceOverview">Attendance
+    Overview</a>
+    <br>&nbsp;<a
+      href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=PossibleDupStudents">Dup.
+    Students</a>
+    <br>&nbsp;<a
+      href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=PossibleDupTeachers">Dup.
+    Teachers</a>
+    <br>&nbsp;<a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=FutureDiscipline">Future
+    Log Entries</a>
+    <br>&nbsp;<a href="report.html?curyearonly=~(gpv.curyearonly)&maxlines=~(gpv.maxlines)&reportname=FutureIncidents">Future
+    Incidents</a>
+  </td>
+</tr>
+[/if#schoolnetlinks]
+[/if.district.office]
+</table>
+[/if#versioncheck]
+<!-- end of links -->
+</div>
+</div>
+
+<div id="menu-mask">
+</div>
+</body>
+</html>

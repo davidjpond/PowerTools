@@ -1,0 +1,28 @@
+[
+~[tlist_sql;
+SELECT g1.dcid
+FROM ps.gen g1
+WHERE EXISTS (
+SELECT 1
+FROM ps.gen g2
+WHERE g2.cat = g1.cat
+AND (g2.name = g1.name
+OR (g2.name IS NULL
+AND g1.name IS NULL))
+AND (g2.value = g1.value
+OR (g2.value IS NULL
+AND g1.value IS NULL))
+AND (g2.schoolid = g1.schoolid
+OR (g2.schoolid IS NULL
+AND g1.schoolid IS NULL))
+AND (g2.yearid = g1.yearid
+OR (g2.yearid IS NULL
+AND g1.yearid IS NULL))
+AND g2.id < g1.id)
+]
+{
+"dcid" : "~(g1.dcid)"
+},
+[/tlist_sql]
+{}
+]

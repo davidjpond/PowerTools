@@ -1,0 +1,17 @@
+{"ResultSet":[
+~[tlist_sql;
+SELECT g1.name
+, count(*)
+FROM gen g1
+WHERE Cat = 'exitcodes'
+GROUP BY g1.name
+HAVING COUNT(*) > 1
+ORDER BY g1.name
+]
+{
+"exitCode" : "~(Code;js)",
+"count" : "~(count;js)"
+},
+[/tlist_sql]
+{}
+]}

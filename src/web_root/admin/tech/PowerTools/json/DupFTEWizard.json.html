@@ -1,0 +1,29 @@
+[
+~[tlist_sql;
+SELECT f2.dcid BadDCID
+, f1.id GoodID
+, f2.id BadID
+FROM ps.fte f1
+INNER JOIN ps.fte f2
+ON f1.name = f2.name
+AND f1.schoolid = f2.schoolid
+AND f1.yearid = f2.yearid
+AND f1.id < f2.id
+WHERE f1.id = (
+SELECT MIN(id)
+FROM ps.fte
+WHERE name = f2.name
+AND schoolid = f2.schoolid
+AND yearid = f2.yearid)
+~[if.is.a.school]AND f2.schoolid = ~[v.curschoolid][/if]
+ORDER BY f2.id
+]
+    {
+      "dcid" : "~(f2.dcid)",
+      "goodval" : "~(f1.id)",
+      "badval" : "~(f2.id)"
+    },
+
+[/tlist_sql]
+{}
+]

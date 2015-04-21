@@ -1,0 +1,28 @@
+[
+~[tlist_sql;
+SELECT a2.dcid BadDCID
+, a1.id GoodID
+, a2.id BadID
+FROM ps.attendance_conversion a1
+INNER JOIN ps.attendance_conversion a2
+ON a1.name = a2.name
+AND a1.schoolid = a2.schoolid
+AND a1.year_id = a2.year_id
+AND a1.id < a2.id
+WHERE a1.id = (
+SELECT MIN(ID)
+FROM ps.attendance_conversion
+WHERE name = a2.name
+AND year_id = a2.year_id
+AND schoolid = a2.schoolid)
+~[if.is.a.school]AND a2.schoolid = ~[v.curschoolid][/if]
+ORDER BY a2.id
+]
+    {
+      "dcid" : "~(a2.dcid)",
+      "goodval" : "~(a1.id)",
+      "badval" : "~(a2.id)"
+    },
+[/tlist_sql]
+    {}
+]

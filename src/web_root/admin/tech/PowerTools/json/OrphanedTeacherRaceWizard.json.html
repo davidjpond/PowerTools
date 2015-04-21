@@ -1,0 +1,22 @@
+[
+~[tlist_sql;
+SELECT t1.dcid
+FROM ps.teacherrace t1
+LEFT JOIN ps.teachers t2
+ON t1.teacherid = t2.id
+LEFT JOIN ps.gen g1
+ON t1.racecd = g1.name
+AND g1.cat = 'race'
+WHERE (t1.dcid IS NULL
+~[if.~(gpv.noTeacher)=1]OR t2.ID IS NULL[/if]
+~[if.~(gpv.noRaceCode)=1]OR g1.name IS NULL[/if]
+)
+~[if.is.a.school]AND t2.schoolid = ~[v.curschoolid][/if.is.a.school]
+ORDER BY t1.ID
+]
+{
+"dcid" : "~(dcid)"
+},
+[/tlist_sql]
+{}
+]

@@ -1,0 +1,52 @@
+{"ResultSet":[
+~[tlist_sql;
+SELECT s1.dcid
+, s1.id
+, CASE
+WHEN c1.course_number IS NULL
+THEN 'Course ' || s1.course_number || ' does not exist'
+ELSE s1.course_number || '.' || s1.section_number
+END "Course.Section"
+, CASE
+WHEN c1.course_number IS NULL
+THEN 'Course ' || s1.course_number || ' Does Not Exist'
+ELSE s1.course_number || '.' || s1.section_number
+END "Course.SectionSort"
+, t1.lastfirst
+, s1.teacher
+, s2.name
+, s1.schoolid
+, t2.id
+, s1.termid
+FROM sections s1
+LEFT JOIN courses c1
+ON s1.course_number = c1.course_number
+LEFT JOIN teachers t1
+ON s1.teacher = t1.id
+LEFT JOIN schools s2
+ON s1.schoolid = s2.school_number
+LEFT JOIN terms t2
+ON s1.termid = t2.id
+AND s1.schoolid = t2.schoolid
+WHERE (c1.course_number IS NULL
+OR t1.id IS NULL
+OR s2.school_number IS NULL
+OR t2.id IS NULL)
+~[if.is.a.school]AND s1.schoolid = ~[v.curschoolid][/if.is.a.school]
+ORDER BY s1.ID
+]
+{
+"dcid" : "~(c1.dcid)",
+"id" : "~(c1.id)",
+"courseSection" : "~(s2.course_section;js)",
+"courseSectionSort" : "~(s2.course_sectionsort;js)",
+"teacher" : "~(t1.lastfirst;js)",
+"teacherId" : "~(s1.teacher;js)",
+"schoolName" : "~(s2.schoolname;js)",
+"schoolId" : "~(s1.schoolid;js)",
+"schoolTermId" : "~(t1.id;js)",
+"sectionTermId" : "~(s1.temrid;js)"
+},
+[/tlist_sql]
+{}
+]}

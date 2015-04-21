@@ -1,0 +1,21 @@
+[
+~[tlist_sql;
+SELECT c2.dcid BadDCID
+FROM ps.calendar_day c1
+JOIN ps.calendar_day c2
+ON c1.date_value = c2.date_value
+AND c1.schoolid = c2.schoolid
+AND C1.id < c2.id
+WHERE c1.id = (
+SELECT MIN(ID)
+FROM ps.calendar_day
+WHERE date_value = c2.date_value
+AND schoolid = c2.schoolid)
+~[if.is.a.school]AND c1.schoolid = ~[v.curschoolid][/if.is.a.school]
+]
+    {
+      "dcid" : "~(c2.dcid)"
+    },
+[/tlist_sql]
+    {}
+]

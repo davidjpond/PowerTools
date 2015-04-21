@@ -1,0 +1,60 @@
+{"ResultSet":[
+	~[tlist_sql;
+SELECT *
+	FROM (SELECT s1.dcid
+  , s1.id
+	, s1.lastfirst lastfirst
+	, s2.name
+	, r1.grade_level
+	, to_char(r1.entrydate, 'YYYY-MM-DD')
+	, to_char(r1.exitdate, 'YYYY-MM-DD')
+	FROM REENROLLMENTS r1
+	, reenrollments r2
+	, students s1
+	LEFT JOIN schools s2
+	ON s1.schoolid = s2.school_number
+	WHERE r1.entrydate >= r2.entrydate
+	AND r1.entrydate < r2.exitdate
+	AND r1.exitdate > r1.entrydate
+	AND r1.studentid = r2.studentid
+	AND r1.id < r2.id
+	AND r1.studentid = s1.id
+	~[if.is.a.school]AND s1.schoolid = ~[v.curschoolid] [/if.is.a.school]
+	UNION ALL
+	SELECT s1.dcid
+  , s1.id
+	, s1.lastfirst lastfirst
+	, s2.name
+	, r1.grade_level
+	, to_char(r1.entrydate, 'YYYY-MM-DD') entrydate
+	, to_char(r1.exitdate, 'YYYY-MM-DD') exitdate
+	FROM reenrollments r1
+	, students s1
+	LEFT JOIN schools s2
+	ON s1.schoolid = s2.school_number
+	WHERE r1.entrydate < r1.exitdate
+	AND r1.studentid = s1.id
+	~[if.is.a.school]AND s1.schoolid = ~[v.curschoolid][/if.is.a.school]
+	AND ((r1.entrydate >= s1.entrydate
+	  AND r1.entrydate < s1.exitdate
+    AND r1.exitdate > s1.entrydate)
+	  OR (r1.exitdate > s1.entrydate
+	  AND r1.exitdate <= s1.exitdate)
+	  OR (s1.entrydate >= r1.entrydate
+	  AND r1.exitdate >= s1.exitdate
+    AND s1.entrydate != r1.exitdate))
+	ORDER BY lastfirst)
+]
+{
+"dcid" : "~(dcid)",
+"studentid" : "~(s1.id)",
+"student" : "~(lastfirst;js)",
+"schoolName" : "~(name;js)",
+"gradeLevel" : "~(grade_level)",
+"entryDate" : "~(entrydate;js)",
+"exitDate" : "~(exitdate;js)"
+    },
+[/tlist_sql]
+{}
+]}
+
