@@ -21,15 +21,15 @@
   <script src="js/yui/datasource/datasource-min.js"></script>
   <script src="js/yui/datatable/datatable-min.js"></script>
   <script src="js/yui/json/json-min.js"></script>
-  <script type="text/javascript" src="js/PowerToolsLib.js"></script>
   <script src="js/report.js"></script>
 </head>
 <body class="yui-skin-sam">
   ~[wc:admin_header_frame_css]
   <!-- breadcrumb start -->
-  <a href="/admin/home.html" target="_top">Start Page</a> &gt; <a href="/admin/tech/home.html" target="_top">System
-  Administrator</a> &gt; <a href="/admin/tech/PowerTools/home.html" target="_top">PowerTools</a>
-  &gt; <span id="bcReportName">&nbsp;</span>
+  <a href="/admin/home.html" target="_top">Start Page</a> &gt;
+  <a href="/admin/tech/home.html" target="_top">System Administrator</a> &gt;
+  <a href="/admin/tech/PowerTools/home.html" target="_top">PowerTools</a> &gt;
+  <span id="bcReportName">&nbsp;</span>
   <!-- breadcrumb end -->
   ~[wc:admin_navigation_frame_css]
   <!-- start of title -->
@@ -65,18 +65,22 @@
 
   ~[wc:admin_footer_frame_css]
   <script type="text/javascript">
-    var dataOptions = {
-      "maxLines": "~(gpv.maxlines)",
-      "curyearonly": "~(gpv.curyearonly)",
-      "schoolid": ~(v.curschoolid),
-      "schoolname": "~[schoolname]",
-      "reportid": "~(gpv.reportname)",
-      "usermaxlines": "~[if.~[displaypref:PowerTools-maxlines-U~[x:userid]]>0]~[displaypref:PowerTools-maxlines-U~[x:userid]][else]25[/if]",
-      "hispaniconly": "~[displaypref:PowerTools-Hispanic-Only-Qualifies]",
-      "ddaRedirect": "~[displaypref:PowerTools-Redirect-Orphan-DDA]",
-      "userid": "~[x:userid]"
+    powerTools.initReport = function(report, maxLines, curYear) {
+      $j('#wizardLink').html(null);
+      powerTools.dataOptions = {
+        "maxLines": maxLines,
+        "curyearonly": curYear,
+        "schoolid": ~(v.curschoolid),
+        "schoolname": "~[schoolname]",
+        "reportid": report,
+        "usermaxlines": "~[if.~[displaypref:PowerTools-maxlines-U~[x:userid]]>0]~[displaypref:PowerTools-maxlines-U~[x:userid]][else]25[/if]",
+        "hispaniconly": "~[displaypref:PowerTools-Hispanic-Only-Qualifies]",
+        "ddaRedirect": "~[displaypref:PowerTools-Redirect-Orphan-DDA]",
+        "userid": "~[x:userid]"
+      };
+      powerTools.loadReport();
     };
-    powerTools.loadReport();
+    powerTools.initReport('~(gpv.reportname)','~(gpv.maxlines)','~(gpv.curyearonly)');
   </script>
 </body>
 </html><!-- non framed -->

@@ -19,7 +19,9 @@ var prefs = {
       'xdescribe': true,
       'xit': true,
       'PowerTools' : true,
-      'YAHOO': true
+      'YAHOO': true,
+      'loadingDialog': true,
+      'closeLoading': true
     },
     'sourcePath': 'src/',
     'distributionPath': 'dist/',

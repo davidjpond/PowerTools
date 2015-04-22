@@ -14,7 +14,6 @@ module.exports = function () {
       "freeze": true,
       "globalstrict": true,
       "immed": true,
-      "indent": 2,
       "latedef": true,
       "newcap": true,
       "noarg": true,
@@ -27,14 +26,11 @@ module.exports = function () {
       "trailing": true,
       "undef": true,
       "globals": prefs.options.globalVars,
-      "ignores": [
-          prefs.options.sourcePath + 'web_root/scripts/pearsoncpt/' + prefs.options.lowerName + '/vendor/**/*.js',
-          prefs.options.sourcePath + 'web_root/scripts/pearsoncpt/' + prefs.options.lowerName + '/cpt.min.js',
-          prefs.options.sourcePath + 'web_root/admin/tech/PowerTools/js/yui/**/*.*'
-      ]
+      "ignores": [prefs.options.sourcePath + 'web_root/scripts/pearsoncpt/' + prefs.options.lowerName +
+      '/vendor/**/*.js',
+        prefs.options.sourcePath + 'web_root/scripts/pearsoncpt/' + prefs.options.lowerName + '/cpt.min.js',
+        prefs.options.sourcePath + 'web_root/admin/tech/PowerTools/js/yui/**/*.*']
     },
-    all: [
-        prefs.options.sourcePath + 'web_root/**/*.js'
-    ]
+    all: [prefs.options.sourcePath + 'web_root/**/*.js']
   };
 };
