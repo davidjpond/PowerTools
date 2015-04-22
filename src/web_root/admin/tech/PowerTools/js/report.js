@@ -1,11 +1,12 @@
 'use strict';
-var reportData = {},
-    reportOptions = {},
-    dataOptions = window.dataOptions || {};
+var dataOptions = window.dataOptions || {};
 
 //noinspection JSUnusedGlobalSymbols
 var powerTools = window.powerTools || {
+      reportData: {},
+      reportOptions: {},
       hideSpinner: function () {
+        //noinspection JSUnresolvedFunction
         $j(window).ajaxStop(function () {
           closeLoading();
         });
@@ -13,16 +14,16 @@ var powerTools = window.powerTools || {
       loadYUIReport: function () {
         //noinspection JSUnusedLocalSymbols
         var ClientPagination = (function () {
-          var myColumnDefs = reportData.columns,
+          var myColumnDefs = powerTools.reportData.columns,
               myDataSource = new YAHOO.util.DataSource('json/' + dataOptions.reportid + '.json.html?curyearonly=' +
                   dataOptions.curyearonly),
               oConfigs = {
                 paginator: new YAHOO.widget.Paginator({
                   rowsPerPage: dataOptions.maxLines,
                   containers: ['top_container', 'bottom_container'],
-                  template: reportData.template
+                  template: powerTools.reportData.template
                 }),
-                sortedBy: {key: reportData.sortKey, dir: YAHOO.widget.DataTable.CLASS_ASC},
+                sortedBy: {key: powerTools.reportData.sortKey, dir: YAHOO.widget.DataTable.CLASS_ASC},
                 MSG_LOADING: 'Loading Report'
               },
               myDataTable = new YAHOO.widget.DataTable('paginated', myColumnDefs, myDataSource, oConfigs);
@@ -74,7 +75,7 @@ var powerTools = window.powerTools || {
               }
             },
             Calendar: function (elCell, oRecord, oColumn, oData) {
-              var formattedDate = convertDate(oData);
+              var formattedDate = powerTools.convertDate(oData);
               elCell.innerHTML =
                   '<a href="/admin/schoolsetup/calendarsetup/calendarsetup.html?scheddate=' + formattedDate +
                   '" target=Powertools>' + formattedDate + '</a>';
@@ -105,7 +106,7 @@ var powerTools = window.powerTools || {
                   sectionNumber + '</a>';
             },
             DateNoLink: function (elCell, oRecord, oColumn, oData) {
-                elCell.innerHTML = powerTools.convertDate(oData);
+              elCell.innerHTML = powerTools.convertDate(oData);
             },
             DDAAttendance: function (elCell, oRecord, oColumn, oData) {
               powerTools.ddaLink(elCell, oRecord, oData, '157', 'attendanceDcid');
@@ -171,7 +172,7 @@ var powerTools = window.powerTools || {
             EnrollmentDateNoLink: function (elCell, oRecord, oColumn, oData) {
               var date;
               if (oData) {
-                date = convertDate(oData);
+                date = powerTools.convertDate(oData);
               } else {
                 date = 'Not Enrolled';
               }
@@ -185,7 +186,7 @@ var powerTools = window.powerTools || {
               }
             },
             FeeExist: function (elCell, oRecord, oColumn, oData) {
-              existCheck(elCell, oRecord, oData, 'feeId', 'Fee ID');
+              powerTools.existCheck(elCell, oRecord, oData, 'feeId', 'Fee ID');
             },
             GradeLevelValid: function (elCell, oRecord, oColumn, oData) {
               var schoolId = oRecord.getData('schoolId'),
@@ -284,7 +285,9 @@ var powerTools = window.powerTools || {
                     '&reportname=' + dataOptions.reportid + '">' + forcedTotal + '</a>');
               } else {
                 $j.getJSON('json/' + oData + '.json.html?curyearonly=' + dataOptions.curyearonly, function (result) {
+                  //noinspection JSUnresolvedVariable
                   result.ResultSet.pop();
+                  //noinspection JSUnresolvedVariable
                   elCell.innerHTML =
                       ('<a href="report.html?curyearonly=' + dataOptions.curyearonly + '&maxlines=' +
                       dataOptions.maxLines +
@@ -409,11 +412,12 @@ var powerTools = window.powerTools || {
 
           YAHOO.widget.DataTable.Formatter = $j.extend(YAHOO.widget.DataTable.Formatter, customFormatters);
 
+          //noinspection JSUnresolvedVariable
           myDataSource.responseType = YAHOO.util.XHRDataSource.TYPE_JSON;
           myDataSource.connXhrMode = 'queueRequests';
           myDataSource.responseSchema = {
             resultsList: 'ResultSet',
-            fields: reportData.fields
+            fields: powerTools.reportData.fields
           };
           myDataSource.doBeforeCallback = function (oRequest, oFullResponse, oParsedResponse) {
             oParsedResponse.results.pop();
@@ -441,7 +445,6 @@ var powerTools = window.powerTools || {
             month = +parts[2];
             date.setFullYear(parts[1], month - 1, parts[3]);
             if (month !== date.getMonth() + 1) {
-              git
               date.setTime(NaN);
             }
           }
@@ -478,21 +481,22 @@ var powerTools = window.powerTools || {
             '&ac=suv;lsp=/admin/students/' + page + '" target=PowerTools>' + oData + '</a>';
       },
       showWizardLink: function () {
-        if (reportData.wizardLink === 1 && dataOptions.DDAUserPerms === 'on' && dataOptions.userid > 0) {
+        if (powerTools.reportData.wizardLink === 1 && dataOptions.DDAUserPerms === 'on' && dataOptions.userid > 0) {
           $j('#wizardLink').html('These records may be corrected using the ' +
-              '<a href="wizard.html?wizardid=' + dataOptions.reportid + 'Wizard">' + reportData.title + ' Wizard' +
+              '<a href="wizard.html?wizardid=' + dataOptions.reportid + 'Wizard">' + powerTools.reportData.title + ' Wizard' +
               '</a>');
         }
       },
       loadReportData: function () {
-        $j('#bcReportName').text(reportData.title);
-        $j('#reportInfo').html(reportData.info);
-        $j('h1').text(reportData.header);
+        $j('#bcReportName').text(powerTools.reportData.title);
+        $j('#reportInfo').html(powerTools.reportData.info);
+        $j('h1').text(powerTools.reportData.header);
         powerTools.showWizardLink();
         powerTools.loadYUIReport();
       },
       checkDDAPermissions: function () {
         $j.getJSON('json/DDAPermissions.json.html', function (result) {
+          //noinspection JSUnresolvedVariable
           if (result.DDAPagePerms === '2' || (result.DDAGroupPerms === '2' && result.DDAPagePerms === '*') ||
               dataOptions.userid === '0') {
             dataOptions.DDAUserPerms = 'on';
@@ -508,30 +512,110 @@ var powerTools = window.powerTools || {
         });
       },
       showSelectButtons: function () {
-        if (reportData.showSelectButtons === 1) {
+        if (powerTools.reportData.showSelectButtons === 1) {
           $j('#selectStudents').show();
         } else {
           $j('#selectStudents').hide();
         }
       },
+      templateCYOnly: function () {
+        return '<B>Filter these reports for </b>' +
+            '<select name="curyearonly" ONCHANGE="location = this.options[this.selectedIndex].value;">' +
+            '<option value="?curyearonly=0&maxlines=' + dataOptions.maxLines + '&reportname=' + dataOptions.reportid +
+            '">All Years</option>' + '<option value="?curyearonly=1&maxlines=' + dataOptions.maxLines + '&reportname=' +
+            dataOptions.reportid + '">Current Year</option>' + '</select>';
+      },
+      templateNoOption: function () {
+        return '';
+      },
+      templateNoCY: function () {
+        return '{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} ' +
+            '<select name="maxlines" ONCHANGE="location = this.options[this.selectedIndex].value;">' +
+            '<option value="?curyearonly=0&maxlines=25&reportname=' + dataOptions.reportid + '">25 Rows</option>' +
+            '<option value="?curyearonly=0&maxlines=50&reportname=' + dataOptions.reportid + '">50 Rows</option>' +
+            '<option value="?curyearonly=0&maxlines=100&reportname=' + dataOptions.reportid + '">100 Rows</option>' +
+            '<option value="?curyearonly=0&maxlines=500&reportname=' + dataOptions.reportid + '">500 Rows</option>' +
+            '<option value="?curyearonly=0&maxlines=100000&reportname=' + dataOptions.reportid + '">Max Rows</option>' +
+            '</select> ';
+      },
+      templateCY: function () {
+        return '{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} ' +
+            '<select name="maxlines" ONCHANGE="location = this.options[this.selectedIndex].value;">' +
+            '<option value="?curyearonly=' + dataOptions.curyearonly + '&maxlines=25&reportname=' + dataOptions.reportid +
+            '">25 Rows</option>' + '<option value="?curyearonly=' + dataOptions.curyearonly + '&maxlines=50&reportname=' +
+            dataOptions.reportid + '">50 Rows</option>' + '<option value="?curyearonly=' + dataOptions.curyearonly +
+            '&maxlines=100&reportname=' + dataOptions.reportid + '">100 Rows</option>' + '<option value="?curyearonly=' +
+            dataOptions.curyearonly + '&maxlines=500&reportname=' + dataOptions.reportid + '">500 Rows</option>' +
+            '<option value="?curyearonly=' + dataOptions.curyearonly + '&maxlines=100000&reportname=' + dataOptions.reportid +
+            '">Max Rows</option>' + '</select> ' +
+            '<select name="curyearonly" ONCHANGE="location = this.options[this.selectedIndex].value;">' +
+            '<option value="?curyearonly=0&maxlines=' + dataOptions.maxLines + '&reportname=' + dataOptions.reportid +
+            '">All Years</option>' + '<option value="?curyearonly=1&maxlines=' + dataOptions.maxLines + '&reportname=' +
+            dataOptions.reportid + '">Current Year</option>' + '</select>';
+      },
+      clickSelectStudents: function (method) {
+        loadingDialog();
+        $j.getJSON('json/' + dataOptions.reportid + '.json.html?curyearonly=" + dataOptions.curyearonly', function (result) {
+          //noinspection JSUnresolvedVariable
+          $j.each(result.ResultSet, function () {
+            //noinspection JSUnresolvedVariable
+            if (this.dcid) {
+              //noinspection JSUnresolvedVariable,HtmlUnknownTarget
+              $j('#StudentList').append('<li><a target="_top" href="/admin/students/home.html?frn=001' + this.dcid + '">' +
+                  this.student + '</a></li>');
+              //noinspection JSUnresolvedVariable
+              $j('#studentSelection').append('<input type="hidden" value="' + this.studentid + '"/>');
+            }
+          });
+          powerTools.selectStudents(method);
+        });
+      },
+      selectStudents: function (action) {
+        var curSelect = $j.unique($j('input:hidden').map(function () {
+          return 'ids=' + $j(this).val();
+        })).get().join('&');
+        curSelect = curSelect + '&selectionAction=' + action + '&temp=false';
+        $j.ajax({
+          type: 'POST',
+          url: '/admin/SaveSelectedStudentsToSelection.action',
+          cache: false,
+          data: curSelect.replace(/ids=&/gi, ''),
+          success: function () {
+            top.location = '/admin/home.html';
+          },
+          error: function () {
+            closeLoading();
+            $j('body').append('<div id="curSelectFail" title="Error"><p>There was an error making the students the current ' +
+                'selection.</p></div >');
+            //noinspection JSUnresolvedFunction
+            $j('#curSelectFail').dialog();
+          }
+        });
+      },
       reportConfig: {
         ActivitiesWithSpaces: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Activities With Spaces',
             header: 'Activities with Spaces in the Field Names',
             info: 'This report selects any activity where the field name contains a space.<p>Selecting a record will take ' +
             'you to the activity, where the space can be removed from the field name, or the activity may be deleted.',
             fields: ['dcid', 'activityName', 'fieldName'],
             columns: [
-              {key: 'activityName', label: 'Activity Name', minWidth: 150, sortable: true, formatter: 'Activities'},
+              {
+                key: 'activityName',
+                label: 'Activity Name',
+                minWidth: 150,
+                sortable: true,
+                formatter: 'Activities'
+              },
               {key: 'fieldName', label: 'Field Name', minWidth: 150, sortable: true}
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'activityName'
           };
         },
         AttendanceOverview: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Attendance Overview',
             header: 'Attendance Overview',
             info: 'This report displays the FTE, Attendance Mode, Attendance Conversion, and whether or not absences or ' +
@@ -545,14 +629,14 @@ var powerTools = window.powerTools || {
               {key: 'attendanceConversion', label: 'Attendance Conversion', minWidth: 50, sortable: true},
               {key: 'calc', label: 'Calculation Type', minWidth: 50, sortable: true}
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'schoolName'
           };
         },
         BlankStoredGrades: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Blank Stored Grades',
-            header: 'Students with Blank Stored Grades in ' + reportOptions.schoolName,
+            header: 'Students with Blank Stored Grades in ' + powerTools.reportOptions.schoolName,
             info: 'This report selects any student who has a stored grade which has no letter grade, percentage is 0, and ' +
             'the comment is blank.<br>Selecting a record will take you to the students Historical Grades page, where the ' +
             'blank ' + 'grade can be deleted.',
@@ -566,14 +650,14 @@ var powerTools = window.powerTools || {
               {key: 'termID', label: 'Term ID', minWidth: 50, sortable: true},
               {key: 'schoolName', label: 'School', minWidth: 200, sortable: true}
             ],
-            template: PowerTools.templateCY(),
+            template: powerTools.templateCY(),
             sortKey: 'student',
             showSelectButtons: 1,
             wizardLink: 1
           };
         },
         CalendarIssues: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Incomplete Calendar Days',
             info: 'This report selects any calendar day record that is in-session, however either the Cycle Day is blank, ' +
             'the Bell Schedule is blank, or the Membership value is 0.<p>Selecting a record will take you to the ' +
@@ -584,23 +668,29 @@ var powerTools = window.powerTools || {
             columns: [
               {key: 'date', label: 'Date', minWidth: 150, sortable: true, formatter: 'Calendar'},
               {key: 'cycleDay', label: 'Cycle Day', minWidth: 100, sortable: true, formatter: 'BlankDay'},
-              {key: 'bellSchedule', label: 'Bell Schedule', minWidth: 150, sortable: true, formatter: 'BlankDay'},
+              {
+                key: 'bellSchedule',
+                label: 'Bell Schedule',
+                minWidth: 150,
+                sortable: true,
+                formatter: 'BlankDay'
+              },
               {key: 'membershipValue', label: 'Membership Value', minWidth: 100, sortable: true}
             ],
-            template: PowerTools.templateCY(),
+            template: powerTools.templateCY(),
             sortKey: 'date'
           };
 
           if (dataOptions.schoolid === 0) {
-            reportData.header = ('There are no calendar records at the District Office');
+            powerTools.reportData.header = ('There are no calendar records at the District Office');
           } else {
-            reportData.header =
+            powerTools.reportData.header =
                 ('In-session Calendar Day Records with No Cycle Day, Bell Schedule, or Membership in ' +
                 dataOptions.schoolname);
           }
         },
         CourseGroupsWithSpaces: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Course Groups Ending in a Space',
             header: 'Course Groups Ending in a Space',
             info: 'This report selects any course group where the name ends in a space.<p>' +
@@ -608,18 +698,24 @@ var powerTools = window.powerTools || {
             'name, or the course group may be deleted.',
             fields: ['dcid', 'courseGroup', 'type', 'schoolName'],
             columns: [
-              {key: 'courseGroup', label: 'Course Group', minWidth: 150, sortable: true, formatter: 'CourseGroups'},
+              {
+                key: 'courseGroup',
+                label: 'Course Group',
+                minWidth: 150,
+                sortable: true,
+                formatter: 'CourseGroups'
+              },
               {key: 'type', label: 'Type', minWidth: 150, sortable: true},
               {key: 'schoolName', label: 'School Name', minWidth: 200, sortable: true}
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'courseGroup'
           };
         },
         DupAttendance: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Duplicate Attendance Records',
-            header: 'Students with Duplicate Attendance Records in ' + reportOptions.schoolName,
+            header: 'Students with Duplicate Attendance Records in ' + powerTools.reportOptions.schoolName,
             info: 'This report selects any student who has duplicate daily or meeting attendance records.<br>' +
             'Selecting a record will take you to the students Attendance page, however the bad records must be removed ' +
             'via DDA.' +
@@ -632,22 +728,28 @@ var powerTools = window.powerTools || {
               {key: 'periodID', parser: 'number'}, 'attendanceType', {key: 'count', parser: 'number'}],
             columns: [
               {key: 'student', label: 'Student', minWidth: 150, sortable: true, formatter: 'Attendance'},
-              {key: 'attDate', label: 'Attendance Date', minWidth: 100, sortable: true, formatter: 'DateNoLink'},
+              {
+                key: 'attDate',
+                label: 'Attendance Date',
+                minWidth: 100,
+                sortable: true,
+                formatter: 'DateNoLink'
+              },
               {key: 'ccID', label: 'CCID', minWidth: 50, sortable: true},
               {key: 'periodID', label: 'Period ID', minWidth: 50, sortable: true},
               {key: 'attendanceType', label: 'Attendance Type', minWidth: 100, sortable: true},
               {key: 'count', label: 'Count', minWidth: 50, sortable: true},
               {key: 'schoolName', label: 'School Name', minWidth: 200, sortable: true}
             ],
-            template: PowerTools.templateCY(),
+            template: powerTools.templateCY(),
             sortKey: 'student',
             showSelectButtons: 1
           };
         },
         DupAttendanceCode: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Duplicate Attendance Code Records',
-            header: 'Duplicate Attendance Code Records in ' + reportOptions.schoolName,
+            header: 'Duplicate Attendance Code Records in ' + powerTools.reportOptions.schoolName,
             info: 'This report displays attendance code records that are duplicated. An attendance code is considered ' +
             'duplicate when there are two records with the same school id, year id and attendance code. It is not ' +
             'recommended to simply delete these records as removing the attendance codes through normal deletion will ' +
@@ -659,15 +761,15 @@ var powerTools = window.powerTools || {
               {key: 'yearId', label: 'School Year', minWidth: 50, sortable: true},
               {key: 'count', label: 'Count of Records', minWidth: 50, sortable: true}
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'schoolName',
             wizardLink: 1
           };
         },
         DupAttendanceConversion: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Duplicate Attendance Conversion Records',
-            header: 'Duplicate Attendance Conversion Records in ' + reportOptions.schoolName,
+            header: 'Duplicate Attendance Conversion Records in ' + powerTools.reportOptions.schoolName,
             info: 'This report displays attendance conversion records that are duplicated. An attendance conversion is ' +
             'considered duplicate when there are two records with the same school id, year id, and name. It is not ' +
             'recommended to simply delete these records as removing the attendance conversions will orphan bell ' +
@@ -680,15 +782,15 @@ var powerTools = window.powerTools || {
               {key: 'yearId', label: 'School Year', minWidth: 50, sortable: true},
               {key: 'count', label: 'Count of Records', minWidth: 50, sortable: true}
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'schoolName',
             wizardLink: 1
           };
         },
         DupBellSchedule: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Duplicate Bell Schedule Records',
-            header: 'Duplicate Bell Schedule Records in ' + reportOptions.schoolName,
+            header: 'Duplicate Bell Schedule Records in ' + powerTools.reportOptions.schoolName,
             info: 'This report displays bell schedule records that are duplicated. A bell schedule is considered ' +
             'duplicate when there are two records with the same name, the same School ID, and the same Year ID. It is ' +
             'not recommended to simply delete these records as removing the bell schedules through normal deletion will ' +
@@ -700,15 +802,15 @@ var powerTools = window.powerTools || {
               {key: 'yearId', label: 'School Year', minWidth: 50, sortable: true},
               {key: 'count', label: 'Count of Records', minWidth: 50, sortable: true}
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'schoolName',
             wizardLink: 1
           };
         },
         DupBellScheduleItems: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Duplicate Bell Schedule Items',
-            header: 'Duplicate Bell Schedule Items in ' + reportOptions.schoolName,
+            header: 'Duplicate Bell Schedule Items in ' + powerTools.reportOptions.schoolName,
             info: 'This report displays bell schedule item records that are duplicated. A duplicate bell schedule item is ' +
             'a bell schedule containing the same period twice. These records must be removed manually as a period ' +
             'should only be used once per day.<p> Clicking on the bell schedule name will take you to the bell schedule ' +
@@ -729,14 +831,14 @@ var powerTools = window.powerTools || {
               {key: 'yearId', label: 'School Year', minWidth: 50, sortable: true},
               {key: 'count', label: 'Count of Records', minWidth: 50, sortable: true}
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'name'
           };
         },
         DupCalendarDay: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Duplicate Calendar Day Records',
-            header: 'Duplicate Calendar Day Records in ' + reportOptions.schoolName,
+            header: 'Duplicate Calendar Day Records in ' + powerTools.reportOptions.schoolName,
             info: 'This report displays calendar day records that are duplicated. A calendar_day record is considered ' +
             'duplicate when there are two records with the same date and school id.',
             fields: ['date', 'schoolName', {key: 'count', parser: 'number'}],
@@ -745,13 +847,13 @@ var powerTools = window.powerTools || {
               {key: 'date', label: 'Date', minWidth: 100, sortable: true, formatter: 'DateNoLink'},
               {key: 'count', label: 'Count of Records', minWidth: 50, sortable: true}
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'schoolName',
             wizardLink: 1
           };
         },
         DupCourseNumbers: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Duplicate Course Number Records',
             header: 'Duplicate Course Number Records',
             info: 'This report displays records in the Courses table that are duplicated.<p>' +
@@ -762,14 +864,14 @@ var powerTools = window.powerTools || {
               {key: 'courseNumber', label: 'Course Number', minWidth: 150, sortable: true},
               {key: 'count', label: 'Count of Records', minWidth: 150, sortable: true}
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'courseNumber'
           };
         },
         DupDays: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Duplicate Day Records',
-            header: 'Duplicate Cycle Day Records in ' + reportOptions.schoolName,
+            header: 'Duplicate Cycle Day Records in ' + powerTools.reportOptions.schoolName,
             info: 'This report displays Cycle Day records that are duplicated. A cycle day is considered duplicate when ' +
             'there are two records with the same School ID, same Year ID, and same letter. It is not recommended to ' +
             'simply delete these records as removing the cycle days through normal deletion will orphan calendar day ' +
@@ -781,13 +883,13 @@ var powerTools = window.powerTools || {
               {key: 'yearId', label: 'School Year', minWidth: 50, sortable: true},
               {key: 'count', label: 'Count of Records', minWidth: 50, sortable: true}
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'schoolName',
             wizardLink: 1
           };
         },
         DupEntryCodes: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Duplicate Entry Code Records',
             header: 'Duplicate Entry Code Records',
             info: 'This report displays Entry code records that are duplicated. An Entry code is considered duplicate ' +
@@ -797,13 +899,13 @@ var powerTools = window.powerTools || {
               {key: 'entryCode', label: 'Entry Code', minWidth: 150, sortable: true},
               {key: 'count', label: 'Count of Records', minWidth: 150, sortable: true}
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'entryCode',
             wizardLink: 1
           };
         },
         DupExitCodes: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Duplicate Exit Code Records',
             header: 'Duplicate Exit Code Records',
             info: 'This report displays exit code records that are duplicated. An Exit code is considered duplicate when ' +
@@ -813,15 +915,15 @@ var powerTools = window.powerTools || {
               {key: 'exitCode', label: 'Exit Code', minWidth: 150, sortable: true},
               {key: 'count', label: 'Count of Records', minWidth: 150, sortable: true}
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'exitCode',
             wizardLink: 1
           };
         },
         DupFTE: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Duplicate FTE Records',
-            header: 'Duplicate FTE Records in ' + reportOptions.schoolName,
+            header: 'Duplicate FTE Records in ' + powerTools.reportOptions.schoolName,
             info: 'This report displays FTE records that are duplicated. A Full-Time Equivalency is considered duplicate ' +
             'when there are two records with the same name, the same School ID, and the same Year Id. It is not ' +
             'recommended to simply delete these records as removing the FTE\'s through normal deletion will orphan ' +
@@ -833,13 +935,13 @@ var powerTools = window.powerTools || {
               {key: 'yearId', label: 'School Year', minWidth: 50, sortable: true},
               {key: 'count', label: 'Count of Records', minWidth: 50, sortable: true}
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'schoolName',
             wizardLink: 1
           };
         },
         DupGen: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Duplicate Gen Table Records',
             header: 'Duplicate Gen Table Records in All Schools',
             info: 'This report displays records in the Gen table that are duplicated. A Gen record is considered duplicate ' +
@@ -853,44 +955,62 @@ var powerTools = window.powerTools || {
               {key: 'schoolName', label: 'School Name', minWidth: 200, sortable: true},
               {key: 'count', label: 'Count of Records', minWidth: 50, sortable: true}
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'name',
             wizardLink: 1
           };
         },
         DuplicateTeacherNumber: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Duplicate Teachers',
             header: 'Teachers with the Same Teacher Number in Multiple Schools',
             info: 'This report selects any staff member who exists in more than one school with the same teacher number.' +
             '<p>Selecting a teacher will take you to the staff members page.',
             fields: ['dcid', 'teacher', 'schoolName', 'teacher2dcid', 'teacher2', 'teacher2SchoolName',
-                     'teacher2Number'],
+              'teacher2Number'],
             columns: [
-              {key: 'teacher', label: 'Teacher Name', minWidth: 150, sortable: true, formatter: 'TeacherEdit'},
+              {
+                key: 'teacher',
+                label: 'Teacher Name',
+                minWidth: 150,
+                sortable: true,
+                formatter: 'TeacherEdit'
+              },
               {key: 'schoolName', label: 'School Name', minWidth: 100, sortable: true},
-              {key: 'teacher2', label: 'Teacher Name', minWidth: 150, sortable: true, formatter: 'TeacherEdit2'},
+              {
+                key: 'teacher2',
+                label: 'Teacher Name',
+                minWidth: 150,
+                sortable: true,
+                formatter: 'TeacherEdit2'
+              },
               {key: 'teacher2SchoolName', label: 'School Name', minWidth: 100, sortable: true},
               {key: 'teacher2Number', label: 'Teacher Number', minWidth: 50, sortable: true}
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'teacher'
           };
         },
         DupPeriodEnrollment: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Duplicate Period Enrollments',
-            header: 'Students with Multiple Enrollments in the Same Period in ' + reportOptions.schoolName,
+            header: 'Students with Multiple Enrollments in the Same Period in ' + powerTools.reportOptions.schoolName,
             info: 'This report selects any student who is enrolled more than once in a period at any point in time.<p>' +
             'Selecting a record will take you to the students All Enrollments page, where the duplicate period ' +
             'enrollments may be reviewed.<p>' +
             '<b>This page is highly dependent on the Section Meetings records. If you are getting incorrect results, ' +
             'please reset section meetings.</b>',
             fields: ['dcid', 'studentid', 'student', 'schoolName', {key: 'studentNumber', parser: 'number'},
-                     'dateEnrolled',
-                     'periodNumber'],
+              'dateEnrolled',
+              'periodNumber'],
             columns: [
-              {key: 'student', label: 'Student Name', minWidth: 150, sortable: true, formatter: 'AllEnrollments'},
+              {
+                key: 'student',
+                label: 'Student Name',
+                minWidth: 150,
+                sortable: true,
+                formatter: 'AllEnrollments'
+              },
               {key: 'studentNumber', label: 'Student Number', minWidth: 100, sortable: true},
               {
                 key: 'dateEnrolled', label: 'Date Dup Enrollment Starts', minWidth: 100, sortable: true,
@@ -899,15 +1019,15 @@ var powerTools = window.powerTools || {
               {key: 'periodNumber', label: 'Expression', minWidth: 100, sortable: true},
               {key: 'schoolName', label: 'School Name', minWidth: 200, sortable: true}
             ],
-            template: PowerTools.templateCY(),
+            template: powerTools.templateCY(),
             sortKey: 'student',
             showSelectButtons: 1
           };
         },
         DupPeriodNumber: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Duplicate Period Number Records',
-            header: 'Duplicate Period Number Records in ' + reportOptions.schoolName,
+            header: 'Duplicate Period Number Records in ' + powerTools.reportOptions.schoolName,
             info: 'This report displays period number records that are duplicated. A period is considered duplicate when ' +
             'there are two periods with the same period number, same School ID, and same Year ID.',
             fields: ['period', 'schoolName', 'yearId', {key: 'count', parser: 'number'}],
@@ -917,15 +1037,15 @@ var powerTools = window.powerTools || {
               {key: 'yearId', label: 'School Year', minWidth: 50, sortable: true},
               {key: 'count', label: 'Count of Records', minWidth: 50, sortable: true}
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'schoolName',
             wizardLink: 1
           };
         },
         DupPrefs: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Duplicate Preference Records',
-            header: 'Duplicate Preference Records in ' + reportOptions.schoolName,
+            header: 'Duplicate Preference Records in ' + powerTools.reportOptions.schoolName,
             info: 'This report displays records in the Prefs table that are duplicated. A Preference is considered ' +
             'duplicate when there are two records with the same name, school id, year id and user id.',
             fields: ['name', 'yearId', 'schoolId', {key: 'count', parser: 'number'},
@@ -937,13 +1057,13 @@ var powerTools = window.powerTools || {
               {key: 'userId', label: 'UserId', minWidth: 50, sortable: true},
               {key: 'count', label: 'Count of Records', minWidth: 50, sortable: true}
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'name',
             wizardLink: 1
           };
         },
         DupServerConfig: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Duplicate Server Config Records',
             header: 'Duplicate Server Config Records',
             info: 'This report displays server configuration records that are duplicated. A server_config record is ' +
@@ -958,13 +1078,13 @@ var powerTools = window.powerTools || {
               {key: 'serverInstanceId', label: 'Server Instance ID', minWidth: 50, sortable: true},
               {key: 'count', label: 'Count of Records', minWidth: 50, sortable: true}
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'name',
             wizardLink: 1
           };
         },
         DupServerInstance: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Duplicate Server Instance Records',
             header: 'Duplicate Server Instance Records',
             info: 'This report displays server instance records that are duplicated. A server instance record is ' +
@@ -981,15 +1101,15 @@ var powerTools = window.powerTools || {
               {key: 'userSuppliedName', label: 'HostName', minWidth: 150, sortable: true},
               {key: 'serverState', label: 'Server State', minWidth: 50, sortable: true}
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'id',
             wizardLink: 1
           };
         },
         DupStoredGrades: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Duplicate StoredGrades',
-            header: 'Students with Duplicate Stored Grades in ' + reportOptions.schoolName,
+            header: 'Students with Duplicate Stored Grades in ' + powerTools.reportOptions.schoolName,
             info: 'This report selects any student who has duplicate stored grades for a course and term.<br>' +
             'Selecting a record will take you to the students Historical Grades page, where the duplicate records can ' +
             'be deleted.' +
@@ -1006,13 +1126,13 @@ var powerTools = window.powerTools || {
               {key: 'termID', label: 'Term ID', minWidth: 50, sortable: true},
               {key: 'schoolName', label: 'School', minWidth: 200, sortable: true}
             ],
-            template: PowerTools.templateCY(),
+            template: powerTools.templateCY(),
             sortKey: 'student',
             showSelectButtons: 1
           };
         },
         DupStudentID: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Duplicate Student IDs',
             header: 'Duplicate Student IDs in All Schools',
             info: 'This report selects any student whose ID matches the ID of another student in the database.<br>' +
@@ -1026,14 +1146,14 @@ var powerTools = window.powerTools || {
               {key: 'student1', label: 'Student 1', minWidth: 150, sortable: true, formatter: 'Demographics'},
               {key: 'student2', label: 'Student 2', minWidth: 150, sortable: true, formatter: 'Demographics2'}
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'student1'
           };
         },
         DupStudentNumber: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Duplicate Student Numbers',
-            header: 'Duplicate Student Numbers in ' + reportOptions.schoolName,
+            header: 'Duplicate Student Numbers in ' + powerTools.reportOptions.schoolName,
             info: 'This report selects any student who has a student number which is also assigned to another student.<br>' +
             'Selecting a record will take you to the students General Demographics page, where the student number can ' +
             'be changed.' +
@@ -1046,14 +1166,14 @@ var powerTools = window.powerTools || {
               {key: 'student2', label: 'Student 2', minWidth: 50, sortable: true, formatter: 'Demographics2'},
               {key: 'school2Name', label: 'Student 2 School Name', minWidth: 50, sortable: true}
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'studentNumber'
           };
         },
         DupTeacherNumber: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Duplicate Teacher Numbers',
-            header: 'Duplicate Teacher Numbers in ' + reportOptions.schoolName,
+            header: 'Duplicate Teacher Numbers in ' + powerTools.reportOptions.schoolName,
             info: 'This report selects any teacher who has a student number which is also assigned to another student.<br>' +
             'Selecting a record will take you to the teachers record, where the teacher number can be changed on the ' +
             'Edit Information section.' + '<p>' +
@@ -1066,14 +1186,14 @@ var powerTools = window.powerTools || {
               {key: 'teacher2', label: 'Teacher 2', minWidth: 50, sortable: true, formatter: 'TeacherEdit2'},
               {key: 'school2Name', label: 'Teacher 2 School Name', minWidth: 200, sortable: true}
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'teacherNumber'
           };
         },
         DupTermBins: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Duplicate Final Grade Setup Records',
-            header: 'Duplicate Final Grade Setup Records in ' + reportOptions.schoolName,
+            header: 'Duplicate Final Grade Setup Records in ' + powerTools.reportOptions.schoolName,
             info: 'This report displays Final Grade Setup (Termbins) records that are duplicated. A Final Grade Setup is ' +
             'considered duplicate when there are two records with the same SchoolID, the same TermID, and the same ' +
             'StoreCode.',
@@ -1085,15 +1205,15 @@ var powerTools = window.powerTools || {
               {key: 'storeCode', label: 'Store Code', minWidth: 50, sortable: true},
               {key: 'count', label: 'Count of Records', minWidth: 50, sortable: true}
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'schoolName',
             wizardLink: 1
           };
         },
         DupTerms: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Duplicate Term Records',
-            header: 'Duplicate Term Records in ' + reportOptions.schoolName,
+            header: 'Duplicate Term Records in ' + powerTools.reportOptions.schoolName,
             info: 'This report displays term records that are duplicated. A term is considered duplicate when there are ' +
             'two records with the same SchoolID, and same Term ID.',
             fields: ['termId', 'schoolName', 'yearId', {key: 'count', parser: 'number'}],
@@ -1103,7 +1223,7 @@ var powerTools = window.powerTools || {
               {key: 'termId', label: 'Term ID', minWidth: 75, sortable: true},
               {key: 'count', label: 'Count of Records', minWidth: 50, sortable: true}
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'schoolName',
             showSelectButtons: 1,
             wizardLink: 1
@@ -1111,7 +1231,7 @@ var powerTools = window.powerTools || {
         },
         EnrollmentReport: function () {
           powerTools.hideSpinner();
-          reportData = {
+          powerTools.reportData = {
             title: 'Enrollment Report',
             header: 'Enrollment Report',
             info: 'This report will perform a listing of the count of records for each enrollment item PowerTools ' +
@@ -1129,21 +1249,21 @@ var powerTools = window.powerTools || {
                 formatter: 'OverviewCount'
               }
             ],
-            template: PowerTools.templateCYOnly()
+            template: powerTools.templateCYOnly()
           };
         },
         FutureActiveSchool: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Invalid Future Active Enrollments',
-            header: 'Students with Active Enrollments for Future Dates in ' + reportOptions.schoolName,
+            header: 'Students with Active Enrollments for Future Dates in ' + powerTools.reportOptions.schoolName,
             info: 'This report selects all students whose enrollments are active, but have future enrollment dates which ' +
             'do not start on the first day of a year long term.<br>' +
             'Selecting a record will take you to the students Transfer Info page, where the enrollment dates can be ' +
             'corrected if necessary. If the student should be preregistered, the record must be corrected by editing ' +
             'the enroll_status field using either DDA or Student Field Value.',
             fields: ['dcid', 'studentid', 'student', 'schoolName', {key: 'gradeLevel', parser: 'number'},
-                     'enrollStatus',
-                     'entryDate', 'exitDate'],
+              'enrollStatus',
+              'entryDate', 'exitDate'],
             columns: [
               {key: 'student', label: 'Student', minWidth: 150, sortable: true, formatter: 'TransferInfo'},
               {key: 'gradeLevel', label: 'Grade Level', minWidth: 50, sortable: true},
@@ -1164,13 +1284,13 @@ var powerTools = window.powerTools || {
               },
               {key: 'schoolName', label: 'School Name', minWidth: 200, sortable: true}
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'student',
             showSelectButtons: 1
           };
         },
         FutureDiscipline: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Discipline Logs with Future Dates',
             header: 'Discipline Logs with Future Dates',
             info: 'This report selects any student with a log entry that has a type of "Discipline" and a discipline ' +
@@ -1181,12 +1301,12 @@ var powerTools = window.powerTools || {
               {key: 'date', label: 'Date', minWidth: 50, sortable: true},
               {key: 'logEntry', label: 'Title', minWidth: 100, sortable: true}
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'student'
           };
         },
         FutureIncidents: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Incidents with Future Dates',
             header: 'Incidents with Future Dates',
             info: 'This report selects any incident with an incident date in the future.<p>' +
@@ -1203,12 +1323,12 @@ var powerTools = window.powerTools || {
               {key: 'title', label: 'Incident Title', minWidth: 200, sortable: true},
               {key: 'schoolName', label: 'School Name', minWidth: 50, sortable: true}
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'incidentId'
           };
         },
         GradeScaleDupCutoff: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Grade Scales with Duplicate Cutoff Percentages',
             header: 'Grade Scales with Duplicate Cutoff Percentages',
             info: 'This report selects any grade scale which contains more than one item with the same cutoff percentage.' +
@@ -1217,18 +1337,24 @@ var powerTools = window.powerTools || {
             'the duplicate item may be removed.',
             fields: ['dcid', 'name', {key: 'cutoff', parser: 'number'}, {key: 'count', parser: 'number'}],
             columns: [
-              {key: 'name', label: 'Grade Scale Name', minWidth: 150, sortable: true, formatter: 'GradeScales'},
+              {
+                key: 'name',
+                label: 'Grade Scale Name',
+                minWidth: 150,
+                sortable: true,
+                formatter: 'GradeScales'
+              },
               {key: 'cutoff', label: 'Cutoff Percent', minWidth: 50, sortable: true},
               {key: 'count', label: 'Count', minWidth: 50, sortable: true}
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'name'
           };
         },
         IncompleteSched: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Students with Incomplete Scheduling Setup',
-            header: 'Students with Incomplete Scheduling Setup in ' + reportOptions.schoolName,
+            header: 'Students with Incomplete Scheduling Setup in ' + powerTools.reportOptions.schoolName,
             info: 'This report selects any student who is set to be Schedule Next year, however the Next School, Next ' +
             'Year Grade, or Year of Graduation is not set.<p>Selecting a record will take you to the students Scheduling ' +
             'Setup page, where the scheduling setup may be corrected by either populating the data, or by unchecking ' +
@@ -1237,7 +1363,13 @@ var powerTools = window.powerTools || {
               {key: 'nextYearGrade', parser: 'number'}, 'lowGrade', 'highGrade', 'yearOfGraduation'],
             columns: [
               {key: 'student', label: 'Student', minWidth: 150, sortable: true, formatter: 'ScheduleSetup'},
-              {key: 'nextSchoolName', label: 'Next School', minWidth: 200, sortable: true, formatter: 'NextSchool'},
+              {
+                key: 'nextSchoolName',
+                label: 'Next School',
+                minWidth: 200,
+                sortable: true,
+                formatter: 'NextSchool'
+              },
               {
                 key: 'nextYearGrade',
                 label: 'Next Year Grade',
@@ -1260,15 +1392,15 @@ var powerTools = window.powerTools || {
                 formatter: 'SchoolExistNoDistrict'
               }
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'student',
             showSelectButtons: 1
           };
         },
         IncompleteTransfers: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Incomplete Student Transfers',
-            header: 'Students with Incomplete Student Transfers in ' + reportOptions.schoolName,
+            header: 'Students with Incomplete Student Transfers in ' + powerTools.reportOptions.schoolName,
             info: 'This report displays any student who has been transferred out of school, transferred to another school, ' +
             'but has not been enrolled in the new school. This type of incomplete transfer has been known to cause ' +
             'various issues with attendance reporting.<p>' +
@@ -1276,7 +1408,7 @@ var powerTools = window.powerTools || {
             'enrolling the student back in school, or by modifying the schoolid to match the enrollment school id of ' +
             'the record.',
             fields: ['dcid', 'studentid', 'student', {key: 'gradeLevel', parser: 'number'}, 'schoolName',
-                     'enrollmentSchoolName', 'exitDate'],
+              'enrollmentSchoolName', 'exitDate'],
             columns: [
               {key: 'student', label: 'Student', minWidth: 150, sortable: true, formatter: 'TransferInfo'},
               {key: 'gradeLevel', label: 'Grade Level', minWidth: 50, sortable: true},
@@ -1290,15 +1422,16 @@ var powerTools = window.powerTools || {
                 formatter: 'EnrollmentDateNoLink'
               }
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'student',
             showSelectButtons: 1
           };
         },
         IncorrectLunchBal: function () {
-          reportData = {
+          //noinspection HtmlUnknownTarget
+          powerTools.reportData = {
             title: 'Incorrect Lunch Balances',
-            header: 'Students with Incorrect Lunch Balances in ' + reportOptions.schoolName,
+            header: 'Students with Incorrect Lunch Balances in ' + powerTools.reportOptions.schoolName,
             info: 'This report selects any student who has a lunch balance which does not match the starting balance plus ' +
             'the net effect of all lunch transactions. The "Running Balance" plus the "Starting Balance" should match ' +
             'the "Current Balance."<p>' +
@@ -1331,15 +1464,15 @@ var powerTools = window.powerTools || {
               },
               {key: 'schoolName', label: 'School Name', minWidth: 200, sortable: true}
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'student',
             showSelectButtons: 1
           };
         },
         IncorrectStoredGrades: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Incorrect Stored Grades',
-            header: 'Students with Incorrect Stored Grades in ' + reportOptions.schoolName,
+            header: 'Students with Incorrect Stored Grades in ' + powerTools.reportOptions.schoolName,
             info: 'This report selects any student who has a grade where the letter grade or the GPA points does not match ' +
             'what is expected, based off the grade scale used when storing the grades.<br>' +
             'Items in red indicate a mismatch between the Historical Grade record, and the Grade Scale calculation.' +
@@ -1350,8 +1483,11 @@ var powerTools = window.powerTools || {
             'Selecting a record will take you to the students Historical Grades page, where the blank grade can be ' +
             'deleted.',
             fields: ['dcid', 'studentid', 'student', 'schoolName', 'courseName', 'courseNumber', 'storeCode',
-                     'termID',
-              {key: 'percent', parser: 'number'}, 'grade', 'gradescaleGrade', {key: 'gpaPoints', parser: 'number'},
+              'termID',
+              {key: 'percent', parser: 'number'}, 'grade', 'gradescaleGrade', {
+                key: 'gpaPoints',
+                parser: 'number'
+              },
               {key: 'gradePoints', parser: 'number'}],
             columns: [
               {key: 'student', label: 'Student', minWidth: 50, sortable: true, formatter: 'PreviousGrades'},
@@ -1360,7 +1496,13 @@ var powerTools = window.powerTools || {
               {key: 'storeCode', label: 'Store Code', minWidth: 50, sortable: true},
               {key: 'termID', label: 'Term ID', minWidth: 50, sortable: true},
               {key: 'percent', label: 'Percent', minWidth: 50, sortable: true},
-              {key: 'grade', label: 'Grade / Expected', minWidth: 50, sortable: true, formatter: 'InvalidLGrade'},
+              {
+                key: 'grade',
+                label: 'Grade / Expected',
+                minWidth: 50,
+                sortable: true,
+                formatter: 'InvalidLGrade'
+              },
               {
                 key: 'gpaPoints',
                 label: 'GPA Points / Expected',
@@ -1370,15 +1512,16 @@ var powerTools = window.powerTools || {
               },
               {key: 'schoolName', label: 'School', minWidth: 150, sortable: true}
             ],
-            template: PowerTools.templateCY(),
+            template: powerTools.templateCY(),
             sortKey: 'student',
             showSelectButtons: 1
           };
         },
         IncorrectStudYear: function () {
-          reportData = {
+          //noinspection HtmlUnknownTarget
+          powerTools.reportData = {
             title: 'Incorrect Studyear Field',
-            header: 'Students with CC Records Having Incorrect Studyear Values in ' + reportOptions.schoolName,
+            header: 'Students with CC Records Having Incorrect Studyear Values in ' + powerTools.reportOptions.schoolName,
             info: 'This report selects any cc record where the Studyear field is incorrect. A valid studyear field is the ' +
             'Student ID plus the Year ID of the CC record.<p>' +
             'Selecting a record will take you to all enrollments page to verify the enrollment is valid. To correct ' +
@@ -1394,22 +1537,22 @@ var powerTools = window.powerTools || {
               {key: 'yearId', label: 'YearID', minWidth: 30, sortable: true},
               {key: 'studYear', label: 'StudYear', minWidth: 50, sortable: true}
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'student',
             showSelectButtons: 1
           };
         },
         InvalidCC: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Invalid Section Enrollments',
-            header: 'Students with Blank Stored Grades in ' + reportOptions.schoolName,
+            header: 'Students with Blank Stored Grades in ' + powerTools.reportOptions.schoolName,
             info: 'This report selects any class enrollment which has an exit date prior to the entry date of the class ' +
             'enrollment. Selecting a student will take you to the students All Enrollments page, where the data can be ' +
             'corrected.<p>Enrollments must be corrected by manually changing either the date enrolled or date left of ' +
             'the invalid enrollment.' +
             '<p>A no-show enrollment should be indicated by the exit date matching the entry date of the enrollment.',
             fields: ['dcid', 'studentid', 'student', 'schoolName', 'courseName', 'courseNumber', 'sectionNumber',
-                     'dateEnrolled', 'dateLeft'],
+              'dateEnrolled', 'dateLeft'],
             columns: [
               {key: 'student', label: 'Student', minWidth: 150, sortable: true, formatter: 'AllEnrollments'},
               {key: 'courseName', label: 'Course Name', minWidth: 150, sortable: true},
@@ -1420,19 +1563,25 @@ var powerTools = window.powerTools || {
                 sortable: true,
                 formatter: 'CourseSection'
               },
-              {key: 'dateEnrolled', label: 'Date Enrolled', minWidth: 100, sortable: true, formatter: 'DateNoLink'},
+              {
+                key: 'dateEnrolled',
+                label: 'Date Enrolled',
+                minWidth: 100,
+                sortable: true,
+                formatter: 'DateNoLink'
+              },
               {key: 'dateLeft', label: 'Date Left', minWidth: 100, sortable: true, formatter: 'DateNoLink'},
               {key: 'schoolName', label: 'School Name', minWidth: 200, sortable: true}
             ],
-            template: PowerTools.templateCY(),
+            template: powerTools.templateCY(),
             sortKey: 'student',
             showSelectButtons: 1
           };
         },
         InvalidLunch: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Invalid Lunch Transactions',
-            header: 'Students with Invalid Lunch Transactions in ' + reportOptions.schoolName,
+            header: 'Students with Invalid Lunch Transactions in ' + powerTools.reportOptions.schoolName,
             info: 'This report selects any student with a lunch transaction type that has been identified to be invalid.<p>' +
             'Selecting a record will take you to the students lunch transactions page. The records must be removed or ' +
             'corrected by DDA.',
@@ -1441,18 +1590,24 @@ var powerTools = window.powerTools || {
               {key: 'student', label: 'Student', minWidth: 150, sortable: true, formatter: 'TransferInfo'},
               {key: 'date', label: 'Date', minWidth: 100, sortable: true, formatter: 'DateNoLink'},
               {key: 'transType', label: 'Transtype', minWidth: 100, sortable: true},
-              {key: 'currentBal', label: 'Current Balance', minWidth: 100, sortable: true, formatter: 'currency'},
+              {
+                key: 'currentBal',
+                label: 'Current Balance',
+                minWidth: 100,
+                sortable: true,
+                formatter: 'currency'
+              },
               {key: 'schoolName', label: 'School Name', minWidth: 200, sortable: true}
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'student',
             showSelectButtons: 1
           };
         },
         InvalidSchool: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Reverse School Enrollments',
-            header: 'Students with Reverse School Enrollments in ' + reportOptions.schoolName,
+            header: 'Students with Reverse School Enrollments in ' + powerTools.reportOptions.schoolName,
             info: 'This report identifies all students who have a school enrollment with an exit date prior to the ' +
             'enrollment date.<p>' +
             'Selecting a student will take you to the Transfer Info page, where the records can be corrected. These ' +
@@ -1479,15 +1634,15 @@ var powerTools = window.powerTools || {
               },
               {key: 'schoolName', label: 'School Name', minWidth: 200, sortable: true}
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'student',
             showSelectButtons: 1
           };
         },
         InvalidSpEnrollments: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Reverse Special Program Enrollments',
-            header: 'Students with Reverse Special Program Enrollments in ' + reportOptions.schoolName,
+            header: 'Students with Reverse Special Program Enrollments in ' + powerTools.reportOptions.schoolName,
             info: 'This report selects any student who has a Special Program enrollment with the exit date prior to the ' +
             'entry date.<br>Selecting a record will take you to the students Special Programs page, where the enrollment ' +
             'may be corrected.' +
@@ -1501,23 +1656,23 @@ var powerTools = window.powerTools || {
               {key: 'exitDate', label: 'Exit Date', minWidth: 100, sortable: true, formatter: 'DateNoLink'},
               {key: 'schoolName', label: 'School Name', minwidth: 200, sortable: true}
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'student',
             showSelectButtons: 1
           };
         },
         InvalidTrack: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Students with Invalid Tracks',
-            header: 'Students with Invalid Tracks in ' + reportOptions.schoolName,
+            header: 'Students with Invalid Tracks in ' + powerTools.reportOptions.schoolName,
             info: 'This report selects any students whose Track field is populated with something other than A,B,C,D,E, or ' +
             'F.' +
             '<p>Selecting a record will take you to the students Transfer Info page, where the invalid enrollments ' +
             'track may be corrected by selecting the Entry Date, then modifying the Track to be either blank or the ' +
             'students actual school track.',
             fields: ['dcid', 'studentid', 'student', 'schoolName', {key: 'gradeLevel', parser: 'number'},
-                     'entryDate',
-                     'exitDate', 'track'],
+              'entryDate',
+              'exitDate', 'track'],
             columns: [
               {key: 'student', label: 'Student', minWidth: 150, sortable: true, formatter: 'TransferInfo'},
               {key: 'gradeLevel', label: 'Grade Level', minWidth: 50, sortable: true},
@@ -1538,22 +1693,22 @@ var powerTools = window.powerTools || {
               {key: 'track', label: 'Track', minWidth: 50, sortable: true},
               {key: 'schoolName', label: 'School Name', minWidth: 200, sortable: true}
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'student',
             showSelectButtons: 1
           };
         },
         InvCourseNumberCC: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'CC Record Course Number issues',
-            header: 'Invalid Course Number in the CC Table in ' + reportOptions.schoolName,
+            header: 'Invalid Course Number in the CC Table in ' + powerTools.reportOptions.schoolName,
             info: 'This report displays any CC record where the course number exists in the courses table, but has a ' +
             'different case sensitivity. This issue is documented in ' +
             '<a href="https://powersource.pearsonschoolsystems.com/d/55894" target="PowerSource">PowerSource article ' +
             '55894</a>.',
             fields: ['student', {key: 'sectionId', parser: 'number'}, 'schoolName',
               {key: 'termId', parser: 'number'},
-                     'ccCourseNumber', 'ccSectionNumber', 'districtCourseNumber'],
+              'ccCourseNumber', 'ccSectionNumber', 'districtCourseNumber'],
             columns: [
               {key: 'student', label: 'Student', minWidth: 150, sortable: true},
               {key: 'sectionId', label: 'SectionID', minWidth: 50, sortable: true},
@@ -1563,15 +1718,15 @@ var powerTools = window.powerTools || {
               {key: 'ccSectionNumber', label: 'Section #', minWidth: 50, sortable: true},
               {key: 'districtCourseNumber', label: 'Courses Course #', minWidth: 50, sortable: true}
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'student',
             wizardLink: 1
           };
         },
         InvCourseNumberSections: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Sections Record Course Number Issues',
-            header: 'Invalid Course Number in the Sections table in ' + reportOptions.schoolName,
+            header: 'Invalid Course Number in the Sections table in ' + powerTools.reportOptions.schoolName,
             info: 'This report displays any section where the course number exists in the courses table, but has a ' +
             'different case sensitivity in all schools. This issue is documented in ' +
             '<a href="https://powersource.pearsonschoolsystems.com/d/54970" target="PowerSource">' +
@@ -1588,14 +1743,14 @@ var powerTools = window.powerTools || {
               {key: 'sectionCourseNumber', label: 'Sections Course #', minWidth: 50, sortable: true},
               {key: 'coursesCourseNumber', label: 'Courses Course #', minWidth: 50, sortable: true}
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'sectionId',
             wizardLink: 1
           };
         },
         MaintReport: function () {
           powerTools.hideSpinner();
-          reportData = {
+          powerTools.reportData = {
             title: 'Maintenance Report',
             header: 'Maintenance Report',
             info: 'This report will perform a listing of the count records for each system setup item PowerTools diagnoses.' +
@@ -1611,11 +1766,11 @@ var powerTools = window.powerTools || {
                 formatter: 'OverviewCount'
               }
             ],
-            template: PowerTools.templateNoOption()
+            template: powerTools.templateNoOption()
           };
         },
         MisalignedStandards: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Misaligned Standards',
             header: 'Standards with Invalid Calculation or List Parents',
             info: 'This report selects any standard where the list parent or calculation parent does not exist, or where ' +
@@ -1628,13 +1783,13 @@ var powerTools = window.powerTools || {
               {key: 'listParent', label: 'ListParent', minWidth: 100, sortable: true},
               {key: 'issue', label: 'Issue', minWidth: 200, sortable: true}
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'identifier'
           };
         },
         MiscReport: function () {
           powerTools.hideSpinner();
-          reportData = {
+          powerTools.reportData = {
             title: 'Miscellaneous Report',
             header: 'Miscellaneous Report',
             info: 'This report will perform a listing of the count of records for each miscellaneous item PowerTools ' +
@@ -1652,13 +1807,13 @@ var powerTools = window.powerTools || {
                 formatter: 'OverviewCount'
               }
             ],
-            template: PowerTools.templateCYOnly()
+            template: powerTools.templateCYOnly()
           };
         },
         MissingFTEStudent: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Missing Full Time Equivalencies',
-            header: 'Students with Missing Full Time Equivalencies in ' + reportOptions.schoolName,
+            header: 'Students with Missing Full Time Equivalencies in ' + powerTools.reportOptions.schoolName,
             info: 'This report selects any student who has a Full Time Equivalency that is either blank, or does not ' +
             'belong to the school the student is enrolled in.<p>Selecting a record will take you to the students ' +
             'Transfer Info page, where the FTE may be corrected.',
@@ -1669,16 +1824,16 @@ var powerTools = window.powerTools || {
               {key: 'exitDate', label: 'Exit Date', minWidth: 100, sortable: true, formatter: 'DateNoLink'},
               {key: 'schoolName', label: 'School Name', minWidth: 200, sortable: true}
             ],
-            template: PowerTools.templateCY(),
+            template: powerTools.templateCY(),
             sortKey: 'student',
             showSelectButtons: 1
           };
         },
         MissingRace: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Students Missing Ethnicity or Race',
             header: 'Students with Blank Ethnicities or Missing Student Race Records in ' +
-            reportOptions.schoolName,
+            powerTools.reportOptions.schoolName,
             fields: ['dcid', 'studentid', 'student', 'ethnicity', 'race', 'fedEthnicity', 'schoolName'],
             columns: [
               {key: 'student', label: 'Student', minWidth: 150, sortable: true, formatter: 'Demographics'},
@@ -1699,17 +1854,17 @@ var powerTools = window.powerTools || {
               },
               {key: 'schoolName', label: 'School Name', minWidth: 200, sortable: true}
             ],
-            template: PowerTools.templateCY(),
+            template: powerTools.templateCY(),
             sortKey: 'student',
             showSelectButtons: 1
           };
 
           if (dataOptions.hispaniconly !== 1) {
-            reportData.info =
+            powerTools.reportData.info =
                 'This report selects any student who has a blank ethnicity, does not have hispanic or latino declared, ' +
                 'or has no Federal Race records.';
           } else {
-            reportData.info =
+            powerTools.reportData.info =
                 'This report selects any student who has a blank ethnicity, or does not have hispanic or latino ' +
                 'declared and has no Federal Race records.';
           }
@@ -1722,9 +1877,9 @@ var powerTools = window.powerTools || {
             accessType = 'Export';
           }
 
-          reportData = {
+          powerTools.reportData = {
             title: 'Non-Session Attendance',
-            header: 'Students with Attendance on Non-Session Days in ' + reportOptions.schoolName,
+            header: 'Students with Attendance on Non-Session Days in ' + powerTools.reportOptions.schoolName,
             info: ('This report selects any student who has an attendance record that is on a day not in session on the ' +
             'calendar, or any meeting attendance record that the section is not in session either by the cycle day or ' +
             'bell schedule. It is also possible the the attendance record belongs to a section that no longer exists. ' +
@@ -1737,9 +1892,9 @@ var powerTools = window.powerTools || {
             'incorrect data, please reset section meetings.'),
             fields: ['dcid', 'studentid', 'student', 'schoolName', 'attendanceDcid',
               {key: 'attendanceID', parser: 'number'},
-                     'attendanceDate', 'attendanceType', {key: 'ccID', parser: 'number'},
+              'attendanceDate', 'attendanceType', {key: 'ccID', parser: 'number'},
               {key: 'periodID', parser: 'number'},
-                     'attendanceCode', 'error'],
+              'attendanceCode', 'error'],
             columns: [
               {key: 'student', label: 'Student', minWidth: 150, sortable: true, formatter: 'Attendance'},
               {
@@ -1757,30 +1912,36 @@ var powerTools = window.powerTools || {
               {key: 'error', label: 'Error', minWidth: 150, sortable: true},
               {key: 'schoolName', label: 'School Name', minWidth: 200, sortable: true}
             ],
-            template: PowerTools.templateCY(),
+            template: powerTools.templateCY(),
             sortKey: 'student',
             showSelectButtons: 1,
             wizardLink: 1
           };
         },
         OrphanedAttendance: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Orphaned Attendance Records',
-            header: 'Orphaned Attendance Records in ' + reportOptions.schoolName,
+            header: 'Orphaned Attendance Records in ' + powerTools.reportOptions.schoolName,
             info: ('This report selects any Attendance Record where the student, attendance code, CC record, section, ' +
             'course, ' +
-            reportOptions.schoolType +
+            powerTools.reportOptions.schoolType +
             'or period number does not exist, based off the options selected.<p>Selecting a record will take you ' +
-            'to the record in Direct Database ' + reportOptions.ddaAccess + '.'),
+            'to the record in Direct Database ' + powerTools.reportOptions.ddaAccess + '.'),
             fields: ['attendanceDcid', {key: 'attendanceId', parser: 'number'}, 'student', 'studentid',
-                     'attendanceCode',
-                     'attendanceCodeId', 'attendanceRecordCodeId', 'courseSection', 'courseSectionSort', 'period',
-                     'periodId',
-                     'schoolName', 'schoolNumber'],
+              'attendanceCode',
+              'attendanceCodeId', 'attendanceRecordCodeId', 'courseSection', 'courseSectionSort', 'period',
+              'periodId',
+              'schoolName', 'schoolNumber'],
             columns: [
               {key: 'attendanceId', label: 'ID', minWidth: 50, sortable: true, formatter: 'DDAAttendance'},
               {key: 'student', label: 'Student', minWidth: 50, sortable: true, formatter: 'StudentExist'},
-              {key: 'attendanceCode', label: 'AttCode', minWidth: 50, sortable: true, formatter: 'AttCodeExist'},
+              {
+                key: 'attendanceCode',
+                label: 'AttCode',
+                minWidth: 50,
+                sortable: true,
+                formatter: 'AttCodeExist'
+              },
               {
                 key: 'courseSection',
                 label: 'Course.Section',
@@ -1790,41 +1951,47 @@ var powerTools = window.powerTools || {
                 sortOptions: {field: 'CourseSectionSort'}
               },
               {key: 'period', label: 'Period', minWidth: 50, sortable: true, formatter: 'PeriodExist'},
-              {key: 'schoolName', label: 'School Name', minWidth: 200, sortable: true, formatter: 'SchoolExist'}
+              {
+                key: 'schoolName',
+                label: 'School Name',
+                minWidth: 200,
+                sortable: true,
+                formatter: 'SchoolExist'
+              }
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'attendanceId',
             wizardLink: 1
           };
         },
         OrphanedAttendanceTime: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Orphaned Attendance_Time Records',
             header: 'Orphaned Attendance_Time Records in All Schools',
             info: ('This report selects any Attendance_Time Record where the attendance record not exist.<p>Selecting ' +
-            'a record will take you to the record in Direct Database ' + reportOptions.ddaAccess + '.'),
+            'a record will take you to the record in Direct Database ' + powerTools.reportOptions.ddaAccess + '.'),
             fields: ['dcid', {key: 'id', parser: 'number'}, {key: 'attendanceId', parser: 'number'}],
             columns: [
               {key: 'id', label: 'ID', minWidth: 50, sortable: true, formatter: 'DDAAttendanceTime'},
               {key: 'attendanceId', label: 'Attendance ID', minWidth: 50, sortable: true}
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'id',
             wizardLink: 1
           };
 
         },
         OrphanedCC: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Orphaned CC Records',
-            header: 'Orphaned CC Records in ' + reportOptions.schoolName,
+            header: 'Orphaned CC Records in ' + powerTools.reportOptions.schoolName,
             info: ('This report selects any CC Record where the student, section, course, ' +
-            reportOptions.schoolType +
+            powerTools.reportOptions.schoolType +
             ' or term does not exist.<p>Selecting a record will take you to the record in Direct Database ' +
-            reportOptions.ddaAccess + '.'),
+            powerTools.reportOptions.ddaAccess + '.'),
             fields: ['dcid', {key: 'ccid', parser: 'number'}, 'student', 'studentid', 'courseSection',
-                     'courseSectionSort',
-                     'schoolName', 'schoolId', {key: 'termId', parser: 'number'}, 'ccTermId'],
+              'courseSectionSort',
+              'schoolName', 'schoolId', {key: 'termId', parser: 'number'}, 'ccTermId'],
             columns: [
               {key: 'ccid', label: 'ID', minWidth: 50, sortable: true, formatter: 'DDACC'},
               {key: 'student', label: 'Student', minWidth: 200, sortable: true, formatter: 'StudentExist'},
@@ -1836,67 +2003,85 @@ var powerTools = window.powerTools || {
                 formatter: 'DoesNotExist',
                 sortOptions: {field: 'Course_SectionSort'}
               },
-              {key: 'schoolName', label: 'School Name', minWidth: 200, sortable: true, formatter: 'SchoolExist'},
+              {
+                key: 'schoolName',
+                label: 'School Name',
+                minWidth: 200,
+                sortable: true,
+                formatter: 'SchoolExist'
+              },
               {key: 'termId', label: 'TermID', minWidth: 50, sortable: true, formatter: 'CCTermExist'}
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'ccid',
             wizardLink: 1
           };
         },
         OrphanedFeeTransaction: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Orphaned Fee_Transaction Records',
-            header: 'Orphaned Fee_Transaction Records in ' + reportOptions.schoolName,
-            info: ('This report selects any Fee_Transaction Record where the student' + reportOptions.schoolType +
+            header: 'Orphaned Fee_Transaction Records in ' + powerTools.reportOptions.schoolName,
+            info: ('This report selects any Fee_Transaction Record where the student' + powerTools.reportOptions.schoolType +
             'or fee does not exist.<p>Selecting a record will take you to the record in Direct Database ' +
-            reportOptions.ddaAccess + '.'),
+            powerTools.reportOptions.ddaAccess + '.'),
             fields: ['dcid', {key: 'feeTransactionId', parser: 'number'}, 'student', 'studentid', 'feeName',
-                     'feeId',
-                     'schoolName', 'schoolId'],
+              'feeId',
+              'schoolName', 'schoolId'],
             columns: [
-              {key: 'feeTransactionId', label: 'ID', minWidth: 50, sortable: true, formatter: 'DDAFeeTransaction'},
+              {
+                key: 'feeTransactionId',
+                label: 'ID',
+                minWidth: 50,
+                sortable: true,
+                formatter: 'DDAFeeTransaction'
+              },
               {key: 'student', label: 'Student', minWidth: 50, sortable: true, formatter: 'StudentExist'},
               {key: 'feeName', label: 'Fee Name', minWidth: 100, sortable: true, formatter: 'FeeExist'},
-              {key: 'schoolName', label: 'School Name', minWidth: 200, sortable: true, formatter: 'SchoolExist'}
+              {
+                key: 'schoolName',
+                label: 'School Name',
+                minWidth: 200,
+                sortable: true,
+                formatter: 'SchoolExist'
+              }
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'feeTransactionId',
             wizardLink: 1
           };
         },
         OrphanedHonorRoll: function () {
           if (dataOptions.schoolid === 0) {
-            reportOptions.schoolType = 'or school ';
+            powerTools.reportOptions.schoolType = 'or school ';
           } else {
-            reportOptions.schoolType = '';
+            powerTools.reportOptions.schoolType = '';
           }
 
-          reportData = {
+          powerTools.reportData = {
             title: 'Orphaned Honor Roll Records',
-            header: 'Orphaned HonorRoll Records in ' + reportOptions.schoolName,
-            info: ('This report selects any HonorRoll Record where the student ' + reportOptions.schoolType +
+            header: 'Orphaned HonorRoll Records in ' + powerTools.reportOptions.schoolName,
+            info: ('This report selects any HonorRoll Record where the student ' + powerTools.reportOptions.schoolType +
             'does not exist.' + '<p>Selecting a record will take you to the record in Direct Database ' +
-            reportOptions.ddaAccess + '.'),
+            powerTools.reportOptions.ddaAccess + '.'),
             fields: ['dcid', {key: 'honorRollId', parser: 'number'}, 'student', 'studentid', 'schoolName',
-                     'schoolId'],
+              'schoolId'],
             columns: [
               {key: 'honorRollId', label: 'ID', minWidth: 50, sortable: true, formatter: 'DDAHonorRoll'},
               {key: 'student', label: 'Student', minWidth: 50, sortable: true, formatter: 'StudentExist'},
               {key: 'schoolName', label: 'School Name', minWidth: 200, formatter: 'SchoolExistNoDistrict'}
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'honorRollId',
             wizardLink: 1
           };
         },
         OrphanedPGFinalGrades: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Orphaned PGFinalGrades Records',
-            header: 'Orphaned PGFinalGrades Records in ' + reportOptions.schoolName,
+            header: 'Orphaned PGFinalGrades Records in ' + powerTools.reportOptions.schoolName,
             info: ('This report selects any PGFinalGrades Record where the student, section, or course number does not ' +
             'exist.' +
-            '<p>Selecting a record will take you to the record in Direct Database ' + reportOptions.ddaAccess +
+            '<p>Selecting a record will take you to the record in Direct Database ' + powerTools.reportOptions.ddaAccess +
             '.'),
             fields: ['dcid', 'id', 'student', 'studentid', 'courseSection', 'courseSectionSort'],
             columns: [
@@ -1911,48 +2096,60 @@ var powerTools = window.powerTools || {
                 sortOptions: {field: 'courseSectionSort'}
               }
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'id',
             wizardLink: 1
           };
         },
         OrphanedReenrollments: function () {
           if (dataOptions.schoolid === 0) {
-            reportOptions.schoolType = 'or school ';
+            powerTools.reportOptions.schoolType = 'or school ';
           } else {
-            reportOptions.schoolType = '';
+            powerTools.reportOptions.schoolType = '';
           }
-          reportData = {
+          powerTools.reportData = {
             title: 'Orphaned Reenrollment Records',
-            header: 'Orphaned Reenrollment Records in ' + reportOptions.schoolName,
-            info: ('This report selects any Reenrollment Record where the student ' + reportOptions.schoolType +
+            header: 'Orphaned Reenrollment Records in ' + powerTools.reportOptions.schoolName,
+            info: ('This report selects any Reenrollment Record where the student ' + powerTools.reportOptions.schoolType +
             'does not exist, or if the grade ' +
             'level is not within the grade levels of the school.<p>Selecting a record will take you to the record in ' +
-            'Direct Database ' + reportOptions.ddaAccess + '.'),
+            'Direct Database ' + powerTools.reportOptions.ddaAccess + '.'),
             fields: ['dcid', 'id', 'student', 'studentid', 'schoolName', 'schoolId',
               {key: 'gradeLevel', parser: 'number'},
-                     'schoolHighGrade', 'schoolLowGrade'],
+              'schoolHighGrade', 'schoolLowGrade'],
             columns: [
               {key: 'id', label: 'ID', minWidth: 50, sortable: true, formatter: 'DDAReenrollments'},
               {key: 'student', label: 'Student', minWidth: 50, sortable: true, formatter: 'StudentExist'},
-              {key: 'schoolName', label: 'School Name', minWidth: 200, sortable: true, formatter: 'SchoolExist'},
-              {key: 'gradeLevel', label: 'Grade Level', minWidth: 50, sortable: true, formatter: 'GradeLevelValid'}
+              {
+                key: 'schoolName',
+                label: 'School Name',
+                minWidth: 200,
+                sortable: true,
+                formatter: 'SchoolExist'
+              },
+              {
+                key: 'gradeLevel',
+                label: 'Grade Level',
+                minWidth: 50,
+                sortable: true,
+                formatter: 'GradeLevelValid'
+              }
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'id',
             wizardLink: 1
           };
         },
         OrphanedSection: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Orphaned Section Records',
-            header: 'Orphaned Section Records in ' + reportOptions.schoolName,
-            info: ('This report selects any Section Record where the course, teacher, ' + reportOptions.schoolType +
+            header: 'Orphaned Section Records in ' + powerTools.reportOptions.schoolName,
+            info: ('This report selects any Section Record where the course, teacher, ' + powerTools.reportOptions.schoolType +
             'or term does not exist.<p>Selecting a record will take you to the record in Direct Database ' +
-            reportOptions.ddaAccess + '.'),
+            powerTools.reportOptions.ddaAccess + '.'),
             fields: ['dcid', 'id', 'courseSection', 'courseSectionSort', 'teacher', 'teacherId', 'schoolName',
-                     'schoolId',
-                     'schoolTermId', {key: 'sectionTermId', parser: 'number'}],
+              'schoolId',
+              'schoolTermId', {key: 'sectionTermId', parser: 'number'}],
             columns: [
               {key: 'id', label: 'ID', minWidth: 50, sortable: true, formatter: 'DDASection'},
               {
@@ -1964,62 +2161,92 @@ var powerTools = window.powerTools || {
                 sortOptions: {field: 'courseSectionSort'}
               },
               {key: 'teacher', label: 'Teacher', minWidth: 200, sortable: true, formatter: 'TeacherExist'},
-              {key: 'schoolName', label: 'School Name', minWidth: 200, sortable: true, formatter: 'SchoolExist'},
-              {key: 'sectionTermId', label: 'TermID', minWidth: 50, sortable: true, formatter: 'SectionTermExist'}
+              {
+                key: 'schoolName',
+                label: 'School Name',
+                minWidth: 200,
+                sortable: true,
+                formatter: 'SchoolExist'
+              },
+              {
+                key: 'sectionTermId',
+                label: 'TermID',
+                minWidth: 50,
+                sortable: true,
+                formatter: 'SectionTermExist'
+              }
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'id',
             wizardLink: 1
           };
         },
         OrphanedSpEnrollments: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Orphaned Special Program Records',
-            header: 'Orphaned Special Program Records in ' + reportOptions.schoolName,
+            header: 'Orphaned Special Program Records in ' + powerTools.reportOptions.schoolName,
             info: ('This report selects any Special Program Enrollment where the student' +
-            reportOptions.schoolType +
+            powerTools.reportOptions.schoolType +
             ' or program does not exist.<p>Selecting a record will take you to the record in Direct Database ' +
-            reportOptions.ddaAccess + '.'),
+            powerTools.reportOptions.ddaAccess + '.'),
             fields: ['dcid', 'id', 'student', 'studentid', 'programName', 'programId', 'schoolName', 'schoolId'],
             columns: [
               {key: 'id', label: 'ID', minWidth: 50, sortable: true, formatter: 'DDASpEnrollments'},
               {key: 'student', label: 'Student', minWidth: 100, sortable: true, formatter: 'StudentExist'},
-              {key: 'programName', label: 'Program', minWidth: 100, sortable: true, formatter: 'ProgramExist'},
-              {key: 'schoolName', label: 'School Name', minWidth: 150, sortable: true, formatter: 'SchoolExist'}
+              {
+                key: 'programName',
+                label: 'Program',
+                minWidth: 100,
+                sortable: true,
+                formatter: 'ProgramExist'
+              },
+              {
+                key: 'schoolName',
+                label: 'School Name',
+                minWidth: 150,
+                sortable: true,
+                formatter: 'SchoolExist'
+              }
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'id',
             wizardLink: 1
           };
         },
         OrphanedStandardsGrades: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Orphaned StandardsGrades Records',
-            header: 'Orphaned StandardsGrades Records in ' + reportOptions.schoolName,
-            info: ('This report selects any StandardsGrades Record where the student' + reportOptions.schoolType +
+            header: 'Orphaned StandardsGrades Records in ' + powerTools.reportOptions.schoolName,
+            info: ('This report selects any StandardsGrades Record where the student' + powerTools.reportOptions.schoolType +
             ' or standard does not exist.<p>Selecting a record will take you to the record in Direct Database ' +
-            reportOptions.ddaAccess + '.'),
+            powerTools.reportOptions.ddaAccess + '.'),
             fields: ['dcid', 'id', 'student', 'studentid', 'standard', 'standardId', 'schoolName',
               {key: 'yearId', parser: 'number'}, 'schoolId'],
             columns: [
               {key: 'id', label: 'ID', minWidth: 50, sortable: true, formatter: 'DDAStandardsGrades'},
               {key: 'student', label: 'Student', minWidth: 50, sortable: true, formatter: 'StudentExist'},
               {key: 'standard', label: 'Standard', minWidth: 150, sortable: true, formatter: 'StandardExist'},
-              {key: 'schoolName', label: 'School Name', minWidth: 200, sortable: true, formatter: 'SchoolExist'},
+              {
+                key: 'schoolName',
+                label: 'School Name',
+                minWidth: 200,
+                sortable: true,
+                formatter: 'SchoolExist'
+              },
               {key: 'yearId', label: 'YearID', minWidth: 50, sortable: true}
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'id',
             wizardLink: 1
           };
         },
         OrphanedStoredGrades: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Orphaned StoredGrades Records',
-            header: 'Orphaned StoredGrades Records in ' + reportOptions.schoolName,
+            header: 'Orphaned StoredGrades Records in ' + powerTools.reportOptions.schoolName,
             info: ('This report selects any StoredGrades Record where the' +
             'student, linked course, or linked section does not exist.<p>' +
-            'Selecting a record will take you to the record in Direct Database ' + reportOptions.ddaAccess + '.'),
+            'Selecting a record will take you to the record in Direct Database ' + powerTools.reportOptions.ddaAccess + '.'),
             fields: ['dcid', 'student', 'studentid', 'courseSection', 'courseSectionSort', 'courseName',
               {key: 'termId', parser: 'number'}, 'schoolName'],
             columns: [
@@ -2037,122 +2264,152 @@ var powerTools = window.powerTools || {
               {key: 'termId', label: 'TermID', minWidth: 50, sortable: true},
               {key: 'schoolName', label: 'School Name', minWidth: 200, sortable: true}
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'dcid',
             wizardLink: 1
           };
         },
         OrphanedStudentRace: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Orphaned StudentRace Records',
-            header: 'Orphaned StudentRace Records in ' + reportOptions.schoolName,
+            header: 'Orphaned StudentRace Records in ' + powerTools.reportOptions.schoolName,
             info: ('This report selects any StudentRace Record where the student or race code does not exist.<p>' +
-            'Selecting a record will take you to the record in Direct Database ' + reportOptions.ddaAccess + '~'),
+            'Selecting a record will take you to the record in Direct Database ' + powerTools.reportOptions.ddaAccess + '~'),
             fields: ['dcid', {key: 'id', parser: 'number'}, 'student', 'studentid', 'raceCode', 'raceCodeId'],
             columns: [
               {key: 'id', label: 'ID', minWidth: 50, sortable: true, formatter: 'DDAStudentRace'},
               {key: 'student', label: 'Student', minWidth: 200, sortable: true, formatter: 'StudentExist'},
               {key: 'raceCode', label: 'Race Code', minWidth: 100, sortable: true, formatter: 'RaceCodeExist'}
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'id',
             wizardLink: 1
           };
         },
         OrphanedStudents: function () {
           if (dataOptions.schoolid === 0) {
-            reportOptions.schoolType = 'school does not exist, or the ';
+            powerTools.reportOptions.schoolType = 'school does not exist, or the ';
           } else {
-            reportOptions.schoolType = '';
+            powerTools.reportOptions.schoolType = '';
           }
 
-          reportData = {
+          powerTools.reportData = {
             title: 'Orphaned Student Records',
-            header: 'Orphaned Student Records in ' + reportOptions.schoolName,
-            info: ('This report selects any Student Record where the ' + reportOptions.schoolType +
+            header: 'Orphaned Student Records in ' + powerTools.reportOptions.schoolName,
+            info: ('This report selects any Student Record where the ' + powerTools.reportOptions.schoolType +
             'grade level is not within the high and low grade levels for the school.<p>' +
-            'Selecting a record will take you to the record in Direct Database ' + reportOptions.ddaAccess + '.'),
+            'Selecting a record will take you to the record in Direct Database ' + powerTools.reportOptions.ddaAccess + '.'),
             fields: ['dcid', 'student', 'schoolName', 'schoolId', {key: 'gradeLevel', parser: 'number'},
-                     'schoolHighGrade',
-                     'schoolLowGrade'],
+              'schoolHighGrade',
+              'schoolLowGrade'],
             columns: [
               {key: 'student', label: 'Student', minWidth: 100, sortable: true, formatter: 'DDAStudents'},
-              {key: 'schoolName', label: 'School Name', minWidth: 200, sortable: true, formatter: 'SchoolExist'},
-              {key: 'gradeLevel', label: 'Grade Level', minWidth: 200, sortable: true, formatter: 'GradeLevelValid'}
+              {
+                key: 'schoolName',
+                label: 'School Name',
+                minWidth: 200,
+                sortable: true,
+                formatter: 'SchoolExist'
+              },
+              {
+                key: 'gradeLevel',
+                label: 'Grade Level',
+                minWidth: 200,
+                sortable: true,
+                formatter: 'GradeLevelValid'
+              }
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'student'
           };
         },
         OrphanedStudentTestScore: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Orphaned Student Test Score Records',
-            header: 'Orphaned Student Test Score Records in ' + reportOptions.schoolName,
+            header: 'Orphaned Student Test Score Records in ' + powerTools.reportOptions.schoolName,
             info: ('This report selects any Student Test Score Record where the student, test, test score' +
-            reportOptions.schoolType + 'or test date does not exist.<p>' +
-            'Selecting a record will take you to the record in Direct Database ' + reportOptions.ddaAccess + '.'),
+            powerTools.reportOptions.schoolType + 'or test date does not exist.<p>' +
+            'Selecting a record will take you to the record in Direct Database ' + powerTools.reportOptions.ddaAccess + '.'),
             fields: ['dcid', {key: 'id', parser: 'number'}, 'student', 'studentid', 'test', 'testId',
-                     'studentTestId',
-                     'testScore', 'testScoreId', 'testDate', 'schoolName', 'schoolId'],
+              'studentTestId',
+              'testScore', 'testScoreId', 'testDate', 'schoolName', 'schoolId'],
             columns: [
               {key: 'id', label: 'ID', minWidth: 50, sortable: true, formatter: 'DDAStudentTestScore'},
               {key: 'student', label: 'Student', minWidth: 100, sortable: true, formatter: 'StudentExist'},
               {key: 'test', label: 'Test', minWidth: 100, sortable: true, formatter: 'TestExist'},
-              {key: 'testScore', label: 'Test Score', minWidth: 100, sortable: true, formatter: 'TestScoreExist'},
+              {
+                key: 'testScore',
+                label: 'Test Score',
+                minWidth: 100,
+                sortable: true,
+                formatter: 'TestScoreExist'
+              },
               {key: 'testDate', label: 'Test Date', minWidth: 50, sortable: true, formatter: 'DateNoLink'},
-              {key: 'schoolName', label: 'School Name', minWidth: 200, sortable: true, formatter: 'SchoolExist'}
+              {
+                key: 'schoolName',
+                label: 'School Name',
+                minWidth: 200,
+                sortable: true,
+                formatter: 'SchoolExist'
+              }
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'id',
             wizardLink: 1
           };
         },
         OrphanedTeacherRace: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Orphaned TeacherRace Records',
-            header: 'Orphaned TeacherRace Records in ' + reportOptions.schoolName,
+            header: 'Orphaned TeacherRace Records in ' + powerTools.reportOptions.schoolName,
             info: ('This report selects any TeacherRace Record where the teacher or race code does not exist.<p>' +
-            'Selecting a record will take you to the record in Direct Database ' + reportOptions.ddaAccess + '.'),
+            'Selecting a record will take you to the record in Direct Database ' + powerTools.reportOptions.ddaAccess + '.'),
             fields: ['dcid', {key: 'id', parser: 'number'}, 'teacher', 'teacherid', 'raceCode', 'raceCodeId'],
             columns: [
               {key: 'id', label: 'ID', minWidth: 50, sortable: true, formatter: 'DDATeacherRace'},
               {key: 'teacher', label: 'Teacher', minWidth: 50, sortable: true, formatter: 'TeacherExist'},
               {key: 'raceCode', label: 'Race Code', minWidth: 200, sortable: true, formatter: 'RaceCodeExist'}
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'id',
             wizardLink: 1
           };
         },
         OrphanedTermBins: function () {
           if (dataOptions.schoolid === 0) {
-            reportOptions.schoolType = 'or school ';
+            powerTools.reportOptions.schoolType = 'or school ';
           } else {
-            reportOptions.schoolType = '';
+            powerTools.reportOptions.schoolType = '';
           }
 
-          reportData = {
+          powerTools.reportData = {
             title: 'Orphaned TermBins Records',
-            header: 'Orphaned TermBins Records in ' + reportOptions.schoolName,
-            info: ('This report selects any TermBins Record where the term ' + reportOptions.schoolType +
+            header: 'Orphaned TermBins Records in ' + powerTools.reportOptions.schoolName,
+            info: ('This report selects any TermBins Record where the term ' + powerTools.reportOptions.schoolType +
             'does not exist.<p>' + 'Selecting a record will take you to the record in Direct Database ' +
-            reportOptions.ddaAccess + '.'),
+            powerTools.reportOptions.ddaAccess + '.'),
             fields: ['dcid', {key: 'id', parser: 'number'}, 'storeCode', 'term', 'schoolName', 'schoolId',
-                     'termName'],
+              'termName'],
             columns: [
               {key: 'id', label: 'ID', minWidth: 50, sortable: true, formatter: 'DDATermBins'},
               {key: 'storeCode', label: 'StoreCode', minWidth: 50, sortable: true},
               {key: 'term', label: 'Term', minWidth: 100, sortable: true, formatter: 'DoesNotExist'},
-              {key: 'schoolName', label: 'School Name', minWidth: 200, sortable: true, formatter: 'SchoolExist'}
+              {
+                key: 'schoolName',
+                label: 'School Name',
+                minWidth: 200,
+                sortable: true,
+                formatter: 'SchoolExist'
+              }
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'id',
             wizardLink: 1
           };
         },
         OrphanReport: function () {
           powerTools.hideSpinner();
-          reportData = {
+          powerTools.reportData = {
             title: 'Orphaned Records Report',
             header: 'Orphaned Records Report',
             info: ('This report will perform a listing of the count records for each system setup item PowerTools ' +
@@ -2168,20 +2425,20 @@ var powerTools = window.powerTools || {
                 formatter: 'OverviewCount'
               }
             ],
-            template: PowerTools.templateNoOption()
+            template: powerTools.templateNoOption()
           };
         },
         OutsideSchoolCC: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Section Enrollments Outside the School Enrollments',
             header: 'Students with Section Enrollments Outside the School Enrollments in ' +
-            reportOptions.schoolName,
+            powerTools.reportOptions.schoolName,
             info: ('This report selects any student who has a section' +
             ' enrollment which is not contained within a valid school enrollment.<br>' +
             'Selecting a record will take you to the students all enrollments page, ' +
             'where the enrollment may be corrected.'),
             fields: ['dcid', 'studentid', 'student', 'schoolName', 'courseNumber', 'sectionNumber', 'courseName',
-                     'dateEnrolled', 'dateLeft'],
+              'dateEnrolled', 'dateLeft'],
             columns: [
               {key: 'student', label: 'Student', minWidth: 150, sortable: true, formatter: 'AllEnrollments'},
               {
@@ -2192,20 +2449,26 @@ var powerTools = window.powerTools || {
                 formatter: 'CourseSection'
               },
               {key: 'courseName', label: 'Course Name', minWidth: 150, sortable: true},
-              {key: 'dateEnrolled', label: 'Date Enrolled', minWidth: 100, sortable: true, formatter: 'DateNoLink'},
+              {
+                key: 'dateEnrolled',
+                label: 'Date Enrolled',
+                minWidth: 100,
+                sortable: true,
+                formatter: 'DateNoLink'
+              },
               {key: 'dateLeft', label: 'Date Left', minWidth: 100, sortable: true, formatter: 'DateNoLink'},
               {key: 'schoolName', label: 'School Name', minWidth: 200, sortable: true}
             ],
-            template: PowerTools.templateCY(),
+            template: powerTools.templateCY(),
             sortKey: 'student',
             showSelectButtons: 1
           };
         },
         OutsideSchoolSpEnrollments: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Special Program Enrollments Outside the School Enrollments',
             header: 'Students with Special Program Enrollments Outside the School Enrollments in ' +
-            reportOptions.schoolName,
+            powerTools.reportOptions.schoolName,
             info: ('This report selects any student who has a Special Program enrollment which is not contained within a ' +
             'valid school enrollment.<br>Selecting a record will take you to the students Special Programs page, ' +
             'where the enrollment may be corrected.<br>' +
@@ -2221,15 +2484,15 @@ var powerTools = window.powerTools || {
               {key: 'exitDate', label: 'Exit Date', minWidth: 100, sortable: true, formatter: 'DateNoLink'},
               {key: 'schoolName', label: 'SpEnrollment School Name', minWidth: 200, sortable: true}
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'student',
             showSelectButtons: 1
           };
         },
         OutsideYTSchool: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'School Enrollments Outside the Years and Terms',
-            header: 'Students with School Enrollments Outside Years and Terms in ' + reportOptions.schoolName,
+            header: 'Students with School Enrollments Outside Years and Terms in ' + powerTools.reportOptions.schoolName,
             info: ('This report selects all students who have a school enrollment which is not contained within any years ' +
             'and terms existing in the school.<br>' +
             'Selecting a record will take you to the students Transfer Info ' +
@@ -2237,8 +2500,8 @@ var powerTools = window.powerTools || {
             'enrollment, or by correcting the dates to make sure they fall within the schools years and terms.<br>' +
             'A no-show enrollment should be indicated by an exit date matching the entry date of the enrollment.'),
             fields: ['dcid', 'studentid', 'student', 'schoolName', {key: 'gradeLevel', parser: 'number'},
-                     'entryDate',
-                     'exitDate'],
+              'entryDate',
+              'exitDate'],
             columns: [
               {key: 'student', label: 'Student', minWidth: 150, sortable: true, formatter: 'TransferInfo'},
               {key: 'gradeLevel', label: 'Grade Level', minWidth: 50, sortable: true},
@@ -2258,23 +2521,23 @@ var powerTools = window.powerTools || {
               },
               {key: 'schoolName', label: 'School Name', minWidth: 200, sortable: true}
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'student',
             showSelectButtons: 1
           };
         },
         OverlappingCC: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Overlapping Section Enrollments',
-            header: 'Students with Overlapping Section Enrollments in ' + reportOptions.schoolName,
+            header: 'Students with Overlapping Section Enrollments in ' + powerTools.reportOptions.schoolName,
             info: ('This report selects all students who are enrolled in a section more than once at any given time in a ' +
             'school year. Selecting a student takes you to the students All Enrollments page, where the data ' +
             'can be corrected.<br>' +
             'The easiest method for correcting these records is to use the "Clean up overlapping enrollments" function ' +
             'at the bottom of the newly opened page.'),
             fields: ['dcid', 'studentid', 'student', 'schoolName', 'courseName', 'courseNumber', 'sectionNumber',
-                     'yearID',
-                     'termID'],
+              'yearID',
+              'termID'],
             columns: [
               {key: 'student', label: 'Student', minWidth: 150, sortable: true, formatter: 'AllEnrollments'},
               {key: 'courseName', label: 'Course Name', minWidth: 150, sortable: true},
@@ -2289,22 +2552,22 @@ var powerTools = window.powerTools || {
               {key: 'termID', label: 'Term', minWidth: 100, sortable: true},
               {key: 'schoolName', label: 'School Name', minWidth: 200, sortable: true}
             ],
-            template: PowerTools.templateCY(),
+            template: powerTools.templateCY(),
             sortKey: 'student',
             showSelectButtons: 1
           };
         },
         OverlappingSchool: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Overlapping School Enrollments',
-            header: 'Students with Overlapping School Enrollments in ' + reportOptions.schoolName,
+            header: 'Students with Overlapping School Enrollments in ' + powerTools.reportOptions.schoolName,
             info: ('This page displays the reenrollment record which is overlapping another enrollment. Selecting a ' +
             'student will take you to the Transfer Info page, where the data can be corrected.<br>' +
             'The data must be corrected manually, either by removing the invalid record, or by correcting the enrollment ' +
             'dates so they do not overlap.'),
             fields: ['dcid', 'studentid', 'student', 'schoolName', {key: 'gradeLevel', parser: 'number'},
-                     'entryDate',
-                     'exitDate'],
+              'entryDate',
+              'exitDate'],
             columns: [
               {key: 'student', label: 'Student', minWidth: 150, sortable: true, formatter: 'TransferInfo'},
               {key: 'gradeLevel', label: 'Grade Level', minWidth: 50, sortable: true},
@@ -2312,15 +2575,15 @@ var powerTools = window.powerTools || {
               {key: 'exitDate', label: 'Exit Date', minWidth: 100, sortable: true, formatter: 'DateNoLink'},
               {key: 'schoolName', label: 'School Name', minWidth: 200, sortable: true}
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'student',
             showSelectButtons: 1
           };
         },
         OverlappingSpEnrollments: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Overlapping Special Program Enrollments',
-            header: 'Students with Overlapping Special Program Enrollments in ' + reportOptions.schoolName,
+            header: 'Students with Overlapping Special Program Enrollments in ' + powerTools.reportOptions.schoolName,
             info: ('This report selects all students who are enrolled in a special program more than once at any given ' +
             'time in a school year. Selecting a student takes you to the students Special Programs page, where the data ' +
             'can be corrected.' +
@@ -2331,39 +2594,69 @@ var powerTools = window.powerTools || {
             columns: [
               {key: 'student', label: 'Student', minWidth: 150, sortable: true, formatter: 'SpecialPrograms'},
               {key: 'specialProgram', label: 'Program Name', minWidth: 150, sortable: true},
-              {key: 'entryDate', label: 'Date of overlap', minWidth: 100, sortable: true, formatter: 'DateNoLink'},
+              {
+                key: 'entryDate',
+                label: 'Date of overlap',
+                minWidth: 100,
+                sortable: true,
+                formatter: 'DateNoLink'
+              },
               {key: 'schoolName', label: 'School Name', minWidth: 200, sortable: true}
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'student',
             showSelectButtons: 1
           };
         },
         OverlappingTerms: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Overlapping Terms',
-            header: 'Overlapping terms in ' + reportOptions.schoolName,
+            header: 'Overlapping terms in ' + powerTools.reportOptions.schoolName,
             info: ('This report selects all year long terms which overlap another year long term.' + '<p>' +
             'Overlapping terms can cause many problems, including issues with attendance calculations. Overlapping terms ' +
             'must be corrected manually'),
             fields: ['schoolName', 'term1Id', 'term2Id', 'schoolId', 'term1FirstDay', 'term1LastDay',
-                     'term2FirstDay',
-                     'term2LastDay'],
+              'term2FirstDay',
+              'term2LastDay'],
             columns: [
               {key: 'schoolName', label: 'School Name', minWidth: 200, sortable: true},
-              {key: 'term1FirstDay', label: 'Term 1 Start', minWidth: 150, sortable: true, formatter: 'DateNoLink'},
-              {key: 'term1LastDay', label: 'Term 1 End', minWidth: 100, sortable: true, formatter: 'DateNoLink'},
-              {key: 'term2FirstDay', label: 'Term 2 Start', minWidth: 200, sortable: true, formatter: 'DateNoLink'},
-              {key: 'term2LastDay', label: 'Term 2 End', minWidth: 200, sortable: true, formatter: 'DateNoLink'}
+              {
+                key: 'term1FirstDay',
+                label: 'Term 1 Start',
+                minWidth: 150,
+                sortable: true,
+                formatter: 'DateNoLink'
+              },
+              {
+                key: 'term1LastDay',
+                label: 'Term 1 End',
+                minWidth: 100,
+                sortable: true,
+                formatter: 'DateNoLink'
+              },
+              {
+                key: 'term2FirstDay',
+                label: 'Term 2 Start',
+                minWidth: 200,
+                sortable: true,
+                formatter: 'DateNoLink'
+              },
+              {
+                key: 'term2LastDay',
+                label: 'Term 2 End',
+                minWidth: 200,
+                sortable: true,
+                formatter: 'DateNoLink'
+              }
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'schoolName'
           };
         },
         PaddedSchoolEnrollments: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Padded School Enrollments',
-            header: 'Students with Padded School Enrollments in ' + reportOptions.schoolName,
+            header: 'Students with Padded School Enrollments in ' + powerTools.reportOptions.schoolName,
             info: ('This report selects any student who is enrolled in school, however they are not enrolled in class at ' +
             'the beginning of their school enrollment, or they are not enrolled in class at the end of their school ' +
             'enrollment.' +
@@ -2371,8 +2664,8 @@ var powerTools = window.powerTools || {
             'Selecting a record will take you to the students All Enrollments page, where the duplicate period ' +
             'enrollments may be reviewed.'),
             fields: ['dcid', 'studentid', 'student', {key: 'studentNumber', parser: 'number'}, 'entryDate',
-                     'exitDate',
-                     'firstCC', 'lastCC'],
+              'exitDate',
+              'firstCC', 'lastCC'],
             columns: [
               {key: 'student', label: 'Student', minWidth: 150, sortable: true, formatter: 'TransferInfo'},
               {key: 'studentNumber', label: 'Student Number', minWidth: 100, sortable: true},
@@ -2396,15 +2689,15 @@ var powerTools = window.powerTools || {
                 formatter: 'EnrollmentDateNoLink'
               }
             ],
-            template: PowerTools.templateCY(),
+            template: powerTools.templateCY(),
             sortKey: 'student',
             showSelectButtons: 1
           };
         },
         PastPending: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Invalid Pending Transfer Dates',
-            header: 'Students with Invalid Pending Transfer Dates in ' + reportOptions.schoolName,
+            header: 'Students with Invalid Pending Transfer Dates in ' + powerTools.reportOptions.schoolName,
             info: ('This report identifies any students who have a pending transfer date in the past. A pending transfer ' +
             'date in the past indicates an automated transfer which did not occur.<br>' +
             'The record must be corrected ' +
@@ -2415,7 +2708,7 @@ var powerTools = window.powerTools || {
             'to the students Transfer Info page. It may be possible to correct the enrollment data from this page by ' +
             'transferring the student.'),
             fields: ['dcid', 'studentid', 'student', {key: 'gradeLevel', parser: 'number'}, 'enrollmentStatus',
-                     'pendingDate'
+              'pendingDate'
             ],
             columns: [
               {key: 'student', label: 'Student', minWidth: 150, sortable: true, formatter: 'TransferInfo'},
@@ -2426,38 +2719,47 @@ var powerTools = window.powerTools || {
                 formatter: 'EnrollmentDateNoLink'
               }
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'student',
             showSelectButtons: 1
           };
         },
         PossibleDupStudents: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Possible Duplicate Students',
             header: 'Possible Duplicate Students',
             info: ('This report selects any student who has another student with the same first name, last name and dates ' +
             'of birth.<p>Selecting a student will take you to the students Demographics page.'),
-            fields: ['dcid', 'student', {key: 'studentNumber', parser: 'number'}, 'dob', 'student2dcid', 'student2',
+            fields: ['dcid', 'student', {
+              key: 'studentNumber',
+              parser: 'number'
+            }, 'dob', 'student2dcid', 'student2',
               {key: 'student2StudentNumber', parser: 'number'}],
             columns: [
               {key: 'student', label: 'Student', minWidth: 150, sortable: true, formatter: 'Demographics'},
               {key: 'studentNumber', label: 'Student Number', minWidth: 50, sortable: true},
-              {key: 'student2', label: 'Student 2', minWidth: 150, sortable: true, formatter: 'Demographics2'},
+              {
+                key: 'student2',
+                label: 'Student 2',
+                minWidth: 150,
+                sortable: true,
+                formatter: 'Demographics2'
+              },
               {key: 'student2StudentNumber', label: 'Student Number 2', minWidth: 50, sortable: true},
               {key: 'dob', label: 'DOB', minWidth: 50, sortable: true, formatter: 'DateNoLink'}
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'student'
           };
         },
         PossibleDupTeachers: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Possible Duplicate Teachers',
             header: 'Possible Duplicate Teachers',
             info: ('This report selects any staff member who has another staff member with the same first name, last name ' +
             'and SSN.<p>Selecting a teacher will take you to the staff members page.'),
             fields: ['dcid', 'teacher', 'schoolName', 'status', 'teacher2dcid', 'teacher2', 'teacher2SchoolName',
-                     'teacher2Status'],
+              'teacher2Status'],
             columns: [
               {key: 'teacher', label: 'Teacher', minWidth: 150, sortable: true, formatter: 'TeacherEdit'},
               {key: 'schoolName', label: 'School Name', minWidth: 150, sortable: true},
@@ -2466,12 +2768,12 @@ var powerTools = window.powerTools || {
               {key: 'teacher2SchoolName', label: 'School Name 2', minWidth: 150, sortable: true},
               {key: 'teacher2Status', label: 'Current Status 2', minWidth: 50, sortable: true}
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'teacher'
           };
         },
         ReportsWithSpaces: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Reports Ending in a Space',
             header: 'Reports Ending in a Space',
             info: ('This report selects any report where the name ends in a space.<p>' +
@@ -2483,13 +2785,13 @@ var powerTools = window.powerTools || {
               {key: 'reportName', label: 'Report Name', minWidth: 150, sortable: true, formatter: 'Reports'},
               {key: 'reportType', label: 'Report Type', minWidth: 150, sortable: true}
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'reportName'
           };
         },
         SchoolNetReport: function () {
           powerTools.hideSpinner();
-          reportData = {
+          powerTools.reportData = {
             title: 'SchoolNet Report',
             header: 'SchoolNet Report',
             info: ('This report will perform a listing of the count records for each system setup item PowerTools ' +
@@ -2506,20 +2808,20 @@ var powerTools = window.powerTools || {
                 formatter: 'OverviewCount'
               }
             ],
-            template: PowerTools.templateNoOption()
+            template: powerTools.templateNoOption()
           };
         },
         SectionInvalidSM: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Sections Missing Section Meeting Record',
-            header: 'Sections missing Section Meeting records in ' + reportOptions.schoolName,
+            header: 'Sections missing Section Meeting records in ' + powerTools.reportOptions.schoolName,
             info: ('This report displays any section which does not have a valid corresponding section meeting record.' +
             '<p>' +
             'These records may be corrected by adding an expression to the section. If the section already has an ' +
             'expression, you may correct these records by running the Reset Section Meetings special operation.<p>' +
             'Clicking on a section will take you to the Edit Section page for that section.'),
             fields: ['dcid', 'courseNumber', 'sectionNumber', {key: 'termId', parser: 'number'}, 'expression',
-                     'schoolName'],
+              'schoolName'],
             columns: [
               {
                 key: 'courseNumber',
@@ -2532,15 +2834,15 @@ var powerTools = window.powerTools || {
               {key: 'expression', label: 'Expression', minWidth: 50, sortable: true},
               {key: 'schoolName', label: 'School Name', minWidth: 200, sortable: true}
             ],
-            template: PowerTools.templateCY(),
+            template: powerTools.templateCY(),
             sortKey: 'courseNumber'
           };
         },
         SpEnrollmentBadGrade: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Special Program Enrollments with Incorrect Grade Levels',
             header: 'Students having Special Program enrollments with invalid grade levels in ' +
-            reportOptions.schoolName,
+            powerTools.reportOptions.schoolName,
             info: ('This report selects any student who has a Special Program enrollment where grade level of the ' +
             'enrollment does not match the grade level of the school enrollment which contains the special program ' +
             'enrollment.' +
@@ -2559,13 +2861,13 @@ var powerTools = window.powerTools || {
               {key: 'exitDate', label: 'Exit Date', minWidth: 100, sortable: true, formatter: 'DateNoLink'},
               {key: 'schoolName', label: 'School Name', minWidth: 200, sortable: true}
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'student',
             showSelectButtons: 1
           };
         },
         StdConversionLongGrade: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Standard Conversion Scales Having Grades Over 8 Characters',
             header: 'Standard Conversion Scales Having Grades Over 8 Characters',
             info: ('This report selects any standards conversion scale which contains a grade/label which is longer than 8 ' +
@@ -2573,17 +2875,23 @@ var powerTools = window.powerTools || {
             'where the grade/label may be corrected, or the grade may be removed.'),
             fields: ['dcid', 'name', 'grade'],
             columns: [
-              {key: 'name', label: 'Conversion Name', minWidth: 150, sortable: true, formatter: 'StdConversion'},
+              {
+                key: 'name',
+                label: 'Conversion Name',
+                minWidth: 150,
+                sortable: true,
+                formatter: 'StdConversion'
+              },
               {key: 'grade', label: 'Grade', minWidth: 50, sortable: true}
             ],
-            template: PowerTools.templateNoCY(),
+            template: powerTools.templateNoCY(),
             sortKey: 'name'
           };
         },
         StudentNumberIssue: function () {
-          reportData = {
+          powerTools.reportData = {
             title: 'Students with Student Numbers greater than 2147483647',
-            header: 'Students with Student Numbers Greater Than 2147483647 in ' + reportOptions.schoolName,
+            header: 'Students with Student Numbers Greater Than 2147483647 in ' + powerTools.reportOptions.schoolName,
             info: ('This report displays any student with a student ' +
             'number higher than 2147483647. This issue is documented in the following PowerSource articles:<br>' +
             '<a href="https://powersource.pearsonschoolsystems.com/d/7269" target="PowerSource">' +
@@ -2602,7 +2910,7 @@ var powerTools = window.powerTools || {
               {key: 'studentNumber', label: 'Student Number', minWidth: 50, sortable: true},
               {key: 'schoolName', label: 'School Name', minWidth: 150, sortable: true}
             ],
-            template: PowerTools.templateCY(),
+            template: powerTools.templateCY(),
             sortKey: 'student',
             showSelectButtons: 1
           };
@@ -2610,16 +2918,16 @@ var powerTools = window.powerTools || {
       },
       loadReport: function () {
         if (dataOptions.ddaRedirect === 'on') {
-          reportOptions.ddaAccess = 'Access, where the invalid data can be corrected or the record may be deleted';
+          powerTools.reportOptions.ddaAccess = 'Access, where the invalid data can be corrected or the record may be deleted';
         } else {
-          reportOptions.ddaAccess = 'Export, where the record to be corrected may be reviewed for correction';
+          powerTools.reportOptions.ddaAccess = 'Export, where the record to be corrected may be reviewed for correction';
         }
         if (dataOptions.schoolid === 0) {
-          reportOptions.schoolType = 'school';
-          reportOptions.schoolName = 'All Schools';
+          powerTools.reportOptions.schoolType = 'school';
+          powerTools.reportOptions.schoolName = 'All Schools';
         } else {
-          reportOptions.schoolType = '';
-          reportOptions.schoolName = dataOptions.schoolname;
+          powerTools.reportOptions.schoolType = '';
+          powerTools.reportOptions.schoolName = dataOptions.schoolname;
         }
         powerTools.reportConfig[dataOptions.reportid]();
         powerTools.checkDDAPermissions();
