@@ -511,19 +511,15 @@ var powerTools = window.powerTools || {
       powerTools.initReport(powerTools.dataOptions.reportid, rows, selectedValue);
     },
     currentYearTemplate: (
-      '<select name="curyearonly" ONCHANGE="powerTools.reloadReport(' +
-      'this.options[this.selectedIndex].value);">' +
-      '<option value="0">All Years</option>' + '<option value="1">Current Year</option>' +
-      '</select>'
+    '<select name="curyearonly" ONCHANGE="powerTools.reloadReport(' +
+    'this.options[this.selectedIndex].value);">' +
+    '<option value="0">All Years</option>' + '<option value="1">Current Year</option>' +
+    '</select>'
     ),
     // TODO Fix templateCYOnly. It does not reload upon selecting the dropdown.
     templateCYOnly: function () {
-      return '<B>Filter these reports for </b>' +
-        '<select name="curyearonly" ONCHANGE="location = this.options[this.selectedIndex].value;">' +
-        '<option value="?curyearonly=0&maxlines=' + powerTools.dataOptions.maxLines + '&reportname=' +
-        powerTools.dataOptions.reportid + '">All Years</option>' + '<option value="?curyearonly=1&maxlines=' +
-        powerTools.dataOptions.maxLines + '&reportname=' + powerTools.dataOptions.reportid + '">Current Year</option>' +
-        '</select>';
+      return '{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} ' +
+        '<span style="display:none;">{RowsPerPageDropdown}</span>' + powerTools.currentYearTemplate;
     },
     templateNoOption: function () {
       return '';
