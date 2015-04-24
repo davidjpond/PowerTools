@@ -1,32 +1,83 @@
 'use strict';
+// TODO load the home page if there is no reportid
+// TODO convert the changelog to JSON
+// TODO convert the menu to JSON
+// TODO convert report.html to home.html
+// TODO remove more.html
+// TODO convert preferences.html to a script loaded page
+// TODO convert wizard.html to single page app style
+// TODO correct an issue where the second report loads JSON data more than once
+
 //noinspection JSUnusedGlobalSymbols
 var powerTools = window.powerTools || {
     reportData: {},
     reportOptions: {},
+    menuOptions: {
+      reportGroups: [
+        {name: 'Enrollment'},
+        {name: 'Misc'},
+        {name: 'Orphan'},
+        {name: 'Maint'},
+        {name: 'SchoolNet'}
+      ],
+      collapseAll: function () {
+        $j(powerTools.menuOptions.reportGroups).each(function (index, reports) {
+          $j('#' + reports.name + 'Tools').hide();
+        });
+      },
+      reportClick: function (report) {
+        $j('#' + report + 'Report').click(function () {
+          powerTools.menuOptions.collapseAll();
+          $j('#' + report + 'Tools').show();
+        });
+      },
+      showHideMenus: function (report) {
+        $j('#' + report + 'Display').click(function () {
+          if ($j('#' + report + 'Tools').is(':visible')) {
+            $j('#' + report + 'Tools').hide();
+            return false;
+          } else {
+            $j('#' + report + 'Tools').show();
+            return false;
+          }
+        });
+      }
+    },
+    activateLinks: function() {
+      $j('.ptreportlink').click(function () {
+        powerTools.initReport(this.id);
+      });
+    },
+    initReport: function (report) {
+      powerTools.dataOptions.reportid = report;
+      $j('#wizardLink').html(null);
+      powerTools.loadReport();
+    },
     loadYUIReport: function () {
       //noinspection JSUnusedLocalSymbols
       var ClientPagination = (function () {
-        var myColumnDefs = powerTools.reportData.columns, myDataSource = new YAHOO.util.DataSource('json/' +
-          powerTools.dataOptions.reportid + '.json.html?curyearonly=' +
-          powerTools.dataOptions.curyearonly), oConfigs = {
-          paginator: new YAHOO.widget.Paginator({
-            rowsPerPage: powerTools.dataOptions.maxLines,
-            containers: ['top_container', 'bottom_container'],
-            template: powerTools.reportData.template,
-            rowsPerPageOptions: [
-              {value: 25, text: '25 Rows'},
-              {value: 50, text: '50 Rows'},
-              {value: 100, text: '100 Rows'},
-              {value: 500, text: '500 Rows'},
-              {value: 100000, text: 'Max Rows'}
-            ]
-          }),
-          sortedBy: {
-            key: powerTools.reportData.sortKey,
-            dir: YAHOO.widget.DataTable.CLASS_ASC
-          },
-          MSG_LOADING: 'Loading Report'
-        }, myDataTable = new YAHOO.widget.DataTable('paginated', myColumnDefs, myDataSource, oConfigs);
+        var myColumnDefs = powerTools.reportData.columns,
+          myDataSource = new YAHOO.util.DataSource('json/' +
+            powerTools.dataOptions.reportid + '.json.html?curyearonly=' +
+            powerTools.dataOptions.curyearonly), oConfigs = {
+            paginator: new YAHOO.widget.Paginator({
+              rowsPerPage: powerTools.dataOptions.maxLines,
+              containers: ['top_container', 'bottom_container'],
+              template: powerTools.reportData.template,
+              rowsPerPageOptions: [
+                {value: 25, text: '25 Rows'},
+                {value: 50, text: '50 Rows'},
+                {value: 100, text: '100 Rows'},
+                {value: 500, text: '500 Rows'},
+                {value: 100000, text: 'Max Rows'}
+              ]
+            }),
+            sortedBy: {
+              key: powerTools.reportData.sortKey,
+              dir: YAHOO.widget.DataTable.CLASS_ASC
+            },
+            MSG_LOADING: 'Loading Report'
+          }, myDataTable = new YAHOO.widget.DataTable('paginated', myColumnDefs, myDataSource, oConfigs);
         var customFormatters = {
           Activities: function (elCell, oRecord, oColumn, oData) {
             powerTools.adminLink(elCell, oRecord, oData, 'activitiessetup/edit.html?frn=006', 'dcid');
@@ -284,17 +335,15 @@ var powerTools = window.powerTools || {
                   result.ResultSet.pop();
                   //noinspection JSUnresolvedVariable
                   elCell.innerHTML =
-                    ('<a href="report.html?curyearonly=' + powerTools.dataOptions.curyearonly + '&maxlines=' +
-                    powerTools.dataOptions.maxLines + '&reportname=' + oData + '">' + result.ResultSet.length +
+                    ('<a id="' + oRecord.getData('reportName') + '" class="ptreportlink">' + result.ResultSet.length +
                     '</a>');
+                  powerTools.activateLinks();
                 });
             }
           },
           OverviewLink: function (elCell, oRecord, oColumn, oData) {
-            var reportName = oRecord.getData('reportName');
-            elCell.innerHTML =
-              ('<a href="report.html?curyearonly=' + powerTools.dataOptions.curyearonly + '&maxlines=' +
-              powerTools.dataOptions.maxLines + '&reportname=' + reportName + '">' + oData + '</a>');
+            elCell.innerHTML = ('<a id="' + oRecord.getData('reportName') + '" class="ptreportlink">' + oData + '</a>');
+            powerTools.activateLinks();
           },
           PeriodExist: function (elCell, oRecord, oColumn, oData) {
             powerTools.existCheck(elCell, oRecord, oData, 'periodId', 'Period ID');
@@ -510,13 +559,13 @@ var powerTools = window.powerTools || {
       var rows = $j('[title="Rows per page"]').val();
       powerTools.initReport(powerTools.dataOptions.reportid, rows, selectedValue);
     },
+    // TODO Make the current year option reload the report instead of the page
     currentYearTemplate: (
     '<select name="curyearonly" ONCHANGE="powerTools.reloadReport(' +
     'this.options[this.selectedIndex].value);">' +
     '<option value="0">All Years</option>' + '<option value="1">Current Year</option>' +
     '</select>'
     ),
-    // TODO Fix templateCYOnly. It does not reload upon selecting the dropdown.
     templateCYOnly: function () {
       return '{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} ' +
         '<span style="display:none;">{RowsPerPageDropdown}</span>' + powerTools.currentYearTemplate;
@@ -582,18 +631,20 @@ var powerTools = window.powerTools || {
           'take you to the activity, where the space can be removed from the field name, or the activity may be ' +
           'deleted.',
           fields: ['dcid', 'activityName', 'fieldName'],
-          columns: [{
-            key: 'activityName',
-            label: 'Activity Name',
-            minWidth: 150,
-            sortable: true,
-            formatter: 'Activities'
-          }, {
-            key: 'fieldName',
-            label: 'Field Name',
-            minWidth: 150,
-            sortable: true
-          }],
+          columns: [
+            {
+              key: 'activityName',
+              label: 'Activity Name',
+              midWidth: 150,
+              sortable: true,
+              formatter: 'Activities'
+            },
+            {
+              key: 'fieldName',
+              label: 'Field Name',
+              minWidth: 150,
+              sortable: true
+            }],
           template: powerTools.templateNoCY(),
           sortKey: 'activityName'
         };
@@ -652,38 +703,41 @@ var powerTools = window.powerTools || {
             key: 'termID',
             parser: 'number'
           }, 'storedGradeDcid'],
-          columns: [{
-            key: 'student',
-            label: 'Student',
-            minWidth: 150,
-            sortable: true,
-            formatter: 'PreviousGrades'
-          }, {
-            key: 'courseName',
-            label: 'Course Name',
-            minWidth: 150,
-            sortable: true
-          }, {
-            key: 'courseNumber',
-            label: 'Course Number',
-            minWidth: 50,
-            sortable: true
-          }, {
-            key: 'storeCode',
-            label: 'Store Code',
-            minWidth: 50,
-            sortable: true
-          }, {
-            key: 'termID',
-            label: 'Term ID',
-            minWidth: 50,
-            sortable: true
-          }, {
-            key: 'schoolName',
-            label: 'School',
-            minWidth: 200,
-            sortable: true
-          }],
+          columns: [
+            {
+              key: 'student',
+              label: 'Student',
+              minWidth: 150,
+              sortable: true,
+              formatter: 'PreviousGrades'
+            },
+            {
+              key: 'courseName',
+              label: 'Course Name',
+              minWidth: 150,
+              sortable: true
+            },
+            {
+              key: 'courseNumber',
+              label: 'Course Number',
+              minWidth: 50,
+              sortable: true
+            }, {
+              key: 'storeCode',
+              label: 'Store Code',
+              minWidth: 50,
+              sortable: true
+            }, {
+              key: 'termID',
+              label: 'Term ID',
+              minWidth: 50,
+              sortable: true
+            }, {
+              key: 'schoolName',
+              label: 'School',
+              minWidth: 200,
+              sortable: true
+            }],
           template: powerTools.templateCY(),
           sortKey: 'student',
           showSelectButtons: 1,
@@ -4252,6 +4306,14 @@ YAHOO.widget.DataTable.prototype.getTdEl = function (cell) {
 };
 
 $j(function () {
+  powerTools.activateLinks();
+  if (powerTools.dataOptions.expandMenu !== 'on') {
+    powerTools.menuOptions.collapseAll();
+    $j(powerTools.menuOptions.reportGroups).each(function (index, reports) {
+      powerTools.menuOptions.showHideMenus(reports.name);
+      powerTools.menuOptions.reportClick(reports.name);
+    });
+  }
   $j('#top_container,#bottom_container').bind('DOMNodeInserted DOMSubtreeModified DOMNodeRemoved', function () {
     powerTools.selectOptions();
   });

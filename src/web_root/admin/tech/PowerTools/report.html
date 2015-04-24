@@ -24,14 +24,14 @@
   <script src="js/report.js"></script>
 </head>
 <body class="yui-skin-sam">
-  ~[wc:admin_header_frame_css]
+  ~[wc:admin_header_css]
   <!-- breadcrumb start -->
   <a href="/admin/home.html" target="_top">Start Page</a> &gt;
   <a href="/admin/tech/home.html" target="_top">System Administrator</a> &gt;
   <a href="/admin/tech/PowerTools/home.html" target="_top">PowerTools</a> &gt;
   <span id="bcReportName">&nbsp;</span>
   <!-- breadcrumb end -->
-  ~[wc:admin_navigation_frame_css]
+  ~[wc:powertools_menu]
   <!-- start of title -->
   <h1></h1>
   <!-- end of title -->
@@ -63,24 +63,23 @@
   <br>
   <!-- end of content of bounding box -->
 
-  ~[wc:admin_footer_frame_css]
+  ~[wc:admin_footer_css]
   <script type="text/javascript">
-    powerTools.initReport = function(report, maxLines, curYear) {
-      $j('#wizardLink').html(null);
-      powerTools.dataOptions = {
-        "maxLines": maxLines,
-        "curyearonly": curYear,
-        "schoolid": ~(v.curschoolid),
-        "schoolname": "~[schoolname]",
-        "reportid": report,
-        "usermaxlines": "~[if.~[displaypref:PowerTools-maxlines-U~[x:userid]]>0]~[displaypref:PowerTools-maxlines-U~[x:userid]][else]25[/if]",
-        "hispaniconly": "~[displaypref:PowerTools-Hispanic-Only-Qualifies]",
-        "ddaRedirect": "~[displaypref:PowerTools-Redirect-Orphan-DDA]",
-        "userid": "~[x:userid]"
-      };
-      powerTools.loadReport();
+    powerTools.dataOptions = {
+      maxLines: "~[if.~[displaypref:PowerTools-maxlines-U~[x:userid]]>0]~[displaypref:PowerTools-maxlines-U~[x:userid]][else]25[/if]",
+      curyearonly: "~[displaypref:PowerTools-curyearonly-U~[x:userid]",
+      schoolid: ~(v.curschoolid),
+      schoolname: "~[schoolname]",
+      reportid: "~(gpv.reportname)",
+      hispaniconly: "~[displaypref:PowerTools-Hispanic-Only-Qualifies]",
+      ddaRedirect: "~[displaypref:PowerTools-Redirect-Orphan-DDA]",
+      userid: "~[x:userid]",
+      expandMenu: '~[displaypref:PowerTools-navigation-menu-expanded-U~[x:userid]]'
     };
-    powerTools.initReport('~(gpv.reportname)','~(gpv.maxlines)','~(gpv.curyearonly)');
+    powerTools.initReport(powerTools.dataOptions.reportid);
+    $j('.ptreportlink').click(function() {
+      powerTools.initReport(this.id);
+    });
   </script>
 </body>
 </html><!-- non framed -->
