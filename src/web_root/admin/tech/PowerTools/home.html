@@ -1,13 +1,111 @@
 <!DOCTYPE html>
-<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8"/>
 <html>
+<!-- start right frame -->
 <head>
-<title>PowerTools</title>
-~[wc:commonscripts]
+  <title></title>
+  ~[wc:commonscripts]
+  <link href="/images/css/screen.css" rel="stylesheet" media="screen">
+  <link href="/images/css/print.css" rel="stylesheet" media="print">
+  <link href="/images/css/PowerTools.css" rel="stylesheet">
+  <!--[if IE]>
+  <style>
+    #reportInfo, #wizardLink {
+      margin-left: 20px;
+    }
+  </style>
+  <![endif]-->
+  <link rel="stylesheet" type="text/css" href="js/yui/paginator/assets/skins/sam/paginator.css">
+  <link rel="stylesheet" type="text/css" href="js/yui/datatable/assets/skins/sam/datatable.css">
+  <script src="js/yui/utilities/utilities.js"></script>
+  <script src="js/yui/paginator/paginator-min.js"></script>
+  <script src="js/yui/datasource/datasource-min.js"></script>
+  <script src="js/yui/datatable/datatable-min.js"></script>
+  <script src="js/yui/json/json-min.js"></script>
+  <script src="js/report.js"></script>
 </head>
+<body class="yui-skin-sam">
+  ~[wc:admin_header_css]
+  <!-- breadcrumb start -->
+  <a href="/admin/home.html" target="_top">Start Page</a> &gt;
+  <a href="/admin/tech/home.html" target="_top">System Administrator</a> &gt;
+  <span id="ptHomeLink">PowerTools</span>
+  <span id="bcReportName">&nbsp;</span>
+  <!-- breadcrumb end -->
+  </div>
+  <!--end BC tag-->
+  <ul id="tools2">
+    ~[pluginnavlinks:admin.header]
+    ~[wc:admin_interactive_l18n_none]
+    ~[brij_render_insert:notification:authorizedNotificationCountAJAX]
+    ~[reports_batch_statusicon]
+    <li class="icon-btn-print"><a href="javascript:window.print()" id="btnPrint" title="~[text:psx.common.print_title]">
+      &nbsp;</a></li>
+  </ul>
+  </div>
+  </div>
+  <!--end usercontext bar-->
 
-<frameset id="frameSet" cols="210,*" border="0">
-<frame id="frameMenu" src="/admin/tech/PowerTools/menu.html?curyearonly=~[if.~[displaypref:PowerTools-curyearonly-U~[x:userid]]>=0]~[displaypref:PowerTools-curyearonly-U~[x:userid]][else]0[/if]&maxlines=~[if.~[displaypref:PowerTools-maxlines-U~[x:userid]]>0]~[displaypref:PowerTools-maxlines-U~[x:userid]][else]25[/if]" name="menu">
-<frame id="frameContent" src="/admin/tech/PowerTools/more.html" name="content">
-</frameset>
-</html>
+  <!-- start of main menu and content -->
+  <div id="content" class="group">
+    <div id="nav-main">
+      <div id="nav-main-menu"></div>
+      <div id="cust-leftnav-footer">~[cust.insertion_point:leftnav.footer]</div>
+    </div>
+    <div id="content-main">
+  <!-- start of title -->
+  <h1></h1>
+  <!-- end of title -->
+  <!-- start of content and bounding box -->
+  <div class="box-round">
+    <div id="reportInfo"></div>
+
+    <div id="wizardLink"></div>
+
+    <div id="top_container" style="text-align:center;"></div>
+
+    <div id="paginated"></div>
+
+    <br>
+
+    <p id="bottom_container" style="text-align:center"></p>
+
+    <form class="submitOnce">
+      <div style="display:none" id="studentSelection"></div>
+      <div class="button-row" id="selectStudents">
+        <button type="button" onclick="powerTools.clickSelectStudents('replace')" id="makeSelection">Make Students
+          Current
+          Selection
+        </button>
+        <button type="button" onclick="powerTools.clickSelectStudents('add')" id="addSelection">Add Students to Current
+          Selection
+        </button>
+      </div>
+    </form>
+  </div>
+  <br>
+  <!-- end of content of bounding box -->
+
+  ~[wc:admin_footer_css]
+  <script type="text/javascript">
+    powerTools.dataOptions = {
+      curyearonly: "~[displaypref:PowerTools-curyearonly-U~[x:userid]]",
+      curYearSelect: "",
+      ddaRedirect: "~[displaypref:PowerTools-Redirect-Orphan-DDA]",
+      ddaUserPerms: '~[if.security.pagemod=/admin/tech/usm/home.html]on[else]off[/if]',
+      expandMenu: '~[displaypref:PowerTools-navigation-menu-expanded-U~[x:userid]]',
+      hideBlankGrades: '~[displaypref:PowerTools-Hide-Blank-Stored-Grades]',
+      hideDupGrades: '~[displaypref:PowerTools-Hide-Duplicate-Stored-Grades]',
+      hidePaddedSchool: '~[displaypref:PowerTools-Hide-Padded-School-Enrollment-Report]',
+      hideSpEnrollments: '~[displaypref:PowerTools-Hide-SPEnrollments-Reports]',
+      hispaniconly: "~[displaypref:PowerTools-Hispanic-Only-Qualifies]",
+      maxLines: "~[if.~[displaypref:PowerTools-maxlines-U~[x:userid]]>0]~[displaypref:PowerTools-maxlines-U~[x:userid]][else]25[/if]",
+      reportid: "~(gpv.reportname)",
+      schoolid: ~(v.curschoolid),
+      schoolname: "~[schoolname]",
+      schoolNetPrep: '~[displaypref:PowerTools-Enable-SchoolNet-Prep]',
+      userid: "~[x:userid]"
+    };
+    powerTools.loadHomePage();
+  </script>
+</body>
+</html><!-- non framed -->

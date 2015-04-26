@@ -16,7 +16,7 @@ module.exports = function () {
       'exportAll': false,
       'preserveComments': false,
       'banner': '/*! ' + prefs.options.projectName + ' - ' + prefs.package.version +
-        ' - (c) 2014 Pearson Education, Inc., or its affiliate(s). All rights reserved */'
+        ' - (c) 2015 David Pond. All rights reserved */'
     },
     all: {
       expand: true,

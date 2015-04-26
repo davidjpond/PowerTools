@@ -1,0 +1,21 @@
+{"ResultSet":[
+	~[tlist_sql;
+SELECT i1.incident_id
+, s1.name
+, to_char(incident_ts, 'YYYY-MM-DD')
+, i1.incident_title
+FROM ps.incident i1
+LEFT JOIN ps.schools s1
+ON i1.school_number = s1.school_number
+WHERE i1.incident_ts > CURRENT_TIMESTAMP
+ORDER BY i1.incident_id
+	]
+{
+"incidentId" : "~(i1.incident_id)",
+"schoolName" : "~(s1.name)",
+"incidentDate" : "~(i1.incident_date)",
+"title" : "~(i1.incident_title)"
+},
+[/tlist_sql]
+{}
+    ]}

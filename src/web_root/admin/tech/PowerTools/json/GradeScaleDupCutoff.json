@@ -1,0 +1,28 @@
+{"ResultSet":[
+~[tlist_sql;
+SELECT g2.dcid
+, g2.name
+, g3.cutoffpercentage
+, g3.countitem
+FROM (
+SELECT g1.gradescaleid
+, g1.cutoffpercentage
+, count(*) countitem
+FROM ps.gradescaleitem g1
+WHERE g1.gradescaleid != -1
+GROUP BY g1.gradescaleid
+, g1.cutoffpercentage
+HAVING COUNT(*) > 1) g3
+LEFT JOIN ps.gradescaleitem g2
+ON g3.gradescaleid = g2.dcid
+]
+
+{
+"dcid" : "~(g2.dcid)",
+"name" : "~(g2.name)",
+"cutoff" : "~(g3.cutoffpercentage)",
+"count" : "~(g3.countitem)"
+},
+[/tlist_sql]
+{}
+]}

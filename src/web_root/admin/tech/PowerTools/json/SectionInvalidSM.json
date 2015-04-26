@@ -1,0 +1,34 @@
+{"ResultSet":[
+~[tlist_sql;
+SELECT s2.dcid
+, s2.Course_Number
+, s2.Section_Number
+, s2.TermID
+, s2.expression
+, s3.NAME
+FROM sections s2
+INNER JOIN schools s3
+ON s2.schoolid = s3.school_number
+WHERE s2.ID NOT IN (
+SELECT SectionID
+FROM section_meeting s1
+INNER JOIN period p1
+ON s1.schoolid = p1.schoolid
+AND s1.year_id = p1.year_id
+WHERE s1.period_number = p1.period_number)
+~[if.is.a.school]AND s2.schoolid = ~[v.curschoolid][/if.is.a.school]
+~[if.~(gpv.curyearonly)=1]AND trunc(s2.termid/100) = trunc(~[v.curtermid]/100)[/if]
+ORDER BY s2.Course_Number
+]
+
+{
+"dcid" : "~(s2.dcid)",
+"courseNumber" : "~(s2.Course_Number)",
+"sectionNumber" : "~(s2.Section_Number)",
+"termId" : "~(s2.TermID)",
+"expression" : "~(s2.Expression)",
+"schoolName" : "~(s3.Name)"
+},
+[/tlist_sql]
+{}
+]}

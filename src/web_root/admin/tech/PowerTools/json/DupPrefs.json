@@ -1,0 +1,42 @@
+{"ResultSet":[
+	~[tlist_sql;
+SELECT p1.name
+, CASE
+	WHEN (p1.yearid = 0 or p1.yearid IS NULL)
+	THEN 'N/A'
+	ELSE ((p1.yearid + 1990)||'-'||(p1.yearid + 1991))
+	END YearID
+, CASE
+  WHEN p1.schoolid = '0'
+  THEN 'District Office'
+  WHEN p1.schoolid IN (
+    SELECT school_number
+    FROM ps.schools)
+  THEN (
+    SELECT name
+    FROM ps.schools
+    WHERE school_number = p1.schoolid)
+  ELSE 'School Does Not Exist'
+  END schoolname
+, count(*)
+, p1.userid
+FROM ps.prefs p1
+LEFT JOIN ps.schools s1
+ON p1.schoolid = s1.school_number
+GROUP BY p1.schoolid
+, p1.name
+, p1.yearid
+, p1.userid
+HAVING COUNT(*) > 1
+ORDER BY p1.name
+  ]
+{
+"name" : "~(Name)",
+"yearId" : "~(YearID)",
+"schoolId" : "~(SchoolID)",
+"count" : "~(count)",
+"userId" : "~(userid)"
+    },
+			[/tlist_sql]
+{}
+    ]}

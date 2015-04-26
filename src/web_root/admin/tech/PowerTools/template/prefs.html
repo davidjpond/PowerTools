@@ -1,0 +1,103 @@
+<form method="post" onsubmit="loadingDialog();">
+  <h2>User Preferences</h2>
+
+  <table class="linkDescList">
+    <thead>
+      <tr>
+        <th>Option</th>
+        <th class="prefValue">Value</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><label for="maxLines">Default number of rows on each report</label></td>
+        <td class="prefValue">
+          <select id="maxLines" name="[pref]PowerTools-maxlines-U~[x:userid]">
+            <option value="25">25 Rows</option>
+            <option value="50">50 Rows</option>
+            <option value="100">100 Rows</option>
+            <option value="500">500 Rows</option>
+            <option value="100000">Max Rows</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td><label for="defaultYears">Default Years to display (For reports with this
+          option)</label>
+        </td>
+        <td class="prefValue">
+          <select id="defaultYears" name="[pref]PowerTools-curyearonly-U~[x:userid]">
+            <option value="0">All Years</option>
+            <option value="1">Current Year</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td><label for="expandMenu">Expand navigation menu by default (Overrides automatic
+          collapse when running diagnostic reports)</label>
+        </td>
+        <td class="prefValue"><input id="expandMenu" type="checkbox"
+            name="[pref]PowerTools-navigation-menu-expanded-U~[x:userid]">
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h2>Global Preferences</h2>
+
+  <table class="linkDescList">
+    <thead>
+      <tr>
+        <th>Option</th>
+        <th class="prefValue">Value</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><label for="hideSpEnrollments">Hide the Special Program Enrollments Outside School Enrollments and Special
+          Program
+          Enrollments with Invalid Grade Levels reports</label>
+        </td>
+        <td class="prefValue">
+          <input id="hideSpEnrollments" type="checkbox" name="[pref]PowerTools-Hide-SPEnrollments-Reports">
+        </td>
+      </tr>
+      <tr>
+        <td><label for="hidePaddedSchool">Hide the Padded School Enrollment report</label></td>
+        <td
+            class="prefValue"><input id="hidePaddedSchool" type="checkbox"
+            name="[pref]PowerTools-Hide-Padded-School-Enrollment-Report"></td>
+      </tr>
+      <tr>
+        <td><label for="hideBlankGrades">Hide the Blank Stored Grades Report</label></td>
+        <td class="prefValue"><input
+            id="hideBlankGrades" type="checkbox" name="[pref]PowerTools-Hide-Blank-Stored-Grades"></td>
+      </tr>
+      <tr>
+        <td><label for="hideDupGrades">Hide the Duplicate Stored Grades Report</label></td>
+        <td class="prefValue"><input
+            id="hideDupGrades" type="checkbox" name="[pref]PowerTools-Hide-Duplicate-Stored-Grades"></td>
+      </tr>
+      <tr>
+        <td><label for="redirectDDE">Redirect DDE links in reports to DDA instead (Requires DDA Access)</label></td>
+        <td class="prefValue"><input id="redirectDDE" type="checkbox" name="[pref]PowerTools-Redirect-Orphan-DDA"></td>
+      </tr>
+      <tr>
+        <td><label for="hispanicOnly">Allow selecting only Hispanic options to qualify Federal Ethnicity and
+          Race</label></td>
+        <td class="prefValue"><input id="hispanicOnly" type="checkbox"
+            name="[pref]PowerTools-Hispanic-Only-Qualifies"></td>
+      </tr>
+      <tr>
+        <td><label for="enableSchoolNet">Enable SchoolNet Preparation Reports (District Office Only)</label></td>
+        <td class="prefValue"><input id="enableSchoolNet" type="checkbox"
+            name="[pref]PowerTools-Enable-SchoolNet-Prep"></td>
+      </tr>
+    </tbody>
+  </table>
+  <p id="bottom_container" style="text-align:center"></p>
+
+  <div class="button-row">
+    <input type="hidden" name="ac" value="prim">
+    ~[submitbutton]
+  </div>
+</form>

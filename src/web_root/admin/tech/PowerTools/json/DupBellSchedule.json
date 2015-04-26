@@ -1,0 +1,37 @@
+{"ResultSet":[
+~[tlist_sql;
+SELECT b1.name
+, CASE
+WHEN b1.schoolid = '0'
+THEN 'District Office'
+WHEN b1.schoolid IN (
+SELECT School_Number
+FROM ps.schools)
+THEN (
+SELECT name
+FROM ps.schools
+WHERE school_number = b1.schoolid)
+ELSE 'School Does Not Exist'
+END SchoolName
+, (b1.year_id + 1990)||'-'||(b1.year_id + 1991)
+, count(*)
+FROM ps.bell_schedule b1
+~[if.is.a.school]WHERE b1.schoolid = ~[v.curschoolid][/if]
+GROUP BY b1.name
+, b1.schoolid
+, b1.year_id
+HAVING COUNT(*) > 1
+ORDER BY SchoolName
+, b1.year_id
+, b1.name
+]
+{
+
+"name" : "~(name)",
+"schoolName" : "~(schoolid)",
+"yearId" : "~(yearid)",
+"count" : "~(count)"
+},
+[/tlist_sql]
+{}
+]}

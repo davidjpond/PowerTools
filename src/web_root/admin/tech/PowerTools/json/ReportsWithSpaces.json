@@ -1,0 +1,26 @@
+{"ResultSet" : [
+~[tlist_sql;
+SELECT r1.dcid
+, r1.name
+, CASE
+WHEN r1.type = '500'
+THEN 'Object Report'
+WHEN r1.type = '110'
+THEN 'Report Card Report'
+WHEN r1.type = '100'
+THEN 'Form Letter'
+WHEN r1.type = '80'
+THEN 'Mailing Label'
+END Type
+FROM reports r1
+WHERE r1.name like '% '
+ORDER BY r1.name
+]
+{
+"dcid" : "~(g1.dcid)",
+"reportName" : "~(g1.name)",
+"reportType" : "~(g1.type)"
+},
+[/tlist_sql]
+{}
+]}

@@ -1,8 +1,4 @@
 'use strict';
-/*jshint -W106 */
-var $j = jQuery.noConflict(),
-  loadingDialog = window.loadingDialog || {},
-  closeLoading = window.closeLoading || {};
 
 var dataOptions;
 
@@ -343,7 +339,7 @@ var ptWizardData = {
       header: 'Removing blank stored grades in ' + wizardOptions.schoolName,
       info: 'Use this wizard to remove blank stored grades. This wizard will remove all stored grades where the ' +
         'letter grade is blank, the percent is zero, and the comment is blank.',
-      jsonURL: 'json/BlankStoredGradesWizard.json.html',
+      jsonURL: 'json/BlankStoredGradesWizard.json',
       buttonText: 'Remove Blank Stored Grades',
       action: function () {
         currentRecord = 0;
@@ -369,7 +365,7 @@ var ptWizardData = {
       info: 'Use this wizard to repair duplicate attendance codes. This process will repair all attendance records, ' +
         'remove all attendance code categories from the duplicate attendance codes, then remove the duplicate ' +
         'attendance codes.',
-      jsonURL: 'json/DupAttendanceCodeWizard.json.html',
+      jsonURL: 'json/DupAttendanceCodeWizard.json',
       buttonText: 'Repair Duplicate Attendance Codes',
       action: function () {
         currentRecord = 0;
@@ -395,7 +391,7 @@ var ptWizardData = {
       info: 'Use this wizard to repair duplicate Attendance Conversions. This process will correct the attendance ' +
         'conversion on the bell schedules, remove the attendance conversion items record for the duplicated ' +
         'attendance conversion, then delete the duplicated attendance conversion.',
-      jsonURL: 'json/DupAttendanceConversionWizard.json.html',
+      jsonURL: 'json/DupAttendanceConversionWizard.json',
       buttonText: 'Remove Duplicate Attendance Conversions',
       action: function () {
         currentRecord = 0;
@@ -420,7 +416,7 @@ var ptWizardData = {
       header: 'Repairing duplicate bell schedules in ' + wizardOptions.schoolName,
       info: 'Use this wizard to repair duplicate bell schedules. This process will repair all calendar records, then ' +
         'remove the duplicate bell schedules and bell schedule items.',
-      jsonURL: 'json/DupBellScheduleWizard.json.html',
+      jsonURL: 'json/DupBellScheduleWizard.json',
       buttonText: 'Remove Duplicate Bell Schedules',
       action: function () {
         currentRecord = 0;
@@ -435,7 +431,7 @@ var ptWizardData = {
       header: 'Repairing duplicate calendar day records in ' + wizardOptions.schoolName,
       info: 'Use this wizard to repair duplicate calendar day records. This wizard will remove all duplicate ' +
         'calendar_day records.',
-      jsonURL: 'json/DupCalendarDayWizard.json.html',
+      jsonURL: 'json/DupCalendarDayWizard.json',
       buttonText: 'Remove Duplicate Calendar Days',
       action: function () {
         currentRecord = 0;
@@ -455,7 +451,7 @@ var ptWizardData = {
       header: 'Repairing duplicate cycle day records in ' + wizardOptions.schoolName,
       info: 'Use this wizard to repair duplicate cycle days. This process will repair all calendar day records, then ' +
         'remove the duplicate cycle days.',
-      jsonURL: 'json/DupDaysWizard.json.html',
+      jsonURL: 'json/DupDaysWizard.json',
       buttonText: 'Remove Duplicate Cycle Days',
       action: function () {
         currentRecord = 0;
@@ -470,7 +466,7 @@ var ptWizardData = {
       name: 'Duplicate Entry Code',
       header: 'Repairing duplicate entry code records in All Schools',
       info: 'Use this wizard to repair duplicate Entry Codes. This process will remove the duplicate Entry Codes.',
-      jsonURL: 'json/DupEntryCodesWizard.json.html',
+      jsonURL: 'json/DupEntryCodesWizard.json',
       buttonText: 'Remove Duplicate Entry Codes',
       action: function () {
         currentRecord = 0;
@@ -484,7 +480,7 @@ var ptWizardData = {
       name: 'Duplicate Exit Code',
       header: 'Repairing duplicate entry code records in All Schools',
       info: 'Use this wizard to repair duplicate Exit Codes. This process will remove the duplicate Exit Codes.',
-      jsonURL: 'json/DupExitCodesWizard.json.html',
+      jsonURL: 'json/DupExitCodesWizard.json',
       buttonText: 'Remove Duplicate Exit Codes',
       action: function () {
         currentRecord = 0;
@@ -519,7 +515,7 @@ var ptWizardData = {
       header: 'Repairing duplicate FTEs in ' + wizardOptions.schoolName,
       info: 'Use this wizard to repair duplicate FTEs. This process will correct the FTEs in the Students, ' +
         'Reenrollments, FTEGrade and Attendance Conversion tables, then remove the duplicate FTE.',
-      jsonURL: 'json/DupFTEWizard.json.html',
+      jsonURL: 'json/DupFTEWizard.json',
       buttonText: 'Remove Duplicate FTEs',
       action: function () {
         currentRecord = 0;
@@ -533,7 +529,7 @@ var ptWizardData = {
       name: 'Duplicate Gen Records',
       header: 'Repairing duplicate gen records in All Schools',
       info: 'Use this wizard to repair duplicate gen records. This process will remove the duplicate gen records.',
-      jsonURL: 'json/DupGenWizard.json.html',
+      jsonURL: 'json/DupGenWizard.json',
       buttonText: 'Remove Duplicate Gen Records',
       action: function () {
         currentRecord = 0;
@@ -568,7 +564,7 @@ var ptWizardData = {
       header: 'Repairing duplicate periods in ' + wizardOptions.schoolName,
       info: 'Use this wizard to repair duplicate periods. This process will repair all attendance, attendancequeue, ' +
         'attendance_taken, and bell schedule records, then remove the duplicate Periods.',
-      jsonURL: 'json/DupPeriodNumberWizard.json.html',
+      jsonURL: 'json/DupPeriodNumberWizard.json',
       buttonText: 'Remove Duplicate Periods',
       action: function () {
         currentRecord = 0;
@@ -582,7 +578,7 @@ var ptWizardData = {
       name: 'Duplicate Preference',
       header: 'Repairing duplicate preference records in All Schools',
       info: 'Use this wizard to repair duplicate Preferences. This process will remove the duplicate Preferences.',
-      jsonURL: 'json/DupPrefsWizard.json.html',
+      jsonURL: 'json/DupPrefsWizard.json',
       buttonText: 'Remove Duplicate Preferences',
       action: function () {
         currentRecord = 0;
@@ -597,7 +593,7 @@ var ptWizardData = {
       header: 'Repairing duplicate server configuration records',
       info: 'Use this wizard to repair duplicate server configuration records. This wizard will delete the ' +
         'duplicate records.',
-      jsonURL: 'json/DupServerConfigWizard.json.html',
+      jsonURL: 'json/DupServerConfigWizard.json',
       buttonText: 'Remove Duplicate Server Config Records',
       action: function () {
         currentRecord = 0;
@@ -611,7 +607,7 @@ var ptWizardData = {
       header: 'Repairing duplicate server instance records',
       info: 'Use this wizard to repair duplicate server instance records. This process will remove the duplicate ' +
         'server instance records.',
-      jsonURL: 'json/DupServerInstanceWizard.json.html',
+      jsonURL: 'json/DupServerInstanceWizard.json',
       buttonText: 'Remove Duplicate Server Instance Records',
       action: function () {
         currentRecord = 0;
@@ -626,7 +622,7 @@ var ptWizardData = {
       header: 'Repairing duplicate final grade setups in ' + wizardOptions.schoolName,
       info: 'Use this wizard to repair duplicate final grade setups. This process will remove the duplicate Final ' +
         'Grade Setup items.',
-      jsonURL: 'json/DupTermBinsWizard.json.html',
+      jsonURL: 'json/DupTermBinsWizard.json',
       buttonText: 'Remove Duplicate Final Grade Setups',
       action: function () {
         currentRecord = 0;
@@ -641,7 +637,7 @@ var ptWizardData = {
       header: 'Repairing duplicate terms records in ' + wizardOptions.schoolName,
       info: 'Use this wizard to repair duplicate terms records. This process will turn the global sync to non-atomic,' +
         ' remove the duplicate term records, then turn the global sync back to atomic.',
-      jsonURL: 'json/DupTermsWizard.json.html',
+      jsonURL: 'json/DupTermsWizard.json',
       buttonText: 'Remove Duplicate Terms',
       action: function () {
         currentRecord = 0;
@@ -657,7 +653,7 @@ var ptWizardData = {
       info: 'Use this wizard to repair CC Records with incorrect case sensitivity. This process will change sync to ' +
         'non-atomic mode, correct the case sensitivity of the course number in the CC record, then change the sync ' +
         'back to atomic mode.',
-      jsonURL: 'json/InvCourseCCWizard.json.html',
+      jsonURL: 'json/InvCourseCCWizard.json',
       buttonText: 'Repair Course Numbers',
       action: function () {
         currentRecord = 0;
@@ -673,7 +669,7 @@ var ptWizardData = {
       info: 'Use this wizard to repair Section Records with incorrect case sensitivity. This process will change ' +
         'sync to non-atomic mode, correct the case sensitivity of the Section number, then change the sync back to ' +
         'atomic mode.',
-      jsonURL: 'json/InvCourseNumberSectionsWizard.json.html',
+      jsonURL: 'json/InvCourseNumberSectionsWizard.json',
       buttonText: 'Repair Course Numbers',
       action: function () {
         currentRecord = 0;
@@ -713,7 +709,7 @@ var ptWizardData = {
           }
         ]
       },
-      jsonURL: 'json/NonInSessionAttendanceWizard.json.html',
+      jsonURL: 'json/NonInSessionAttendanceWizard.json',
       buttonText: 'Remove Non-Session Attendance',
       action: function () {
         currentRecord = 0;
@@ -728,7 +724,7 @@ var ptWizardData = {
       header: 'Removing orphaned attendance_time records in All Schools',
       info: 'Use this wizard to remove orphaned attendance_time records. This process will delete all ' +
         'attendance_time records where the attendance record does not exist.',
-      jsonURL: 'json/OrphanedAttendanceTimeWizard.json.html',
+      jsonURL: 'json/OrphanedAttendanceTimeWizard.json',
       buttonText: 'Remove Orphaned Attendance_Time Records',
       action: function () {
         currentRecord = 0;
@@ -783,7 +779,7 @@ var ptWizardData = {
           }
         ]
       },
-      jsonURL: 'json/OrphanedAttendanceWizard.json.html',
+      jsonURL: 'json/OrphanedAttendanceWizard.json',
       buttonText: 'Remove Orphaned Attendance Records',
       action: function () {
         currentRecord = 0;
@@ -830,7 +826,7 @@ var ptWizardData = {
           }
         ]
       },
-      jsonURL: 'json/OrphanedCCWizard.json.html',
+      jsonURL: 'json/OrphanedCCWizard.json',
       buttonText: 'Remove Orphaned CC Records',
       action: function () {
         currentRecord = 0;
@@ -868,7 +864,7 @@ var ptWizardData = {
           }
         ]
       },
-      jsonURL: 'json/OrphanedFeeTransactionWizard.json.html',
+      jsonURL: 'json/OrphanedFeeTransactionWizard.json',
       buttonText: 'Remove Orphaned Fee Transactions',
       action: function () {
         currentRecord = 0;
@@ -902,7 +898,7 @@ var ptWizardData = {
           }
         ]
       },
-      jsonURL: 'json/OrphanedHonorRollWizard.json.html',
+      jsonURL: 'json/OrphanedHonorRollWizard.json',
       buttonText: 'Remove Orphaned Honor Roll Records',
       action: function () {
         currentRecord = 0;
@@ -933,7 +929,7 @@ var ptWizardData = {
           }
         ]
       },
-      jsonURL: 'json/OrphanedPGFinalGradesWizard.json.html',
+      jsonURL: 'json/OrphanedPGFinalGradesWizard.json',
       buttonText: 'Remove Orphaned PGFinalGrade Records',
       action: function () {
         currentRecord = 0;
@@ -968,7 +964,7 @@ var ptWizardData = {
           }
         ]
       },
-      jsonURL: 'json/OrphanedReenrollmentsWizard.json.html',
+      jsonURL: 'json/OrphanedReenrollmentsWizard.json',
       buttonText: 'Remove Orphaned Reenrollments',
       action: function () {
         currentRecord = 0;
@@ -1014,7 +1010,7 @@ var ptWizardData = {
         checkboxNote: 'Use caution when selecting the option "Teacher does not exist" as you may wish to simply ' +
           'assign these sections to another teacher.'
       },
-      jsonURL: 'json/OrphanedSectionWizard.json.html',
+      jsonURL: 'json/OrphanedSectionWizard.json',
       buttonText: 'Remove Orphaned Sections',
       action: function () {
         currentRecord = 0;
@@ -1052,7 +1048,7 @@ var ptWizardData = {
           }
         ]
       },
-      jsonURL: 'json/OrphanedSpEnrollmentsWizard.json.html',
+      jsonURL: 'json/OrphanedSpEnrollmentsWizard.json',
       buttonText: 'Remove Orphaned Special Program Records',
       action: function () {
         currentRecord = 0;
@@ -1090,7 +1086,7 @@ var ptWizardData = {
           }
         ]
       },
-      jsonURL: 'json/OrphanedStandardsGradesWizard.json.html',
+      jsonURL: 'json/OrphanedStandardsGradesWizard.json',
       buttonText: 'Remove Orphaned Standards Grades',
       action: function () {
         currentRecord = 0;
@@ -1106,7 +1102,7 @@ var ptWizardData = {
       info: 'Use this wizard to remove orphaned Stored Grades. This process will delete all Stored Grades records ' +
         'where the student does not exist. If you wish to manually correct any records, please do so prior to ' +
         'running this wizard.',
-      jsonURL: 'json/OrphanedStoredGradesWizard.json.html',
+      jsonURL: 'json/OrphanedStoredGradesWizard.json',
       buttonText: 'Remove Orphaned Stored grades',
       action: function () {
         currentRecord = 0;
@@ -1133,7 +1129,7 @@ var ptWizardData = {
           }
         ]
       },
-      jsonURL: 'json/OrphanedStudentRaceWizard.json.html',
+      jsonURL: 'json/OrphanedStudentRaceWizard.json',
       buttonText: 'Remove Orphaned Student Race Records',
       action: function () {
         currentRecord = 0;
@@ -1180,7 +1176,7 @@ var ptWizardData = {
           }
         ]
       },
-      jsonURL: 'json/OrphanedStudentTestScoreWizard.json.html',
+      jsonURL: 'json/OrphanedStudentTestScoreWizard.json',
       buttonText: 'Remove Orphaned Student Test Score Records',
       action: function () {
         currentRecord = 0;
@@ -1207,7 +1203,7 @@ var ptWizardData = {
           }
         ]
       },
-      jsonURL: 'json/OrphanedTeacherRaceWizard.json.html',
+      jsonURL: 'json/OrphanedTeacherRaceWizard.json',
       buttonText: 'Remove Orphaned Teacher Race Records',
       action: function () {
         currentRecord = 0;
@@ -1243,7 +1239,7 @@ var ptWizardData = {
           }
         ]
       },
-      jsonURL: 'json/OrphanedTermBinsWizard.json.html',
+      jsonURL: 'json/OrphanedTermBinsWizard.json',
       buttonText: 'Remove Orphaned Termbins',
       action: function () {
         currentRecord = 0;

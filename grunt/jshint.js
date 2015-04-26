@@ -7,7 +7,6 @@ module.exports = function () {
       "bitwise": true,
       "browser": true,
       "devel": true,
-      "camelcase": true,
       "curly": true,
       "esnext": true,
       "eqeqeq": true,

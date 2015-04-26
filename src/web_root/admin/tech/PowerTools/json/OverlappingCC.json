@@ -1,0 +1,47 @@
+{"ResultSet":[
+~[tlist_sql;
+SELECT s1.dcid
+, s1.id
+, s1.lastfirst
+, s2.name
+, c3.course_name
+, c1.course_number
+, c1.section_number
+, (trunc(abs(c1.termid) / 100) + 1990)||'-'||(trunc(abs(c1.termid) / 100) + 1991)
+, (SELECT t1.abbreviation
+FROM terms t1
+WHERE c1.schoolid = t1.schoolid
+AND ABS(c1.termid) = t1.id) TermID
+FROM CC C1
+, CC C2
+, students s1
+, courses c3
+, schools s2
+WHERE C1.StudentID = C2.StudentID
+AND ABS(C1.SectionID) = ABS(C2.SectionID)
+AND (C1.DCID != C2.DCID
+AND C1.Dateenrolled > C2.Dateenrolled
+OR C1.DCID > C2.DCID
+AND C1.Dateenrolled = c2.dateenrolled)
+AND C1.Dateenrolled < c2.dateleft
+AND c1.studentid = s1.id
+AND c1.course_number = c3.course_number
+AND s2.school_number = c1.schoolid
+~[if.is.a.school]AND s1.schoolid = ~[v.curschoolid][/if.is.a.school]
+~[if.~(gpv.curyearonly)=1]AND trunc(abs(c1.termid)/100) = trunc(~[v.curtermid]/100)[/if]
+ORDER BY lastfirst
+]
+{
+"dcid" : "~(s1.dcid)",
+"studentid" : "~(s1.id)",
+"student" : "~(s1.lastfirst)",
+"schoolName" : "~(s2.name)",
+"courseName" : "~(c3.course_name)",
+"courseNumber" : "~(c1.course_number)",
+"sectionNumber" : "~(c1.section_number)",
+"yearID" : "~(YearID)",
+"termID" : "~(TermID)"
+},
+[/tlist_sql]
+{}
+]}

@@ -1,0 +1,17 @@
+{"ResultSet":[
+~[tlist_sql;
+SELECT g1.name
+, count(*)
+FROM gen g1
+WHERE Cat = 'entrycodes'
+GROUP BY g1.name
+HAVING COUNT(*) > 1
+ORDER BY g1.name
+]
+{
+"entryCode" : "~(Code)",
+"count" : "~(count)"
+},
+[/tlist_sql]
+{}
+]}
