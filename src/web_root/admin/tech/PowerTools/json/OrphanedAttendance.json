@@ -24,13 +24,13 @@ SELECT a1.dcid
 , CASE
   WHEN c1.id IS NULL
   AND a1.ccid != 0
-  THEN 'CCID ' || a1.ccid || ' Does Not Exist'
+  THEN 'CCID ' || a1.ccid || ' does not exist'
   WHEN a1.ccid = 0
   THEN 'Daily Record'
   WHEN s3.id IS NULL
-  THEN 'Section ID ' || abs(c1.sectionid) || ' Does Not Exist'
+  THEN 'Section ID ' || abs(c1.sectionid) || ' does not exist'
   WHEN c2.course_number IS NULL
-  THEN 'Course Number ' || c1.course_number || ' Does Not Exist'
+  THEN 'Course Number ' || c1.course_number || ' does not exist'
   ELSE c1.course_number || '.' || c1.section_number
   END course_sectionsort
 , p1.period_number
@@ -72,7 +72,7 @@ ORDER BY a1.ID
 		"attendanceDcid" : "~(a1.dcid)",
 		"attendanceId" : "~(a1.id)",
 		"student" : "~(s1.lastfirst)",
-		"studentid" : "~(a1.studentid)",
+		"studentId" : "~(a1.studentid)",
 		"attendanceCode" : "~(a1.att_code)",
 		"attendanceCodeId" : "~(a2.id)",
 		"attendanceRecordCodeId" : "~(a1.att_codesort)",

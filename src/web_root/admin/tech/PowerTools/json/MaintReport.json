@@ -85,10 +85,6 @@
 "reportName" : "InvCourseNumberCC"
 },
 {
-"report" : "Sections records with incorrect case course number",
-"reportName" : "InvCourseNumberSections"
-},
-{
 "report" : "Students with incorrect studyear records",
 "reportName" : "IncorrectStudYear"
 },

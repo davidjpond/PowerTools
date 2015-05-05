@@ -6,10 +6,19 @@
         "item": "Added the Duplicate Student ID report to the Maintenance Reports"
       },
       {
+        "item": "Redesigned the application as a single page app"
+      },
+      {
         "item": "Corrected a misspelling of the word \"the\" on the Duplicate Attendance Conversion Report"
       },
       {
         "item": "Corrected an issue where the Students with no Full Time Equivalencies would not display if the students name contained a slash"
+      },
+      {
+        "item": "Deprecated the Invalid Course Number Sections report as it is no longer an issue in PowerSchool"
+      },
+      {
+        "item": "Modified the changelog to a data driven design"
       },
       {
         "item": "Removed support for PowerSchool 7.x and below"
@@ -44,7 +53,7 @@
     "version": "3.2.0",
     "changes": [
       {
-        "item": "Encorporated the YUI into the PowerTools product, so PowerTools does not break upon the removal of YUI."
+        "item": "Encorporated the YUI into the PowerTools product, so PowerTools does not break upon the removal of YUI"
       },
       {
         "item": "Modified the PowerTools menu for PowerSchool 8"
@@ -55,7 +64,7 @@
     "version": "3.1.0",
     "changes": [
       {
-        "item": "Removed access to the wizards from Pearson Technical Support agents. These wizards should only be run by the district PowerSchool Administrators after making a backup."
+        "item": "Removed access to the wizards from Pearson Technical Support agents. These wizards should only be run by the district PowerSchool Administrators after making a backup"
       },
       {
         "item": "Updated all javascript to be jshint compliant"
@@ -74,7 +83,7 @@
     "version": "3.0",
     "changes": [
       {
-        "item": "Added the ability to make all students on many student based reports the current selection."
+        "item": "Added the ability to make all students on many student based reports the current selection"
       },
       {
         "item": "Added the Duplicate Gen Records Report"
@@ -116,22 +125,22 @@
         "item": "Replaced the progress bar on the wizards with the loading bar from PowerSchool"
       },
       {
-        "item": "Removed the Duplicate Custom Fields report and wizard as they are no longer necessary with the Database Extensions."
+        "item": "Removed the Duplicate Custom Fields report and wizard as they are no longer necessary with the Database Extensions"
       },
       {
-        "item": "Updated all pages to PowerSchool 7 format only. PowerSchool 6 is no longer supported."
+        "item": "Updated all pages to PowerSchool 7 format only. PowerSchool 6 is no longer supported"
       },
       {
         "item": "Updated the \"Incorrect Studyear\" report to allow student id's higher than 2147483647"
       },
       {
-        "item": "Updated the interface on all wizards to a PowerSchool 7 look at feel."
+        "item": "Updated the interface on all wizards to a PowerSchool 7 look at feel"
       },
       {
-        "item": "Wizards will now show the total number of records to be changed upon changing the options."
+        "item": "Wizards will now show the total number of records to be changed upon changing the options"
       },
       {
-        "item": "Wizards will no longer have all checkboxes checked by default."
+        "item": "Wizards will no longer have all checkboxes checked by default"
       }
     ]
   },
@@ -139,7 +148,7 @@
     "version": "2.8.3",
     "changes": [
       {
-        "item": "Updated the link to PowerTools on the System page."
+        "item": "Updated the link to PowerTools on the System page"
       }
     ]
   },
@@ -155,7 +164,7 @@
     "version": "2.8.1",
     "changes": [
       {
-        "item": "Corrected an error on the System page which prevented the link to Roles Administration from displaying."
+        "item": "Corrected an error on the System page which prevented the link to Roles Administration from displaying"
       }
     ]
   },
@@ -163,22 +172,22 @@
     "version": "2.8.0",
     "changes": [
       {
-        "item": "Added a report to identify orphaned Attendance_Time records, only available at District office."
+        "item": "Added a report to identify orphaned Attendance_Time records, only available at District office"
       },
       {
-        "item": "Added a wizard to clean up orphaned Attendance_Time records."
+        "item": "Added a wizard to clean up orphaned Attendance_Time records"
       },
       {
-        "item": "Changed the Orphaned Standards Grades report to reflect the school in red if the school is District Office."
+        "item": "Changed the Orphaned Standards Grades report to reflect the school in red if the school is District Office"
       },
       {
-        "item": "Corrected and issue with the Overlapping School Enrollments report, where it incorrectly reflected Graduated School Enrollments, and some enrollments where the entry date matched the exit date."
+        "item": "Corrected and issue with the Overlapping School Enrollments report, where it incorrectly reflected Graduated School Enrollments, and some enrollments where the entry date matched the exit date"
       },
       {
-        "item": "Corrected an issue with the Duplicate Entry Codes report showing duplicate exit codes."
+        "item": "Corrected an issue with the Duplicate Entry Codes report showing duplicate exit codes"
       },
       {
-        "item": "Corrected an issue with the Duplicate Entry Codes Wizard, where it failed to display the number of records to be corrected."
+        "item": "Corrected an issue with the Duplicate Entry Codes Wizard, where it failed to display the number of records to be corrected"
       }
     ]
   },
@@ -186,40 +195,40 @@
     "version": "2.7.0",
     "changes": [
       {
-        "item": "Added the ability to filter the Padded School Enrollments report to the current year."
+        "item": "Added the ability to filter the Padded School Enrollments report to the current year"
       },
       {
-        "item": "Added the ability to filter the Students with no FTE's report to the current year."
+        "item": "Added the ability to filter the Students with no FTE's report to the current year"
       },
       {
-        "item": "Added a report to identify stored grades where the GPA points or the letter grade is not expected based off the grade scale used, or the GPA points of that grade do not match the gradescale based off the letter grade."
+        "item": "Added a report to identify stored grades where the GPA points or the letter grade is not expected based off the grade scale used, or the GPA points of that grade do not match the gradescale based off the letter grade"
       },
       {
         "item": "Added the master report for SchoolNet preparation (PowerSchool 7.x only)"
       },
       {
-        "item": "Added a Global Preference to enable the SchoolNet Preparation Reports (PowerSchool 7.x only, District Office only)."
+        "item": "Added a Global Preference to enable the SchoolNet Preparation Reports (PowerSchool 7.x only, District Office only)"
       },
       {
-        "item": "Added the SchoolNet Preparation report for locating possible duplicate students."
+        "item": "Added the SchoolNet Preparation report for locating possible duplicate students"
       },
       {
-        "item": "Added the SchoolNet Preparation report for locating log entries with future dates."
+        "item": "Added the SchoolNet Preparation report for locating log entries with future dates"
       },
       {
-        "item": "Added the SchoolNet Preparation report for locating multiple teacher accounts with the same teacher number."
+        "item": "Added the SchoolNet Preparation report for locating multiple teacher accounts with the same teacher number"
       },
       {
-        "item": "Added the SchoolNet Preparation report for locating incidents which have a future occurance date."
+        "item": "Added the SchoolNet Preparation report for locating incidents which have a future occurance date"
       },
       {
-        "item": "Added the SchoolNet Preparation report for viewing all attendance setting, for all schools, all years at a glance."
+        "item": "Added the SchoolNet Preparation report for viewing all attendance setting, for all schools, all years at a glance"
       },
       {
-        "item": "Added the SchoolNet Preparation report for locating duplicate teacher accounts by name and SSN."
+        "item": "Added the SchoolNet Preparation report for locating duplicate teacher accounts by name and SSN"
       },
       {
-        "item": "Corrected the Misaligned Standards link on the left hand navigation menu, which previously returned an invalid page when using Custom Page Management."
+        "item": "Corrected the Misaligned Standards link on the left hand navigation menu, which previously returned an invalid page when using Custom Page Management"
       }
     ]
   },
@@ -227,75 +236,75 @@
     "version": "2.6.3",
     "changes": [
       {
-        "item": "Added a global preference to allow Hispanic only to qualify for meeting Federal Ethnicity and Race needs."
+        "item": "Added a global preference to allow Hispanic only to qualify for meeting Federal Ethnicity and Race needs"
       }
     ]
   },
   {
     "version": "2.6.2",
     "changes": [
-      {"item": "Corrected an issue with the Incomplete Scheduling Setup which caused the report to display future kindergarteners which were correctly setup."},
+      {"item": "Corrected an issue with the Incomplete Scheduling Setup which caused the report to display future kindergarteners which were correctly setup"},
       {
-        "item": "Added the link to Roles Administration to the System page, which was added in PowerSchool 7.1.1."
+        "item": "Added the link to Roles Administration to the System page, which was added in PowerSchool 7.1.1"
       }
     ]
   },
   {
     "version": "2.6.1",
     "changes": [
-      {"item": "Version 2.6.1 was never publicly released. All changes made are in the 2.6.2 release notes."}
+      {"item": "Version 2.6.1 was never publicly released. All changes made are in the 2.6.2 release notes"}
     ]
   },
   {
     "version": "2.6.0",
     "changes": [
       {
-        "item": "Added a Miscellaneous Report to identify standard conversion scales with grades longer than 8 characters."
+        "item": "Added a Miscellaneous Report to identify standard conversion scales with grades longer than 8 characters"
       },
       {
-        "item": "Added a Miscellaneous Report to identify grade scales with duplicate cutoff percentages."
+        "item": "Added a Miscellaneous Report to identify grade scales with duplicate cutoff percentages"
       },
       {
-        "item": "Added a Miscellaneous Report to identify reports with spaces at the end of the report name."
+        "item": "Added a Miscellaneous Report to identify reports with spaces at the end of the report name"
       },
       {
-        "item": "Added a Miscellaneous Report to identify activities with spaces in the field name."
+        "item": "Added a Miscellaneous Report to identify activities with spaces in the field name"
       },
       {
-        "item": "Added a Miscellaneous Report to identify course groups with spaces at the end of the name."
+        "item": "Added a Miscellaneous Report to identify course groups with spaces at the end of the name"
       },
       {
-        "item": "Added support for the collapsing left hand navigation menu added in PowerSchool 7.1."
+        "item": "Added support for the collapsing left hand navigation menu added in PowerSchool 7.1"
       },
       {
-        "item": "Added global sorting and formatting to the Fee Name, Grade Level, Periods, Test Score, Tests, Terms, Standards, Race Code, Teachers, Students, and School Name fields on orphaned reports to reduce the load on the database."
+        "item": "Added global sorting and formatting to the Fee Name, Grade Level, Periods, Test Score, Tests, Terms, Standards, Race Code, Teachers, Students, and School Name fields on orphaned reports to reduce the load on the database"
       },
       {
-        "item": "Removed the duplicate period on the Duplicate Termbins page, when referencing the Duplicate Final Grade Setup Wizard."
+        "item": "Removed the duplicate period on the Duplicate Termbins page, when referencing the Duplicate Final Grade Setup Wizard"
       },
       {
-        "item": "Changed the Duplicate Attendance Report to ignore records where the school does not exist."
+        "item": "Changed the Duplicate Attendance Report to ignore records where the school does not exist"
       },
       {
-        "item": "Changed the Orphaned Standards report to show the standard identifier instead of the ID when the standard exists."
+        "item": "Changed the Orphaned Standards report to show the standard identifier instead of the ID when the standard exists"
       },
       {
-        "item": "Corrected an issue where some pages would not display reports due to how page permissions were modified for DDA."
+        "item": "Corrected an issue where some pages would not display reports due to how page permissions were modified for DDA"
       },
       {
-        "item": "Corrected the non-session attendance report to redirect to the Daily Attendance page when selecting the students name on a daily record."
+        "item": "Corrected the non-session attendance report to redirect to the Daily Attendance page when selecting the students name on a daily record"
       },
       {
-        "item": "Corrected the duplicate attendance report to redirect to the Daily Attendance page when selecting the students name on a daily record."
+        "item": "Corrected the duplicate attendance report to redirect to the Daily Attendance page when selecting the students name on a daily record"
       },
       {
-        "item": "Corrected an issue where the pages using DDA permissions did not load if page permissions were not set for the DDA page."
+        "item": "Corrected an issue where the pages using DDA permissions did not load if page permissions were not set for the DDA page"
       },
       {
-        "item": "Corrected an issue on the Maintenance Report which did not identify duplicate preferences with null SchoolID, UserID, or YearID's."
+        "item": "Corrected an issue on the Maintenance Report which did not identify duplicate preferences with null SchoolID, UserID, or YearID's"
       },
       {
-        "item": "Corrected an issue with the Duplicate Preferences wizard which did not remove duplicate preferences with null SchoolID, UserID, or YearID's."
+        "item": "Corrected an issue with the Duplicate Preferences wizard which did not remove duplicate preferences with null SchoolID, UserID, or YearID's"
       }
     ]
   },
@@ -303,85 +312,85 @@
     "version": "2.5.0",
     "changes": [
       {
-        "item": "Added a report to identify standards with invalid list or calculation parents."
+        "item": "Added a report to identify standards with invalid list or calculation parents"
       },
       {
-        "item": "Replaced the output on the Maintenance reports with a progress bar and percentage indicator."
+        "item": "Replaced the output on the Maintenance reports with a progress bar and percentage indicator"
       },
       {
-        "item": "Optimized the Maintenance reports for faster correction."
+        "item": "Optimized the Maintenance reports for faster correction"
       },
       {
-        "item": "Added a wizard to clean up Blank Stored Grades."
+        "item": "Added a wizard to clean up Blank Stored Grades"
       },
       {
-        "item": "Added a wizard to clean up Non-Session Attendance."
+        "item": "Added a wizard to clean up Non-Session Attendance"
       },
       {
-        "item": "Added a wizard to clean up Orphaned Attendance."
+        "item": "Added a wizard to clean up Orphaned Attendance"
       },
       {
-        "item": "Added a wizard to clean up Orphaned CC Records."
+        "item": "Added a wizard to clean up Orphaned CC Records"
       },
       {
-        "item": "Added a wizard to clean up Orphaned Fee Transactions."
+        "item": "Added a wizard to clean up Orphaned Fee Transactions"
       },
       {
-        "item": "Added a wizard to clean up Orphaned Honor Roll Records."
+        "item": "Added a wizard to clean up Orphaned Honor Roll Records"
       },
       {
-        "item": "Added a wizard to clean up Orphaned PGFinalGrades."
+        "item": "Added a wizard to clean up Orphaned PGFinalGrades"
       },
       {
-        "item": "Added a wizard to clean up Orphaned Reenrollments."
+        "item": "Added a wizard to clean up Orphaned Reenrollments"
       },
       {
-        "item": "Added a wizard to clean up Orphaned Sections."
+        "item": "Added a wizard to clean up Orphaned Sections"
       },
       {
-        "item": "Added a wizard to clean up Orphaned Special Program Enrollments."
+        "item": "Added a wizard to clean up Orphaned Special Program Enrollments"
       },
       {
-        "item": "Added a wizard to clean up Orphaned Standards Grades."
+        "item": "Added a wizard to clean up Orphaned Standards Grades"
       },
       {
-        "item": "Added a wizard to clean up Orphaned Stored Grades."
+        "item": "Added a wizard to clean up Orphaned Stored Grades"
       },
       {
         "item": "Added a wizard to clean up Orphaned Student Race Records"
       },
       {
-        "item": "Added a wizard to clean up Orphaned Student Test Scores."
+        "item": "Added a wizard to clean up Orphaned Student Test Scores"
       },
       {
-        "item": "Added a wizard to clean up Orphaned Teacher Race Records."
+        "item": "Added a wizard to clean up Orphaned Teacher Race Records"
       },
       {
-        "item": "Added a wizard to clean up Orphaned Termbins."
+        "item": "Added a wizard to clean up Orphaned Termbins"
       },
       {
-        "item": "Added verbiage to the home page as alternate text to the image stating that images are not properly loaded."
+        "item": "Added verbiage to the home page as alternate text to the image stating that images are not properly loaded"
       },
       {
-        "item": "Added verbiage to the Sections Without Expression report to display how to correct the records."
+        "item": "Added verbiage to the Sections Without Expression report to display how to correct the records"
       },
       {
-        "item": "Adjusted the Duplicate Custom Fields Wizard to disable the buttons upon submission."
+        "item": "Adjusted the Duplicate Custom Fields Wizard to disable the buttons upon submission"
       },
       {
-        "item": "Adjusted the verbiage on the Non-Session Attendance report, changing the name from \"Not In-Session Attendance\"."
+        "item": "Adjusted the verbiage on the Non-Session Attendance report, changing the name from \"Not In-Session Attendance\""
       },
       {
-        "item": "Corrected the verbiage on the Orphaned Reenrollment records to show it searches for invalid grade levels instead of FTE's."
+        "item": "Corrected the verbiage on the Orphaned Reenrollment records to show it searches for invalid grade levels instead of FTE's"
       },
       {
-        "item": "Corrected an issue on the Duplicate Server Configuration which prevented duplicate records from being removed when using the wizard."
+        "item": "Corrected an issue on the Duplicate Server Configuration which prevented duplicate records from being removed when using the wizard"
       },
       {
-        "item": "Corrected an issue on the Duplicate FTE Wizard which prevented students FTE's from being modified, and the FTE from being deleted."
+        "item": "Corrected an issue on the Duplicate FTE Wizard which prevented students FTE's from being modified, and the FTE from being deleted"
       },
       {
-        "item": "Rearranged the output of the wizards to display in a more organized fashion on PowerSchool 7."
+        "item": "Rearranged the output of the wizards to display in a more organized fashion on PowerSchool 7"
       }
     ]
   },
@@ -389,10 +398,10 @@
     "version": "2.4.2",
     "changes": [
       {
-        "item": "Corrected an issue which prevented the Orphaned Fee Transactions report from displaying the records."
+        "item": "Corrected an issue which prevented the Orphaned Fee Transactions report from displaying the records"
       },
       {
-        "item": "Corrected an issue where running reports for the current year prevented reports from displaying when running them from the Enrollment Report."
+        "item": "Corrected an issue where running reports for the current year prevented reports from displaying when running them from the Enrollment Report"
       }
     ]
   },
@@ -400,7 +409,7 @@
     "version": "2.4.1",
     "changes": [
       {
-        "item": "Corrected an issue where the global preference would not take all users with permissions to Direct Database Access to DDA when selected."
+        "item": "Corrected an issue where the global preference would not take all users with permissions to Direct Database Access to DDA when selected"
       }
     ]
   },
@@ -408,28 +417,28 @@
     "version": "2.4.0",
     "changes": [
       {
-        "item": "Relocated the images to the root images folder. Those with image servers should put the images on their image server."
+        "item": "Relocated the images to the root images folder. Those with image servers should put the images on their image server"
       },
       {
-        "item": "Added the maintenance report for public viewing. This report had previously been hidden."
+        "item": "Added the maintenance report for public viewing. This report had previously been hidden"
       },
       {
-        "item": "Introduced automated wizards to correct invalid data in the maintenance reports."
+        "item": "Introduced automated wizards to correct invalid data in the maintenance reports"
       },
       {
-        "item": "Corrected the Orphaned Records master report to correctly filter Student Test Scores by school."
+        "item": "Corrected the Orphaned Records master report to correctly filter Student Test Scores by school"
       },
       {
-        "item": "Corrected the Orphaned Records master report to correctly filter Termbins by school."
+        "item": "Corrected the Orphaned Records master report to correctly filter Termbins by school"
       },
       {
-        "item": "Adjusted the DDA links to redirect the user to DDE if the user does not have access to the DDA home page by page permissions."
+        "item": "Adjusted the DDA links to redirect the user to DDE if the user does not have access to the DDA home page by page permissions"
       },
       {
-        "item": "Changed the left hand navigation menu to a collapsible menu. Set default to collapsed."
+        "item": "Changed the left hand navigation menu to a collapsible menu. Set default to collapsed"
       },
       {
-        "item": "Created a user preference to display the navigation menu collapsed or expanded by default."
+        "item": "Created a user preference to display the navigation menu collapsed or expanded by default"
       }
     ]
   },
@@ -437,52 +446,52 @@
     "version": "2.3.0",
     "changes": [
       {
-        "item": "Added a report to identify students enrolled in a school that doesn't exist, or having grade levels not within the levels of the school as the Orphaned Students Report."
+        "item": "Added a report to identify students enrolled in a school that doesn't exist, or having grade levels not within the levels of the school as the Orphaned Students Report"
       },
       {
-        "item": "Added individual links to the Orphaned Records reports on the menu."
+        "item": "Added individual links to the Orphaned Records reports on the menu"
       },
       {
-        "item": "Added a global preference to hide the Blank Stored Grades report."
+        "item": "Added a global preference to hide the Blank Stored Grades report"
       },
       {
-        "item": "Added a global preference to hide the Duplicate Stored Grades report."
+        "item": "Added a global preference to hide the Duplicate Stored Grades report"
       },
       {
-        "item": "Added a global preference to hide the Padded School Enrollments report."
+        "item": "Added a global preference to hide the Padded School Enrollments report"
       },
       {
-        "item": "Added a link to DDE/DDA based on global preferences on the Non-In-Session Attendance report, which will take the user to the record in DDE/DDA when selecting the Attendance ID."
+        "item": "Added a link to DDE/DDA based on global preferences on the Non-In-Session Attendance report, which will take the user to the record in DDE/DDA when selecting the Attendance ID"
       },
       {
-        "item": "Changed the order of the Enrollment Reports. Reports now show School Enrollments prior to Section Enrollments."
+        "item": "Changed the order of the Enrollment Reports. Reports now show School Enrollments prior to Section Enrollments"
       },
       {
-        "item": "Changed the Orphaned Reenrollments report to include records where the grade level is not within the grade levels of the school."
+        "item": "Changed the Orphaned Reenrollments report to include records where the grade level is not within the grade levels of the school"
       },
       {
-        "item": "Changed the Orphaned Reenrollments report to disregard FTE's as they are identified on the Students with no FTE's report."
+        "item": "Changed the Orphaned Reenrollments report to disregard FTE's as they are identified on the Students with no FTE's report"
       },
       {
-        "item": "Changed the Orphaned Test Scores report to consider entries at the District Office acceptable."
+        "item": "Changed the Orphaned Test Scores report to consider entries at the District Office acceptable"
       },
       {
-        "item": "Changed the global preference to hide Special Program Enrollments outside school enrollments. The preference has been renamed, and will also hide the Special Program Enrollments with Invalid Grade Levels report."
+        "item": "Changed the global preference to hide Special Program Enrollments outside school enrollments. The preference has been renamed, and will also hide the Special Program Enrollments with Invalid Grade Levels report"
       },
       {
-        "item": "Corrected the verbiage on how to correct overlapping Special Program enrollments."
+        "item": "Corrected the verbiage on how to correct overlapping Special Program enrollments"
       },
       {
-        "item": "Corrected the Not In-Session Attendance to reflect attendance taken on the first day of a reenrollment record to be acceptable."
+        "item": "Corrected the Not In-Session Attendance to reflect attendance taken on the first day of a reenrollment record to be acceptable"
       },
       {
-        "item": "Corrected the Section Enrollments Outside School Enrollments which had previously neglected to identify students."
+        "item": "Corrected the Section Enrollments Outside School Enrollments which had previously neglected to identify students"
       },
       {
-        "item": "Corrected the Rows Per Page setting on the Overlapping Special Program Enrollment page, which had previously prevented the page from displaying."
+        "item": "Corrected the Rows Per Page setting on the Overlapping Special Program Enrollment page, which had previously prevented the page from displaying"
       },
       {
-        "item": "Maintenance only: Corrected the Duplicate Preferences report to identify orphaned schoolid's."
+        "item": "Maintenance only: Corrected the Duplicate Preferences report to identify orphaned schoolid's"
       }
     ]
   },
@@ -490,23 +499,23 @@
     "version": "2.2.3",
     "changes": [
       {
-        "item": "Corrected the sort order on the Special Programs with Invalid Grade Levels page."
+        "item": "Corrected the sort order on the Special Programs with Invalid Grade Levels page"
       },
       {
-        "item": "A change log page has been added to PowerTools, which can be accessed by clicking on the version number."
+        "item": "A change log page has been added to PowerTools, which can be accessed by clicking on the version number"
       }
     ]
   },
   {
     "version": "2.2.2",
     "changes": [
-      {"item": "Added a report to identify students with no scheduling ethnicity or race."},
-      {"item": "Moved the preferences links higher in the menu, under the master report pages."},
+      {"item": "Added a report to identify students with no scheduling ethnicity or race"},
+      {"item": "Moved the preferences links higher in the menu, under the master report pages"},
       {
-        "item": "The PowerTools link in the breadcrumbs will now take the user to the home page of PowerTools, reloading the left hand menu."
+        "item": "The PowerTools link in the breadcrumbs will now take the user to the home page of PowerTools, reloading the left hand menu"
       },
       {
-        "item": "The \"Photo Management\" option in the system menu which was added in PowerSchool 6.2.1.1 has been added to the PowerTools system page."
+        "item": "The \"Photo Management\" option in the system menu which was added in PowerSchool 6.2.1.1 has been added to the PowerTools system page"
       }
     ]
   },
@@ -514,7 +523,7 @@
     "version": "2.2.1",
     "changes": [
       {
-        "item": "Corrected the link to the Calendar Issues report on the Miscellaneous report which prevented the Calendar Issues report from opening when using Custom Page Management."
+        "item": "Corrected the link to the Calendar Issues report on the Miscellaneous report which prevented the Calendar Issues report from opening when using Custom Page Management"
       }
     ]
   },
@@ -522,13 +531,13 @@
     "version": "2.2.0",
     "changes": [
       {
-        "item": "Added the Orphaned Records Report, which displays orphaned records in many tables."
+        "item": "Added the Orphaned Records Report, which displays orphaned records in many tables"
       },
       {
-        "item": "Separated the User Preferences and the Global Preferences to different pages, allowing page permissions to be set on Global Preferences."
+        "item": "Separated the User Preferences and the Global Preferences to different pages, allowing page permissions to be set on Global Preferences"
       },
       {
-        "item": "Added a preference the the Global PReferences which allows orphaned records reports to open links in DDE and DDA."
+        "item": "Added a preference the the Global PReferences which allows orphaned records reports to open links in DDE and DDA"
       }
     ]
   },
@@ -536,7 +545,7 @@
     "version": "2.1.1",
     "changes": [
       {
-        "item": "Corrected a display issue in Internet Explorer which caused the spacing in the System menu to display double spaced."
+        "item": "Corrected a display issue in Internet Explorer which caused the spacing in the System menu to display double spaced"
       }
     ]
   },
@@ -544,16 +553,16 @@
     "version": "2.1.0",
     "changes": [
       {
-        "item": "Added the Preferences page, which provides a user to set the default number of rows, default years to display for reports with the option, and the ability to hide the Special Program Enrollments Outside School Enrollments report."
+        "item": "Added the Preferences page, which provides a user to set the default number of rows, default years to display for reports with the option, and the ability to hide the Special Program Enrollments Outside School Enrollments report"
       },
       {
-        "item": "Added the ability to filter the Enrollment report by current year."
+        "item": "Added the ability to filter the Enrollment report by current year"
       },
       {
-        "item": "Added the ability to filter the Miscellaneous report by current year."
+        "item": "Added the ability to filter the Miscellaneous report by current year"
       },
       {
-        "item": "Added the ability to filter the Calendar Issues report by current year."
+        "item": "Added the ability to filter the Calendar Issues report by current year"
       }
     ]
   },
@@ -561,7 +570,7 @@
     "version": "2.0.0",
     "changes": [
       {
-        "item": "Introduced the Yahoo YUI as the interface for PowerTools reporting, providing pagination and sorting capabilities."
+        "item": "Introduced the Yahoo YUI as the interface for PowerTools reporting, providing pagination and sorting capabilities"
       }
     ]
   }
