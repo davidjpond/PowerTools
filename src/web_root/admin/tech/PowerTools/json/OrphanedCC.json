@@ -45,7 +45,7 @@ ORDER BY c1.id
 "dcid" : "~(c1.dcid)",
 "ccid" : "~(c1.id)",
 "student" : "~(s1.lastfirst)",
-"studentid" : "~(c1.studentid)",
+"studentId" : "~(c1.studentid)",
 "courseSection" : "~(s2.course_section)",
 "courseSectionSort" : "~(s2.course_sectionsort)",
 "schoolName" : "~(s3.name)",

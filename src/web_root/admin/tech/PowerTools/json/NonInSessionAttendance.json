@@ -127,7 +127,7 @@ ORDER BY s1.lastfirst
 "ccID" : "~(CCID)",
 "periodID" : "~(Periodid)",
 "attendanceCode" : "~(att_code)",
-"error" : "~(error)"
+"errormsg" : "~(error)"
 },
 [/tlist_sql]
 {}

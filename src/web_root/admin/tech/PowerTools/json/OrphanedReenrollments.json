@@ -34,7 +34,7 @@ ORDER BY r1.ID
 "dcid" : "~(r1.dcid)",
 "id" : "~(r1.id)",
 "student" : "~(s1.lastfirst)",
-"studentid" : "~(r1.studentid)",
+"studentId" : "~(r1.studentid)",
 "schoolName" : "~(s2.Schoolname)",
 "schoolId" : "~(r1.schoolid)",
 "gradeLevel" : "~(r1.GradeLevel)",

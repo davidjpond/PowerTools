@@ -43,7 +43,7 @@ ORDER BY s1.DCID
 {
 "dcid" : "~(s1.dcid)",
 "student" : "~(s2.lastfirst)",
-"studentid" : "~(s1.studentid)",
+"studentId" : "~(s1.studentid)",
 "courseSection" : "~(s3.course_section)",
 "courseSectionSort" : "~(s3.course_sectionsort)",
 "courseName" : "~(s1.coursename)",

@@ -1,12 +1,15 @@
 [
   {
-    "version": "3.3.0",
+    "version": "4.0.0",
     "changes": [
       {
         "item": "Added the Duplicate Student ID report to the Maintenance Reports"
       },
       {
         "item": "Redesigned the application as a single page app"
+      },
+      {
+        "item" : "As PowerSchool no longer supports disabling atomic sync, removed this functionality"
       },
       {
         "item": "Corrected a misspelling of the word \"the\" on the Duplicate Attendance Conversion Report"
