@@ -19,6 +19,9 @@ SELECT course_number
 FROM ps.courses c2
 WHERE LOWER(c2.course_number) = LOWER(c1.course_number)
 AND c2.course_number != c1.course_number)
+           ~[if.~[gpv:frn]>0]
+		  AND s2.id = ~(id)
+				  [/if]
 ~[if.is.a.school]AND c1.schoolid = ~[v.curschoolid][/if.is.a.school]
 ORDER BY s2.lastfirst
 ]

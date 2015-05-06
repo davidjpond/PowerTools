@@ -38,6 +38,9 @@ END
 FROM students s1
 WHERE s1.entrydate < s1.exitdate
 ~[if.is.a.school]AND s1.schoolid = ~[v.curschoolid][/if.is.a.school]
+          ~[if.~[gpv:frn]>0]
+		  AND s1.id = ~(id)
+				  [/if]
 AND (
 NOT EXISTS (
 SELECT *
@@ -98,6 +101,9 @@ INNER JOIN students s1
 on r1.studentid = s1.id
 WHERE r1.entrydate < r1.exitdate
 ~[if.is.a.school]AND r1.schoolid = ~[v.curschoolid][/if.is.a.school]
+          ~[if.~[gpv:frn]>0]
+		  AND r1.studentid = ~(id)
+				  [/if]
 AND (
 NOT EXISTS (
 SELECT *

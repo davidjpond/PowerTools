@@ -17,6 +17,9 @@ ON s1.schoolid = s2.school_number
 LEFT JOIN ps.courses c2
 ON c1.course_number = c2.course_number
 WHERE c1.dateenrolled > c1.dateleft
+          ~[if.~[gpv:frn]>0]
+		  AND s1.id = ~(id)
+				  [/if]
 ~[if.is.a.school]AND s1.schoolid = ~[v.curschoolid][/if.is.a.school]
 ~[if.~(gpv.curyearonly)=1]AND trunc(abs(c1.termid)/100) = trunc(~[v.curtermid]/100)[/if]
 ORDER BY s1.lastfirst

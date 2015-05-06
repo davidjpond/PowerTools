@@ -24,6 +24,9 @@ FROM terms
 WHERE id = (TRUNC(~[v.curtermid]/100)*100)
 AND Schoolid=s1.schoolid)
 [/if#curyearonly]
+           ~[if.~[gpv:frn]>0]
+		  AND s1.id = ~(id)
+				  [/if]
 ~[if.is.a.school]AND s1.schoolid = ~[v.curschoolid][/if.is.a.school]
 AND s1.schoolid != 999999
 UNION ALL
@@ -42,6 +45,9 @@ INNER JOIN students s1
 ON r1.studentid = s1.id
 WHERE (r1.schoolid != f1.schoolid
 OR r1.fteid = 0)
+		  ~[if.~[gpv:frn]>0]
+		  AND r1.studentid = ~(id)
+				  [/if]
 ~[if.is.a.school]AND r1.schoolid = ~[v.curschoolid][/if.is.a.school]
 AND r1.schoolid != 999999
 ~[if#curyearonly.~(gpv.curyearonly)=1]AND r1.entrydate >= (SELECT FIRSTDAY

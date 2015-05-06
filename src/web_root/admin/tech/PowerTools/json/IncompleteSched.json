@@ -21,6 +21,9 @@ FROM PS.students s1
 LEFT JOIN ps.schools s2
 ON s1.schoolid = s2.school_number
 WHERE s1.Sched_Scheduled = 1
+          ~[if.~[gpv:frn]>0]
+		  AND s1.id = ~(id)
+				  [/if]
 ~[if.is.a.school]AND s1.schoolid = ~[v.curschoolid][/if.is.a.school]
 AND (
 s1.next_school NOT IN

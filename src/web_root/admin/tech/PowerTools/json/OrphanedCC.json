@@ -38,6 +38,9 @@ WHERE (s1.lastfirst IS NULL
 OR s2.ID IS NULL
 OR s3.school_number IS NULL
 OR c2.course_number IS NULL)
+           ~[if.~[gpv:frn]>0]
+		  AND s1.id = ~(id)
+				  [/if]
 ~[if.is.a.school]AND c1.schoolid = ~[v.curschoolid][/if.is.a.school]
 ORDER BY c1.id
 ]

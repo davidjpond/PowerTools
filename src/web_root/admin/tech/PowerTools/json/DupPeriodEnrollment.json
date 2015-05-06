@@ -52,6 +52,9 @@ WHERE (cc1.dcid != cc2.dcid
 AND cc1.dateenrolled > cc2.dateenrolled
 OR cc1.dcid > cc2.dcid
 AND cc1.dateenrolled = cc2.dateenrolled)
+          ~[if.~[gpv:frn]>0]
+		  AND cc1.studentid = ~(id)
+				  [/if]
 AND cc1.student_number = cc2.student_number
 AND cc1.period_number = cc2.period_number
 AND cc1.cycle_day_letter = cc2.cycle_day_letter

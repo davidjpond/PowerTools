@@ -1,5 +1,4 @@
 'use strict';
-// TODO Check each report for space errors
 var $j = jQuery.noConflict(),
   loadingDialog = window.loadingDialog,
   closeLoading = window.closeLoading;
@@ -68,8 +67,14 @@ var powerTools = {
       powerTools.initReport(this.id);
     });
   },
+  initStudentReport: function() {
+    powerTools.dataOptions.reportid = 'StudentReport';
+    powerTools.dataOptions.curYearSelect = '';
+    $j('#wizardLink').html(null);
+    powerTools.loadReport();
+  },
   initReport: function (report) {
-    if(!report) {
+    if (!report) {
       report = powerTools.dataOptions.reportid;
     }
     powerTools.dataOptions.reportid = report;
@@ -180,7 +185,7 @@ var powerTools = {
       var myColumnDefs = powerTools.reportData.columns,
         myDataSource = new YAHOO.util.DataSource('json/' +
           powerTools.dataOptions.reportid + '.json?curyearonly=' +
-          curYearOnly), oConfigs = {
+          curYearOnly + '&frn=' + powerTools.dataOptions.frn), oConfigs = {
           paginator: new YAHOO.widget.Paginator({
             rowsPerPage: powerTools.dataOptions.maxLines,
             curYearOption: curYearOnly,
@@ -457,7 +462,8 @@ var powerTools = {
             elCell.innerHTML =
               ('<a id="' + oRecord.getData('reportName') + '" class="ptreportlink">' + forcedTotal + '</a>');
           } else {
-            $j.getJSON('json/' + oData + '.json?curyearonly=' + curYearOnly,
+            $j.getJSON('json/' + oData + '.json?curyearonly=' + curYearOnly + '&frn=' +
+              powerTools.dataOptions.frn,
               function (result) {
                 //noinspection JSUnresolvedVariable
                 result.ResultSet.pop();
@@ -762,7 +768,7 @@ var powerTools = {
         this.select.parentNode.removeChild(this.select);
         this.select = null;
       }
-    }
+    };
   },
   clickSelectStudents: function (method) {
     loadingDialog();
@@ -832,8 +838,7 @@ var powerTools = {
         template: powerTools.templateNoCY(),
         sortKey: 'activityName'
       };
-    }
-    ,
+    },
     AttendanceOverview: function () {
       powerTools.reportData = {
         title: 'Attendance Overview',
@@ -875,8 +880,7 @@ var powerTools = {
         template: powerTools.templateNoCY(),
         sortKey: 'schoolName'
       };
-    }
-    ,
+    },
     BlankStoredGrades: function () {
       powerTools.reportData = {
         title: 'Blank Stored Grades',
@@ -929,8 +933,7 @@ var powerTools = {
         showSelectButtons: 1,
         wizardLink: 1
       };
-    }
-    ,
+    },
     CalendarIssues: function () {
       powerTools.reportData = {
         title: 'Incomplete Calendar Days',
@@ -974,8 +977,7 @@ var powerTools = {
           ('In-session Calendar Day Records with No Cycle Day, Bell Schedule, or Membership in ' +
           powerTools.dataOptions.schoolname);
       }
-    }
-    ,
+    },
     CourseGroupsWithSpaces: function () {
       powerTools.reportData = {
         title: 'Course Groups Ending in a Space',
@@ -1004,8 +1006,7 @@ var powerTools = {
         template: powerTools.templateNoCY(),
         sortKey: 'courseGroup'
       };
-    }
-    ,
+    },
     DupAttendance: function () {
       powerTools.reportData = {
         title: 'Duplicate Attendance Records',
@@ -1069,8 +1070,7 @@ var powerTools = {
         sortKey: 'student',
         showSelectButtons: 1
       };
-    }
-    ,
+    },
     DupAttendanceCode: function () {
       powerTools.reportData = {
         title: 'Duplicate Attendance Code Records',
@@ -1108,8 +1108,7 @@ var powerTools = {
         sortKey: 'schoolName',
         wizardLink: 1
       };
-    }
-    ,
+    },
     DupAttendanceConversion: function () {
       powerTools.reportData = {
         title: 'Duplicate Attendance Conversion Records',
@@ -1147,8 +1146,7 @@ var powerTools = {
         sortKey: 'schoolName',
         wizardLink: 1
       };
-    }
-    ,
+    },
     DupBellSchedule: function () {
       powerTools.reportData = {
         title: 'Duplicate Bell Schedule Records',
@@ -1186,8 +1184,7 @@ var powerTools = {
         sortKey: 'schoolName',
         wizardLink: 1
       };
-    }
-    ,
+    },
     DupBellScheduleItems: function () {
       powerTools.reportData = {
         title: 'Duplicate Bell Schedule Items',
@@ -1232,8 +1229,7 @@ var powerTools = {
         template: powerTools.templateNoCY(),
         sortKey: 'name'
       };
-    }
-    ,
+    },
     DupCalendarDay: function () {
       powerTools.reportData = {
         title: 'Duplicate Calendar Day Records',
@@ -1265,8 +1261,7 @@ var powerTools = {
         sortKey: 'schoolName',
         wizardLink: 1
       };
-    }
-    ,
+    },
     DupCourseNumbers: function () {
       powerTools.reportData = {
         title: 'Duplicate Course Number Records',
@@ -1292,8 +1287,7 @@ var powerTools = {
         template: powerTools.templateNoCY(),
         sortKey: 'courseNumber'
       };
-    }
-    ,
+    },
     DupDays: function () {
       powerTools.reportData = {
         title: 'Duplicate Day Records',
@@ -1331,8 +1325,7 @@ var powerTools = {
         sortKey: 'schoolName',
         wizardLink: 1
       };
-    }
-    ,
+    },
     DupEntryCodes: function () {
       powerTools.reportData = {
         title: 'Duplicate Entry Code Records',
@@ -1358,8 +1351,7 @@ var powerTools = {
         sortKey: 'entryCode',
         wizardLink: 1
       };
-    }
-    ,
+    },
     DupExitCodes: function () {
       powerTools.reportData = {
         title: 'Duplicate Exit Code Records',
@@ -1385,8 +1377,7 @@ var powerTools = {
         sortKey: 'exitCode',
         wizardLink: 1
       };
-    }
-    ,
+    },
     DupFTE: function () {
       powerTools.reportData = {
         title: 'Duplicate FTE Records',
@@ -1424,8 +1415,7 @@ var powerTools = {
         sortKey: 'schoolName',
         wizardLink: 1
       };
-    }
-    ,
+    },
     DupGen: function () {
       powerTools.reportData = {
         title: 'Duplicate Gen Table Records',
@@ -1471,8 +1461,7 @@ var powerTools = {
         sortKey: 'name',
         wizardLink: 1
       };
-    }
-    ,
+    },
     DuplicateTeacherNumber: function () {
       powerTools.reportData = {
         title: 'Duplicate Teachers',
@@ -1480,7 +1469,7 @@ var powerTools = {
         info: 'This report selects any staff member who exists in more than one school with the same teacher ' +
         'number.<p>Selecting a teacher will take you to the staff members page.',
         fields: ['dcid', 'teacher', 'schoolName', 'teacher2dcid', 'teacher2', 'teacher2SchoolName',
-          'teacher2Number'],
+                 'teacher2Number'],
         columns: [{
           key: 'teacher',
           label: 'Teacher Name',
@@ -1512,8 +1501,7 @@ var powerTools = {
         template: powerTools.templateNoCY(),
         sortKey: 'teacher'
       };
-    }
-    ,
+    },
     DupPeriodEnrollment: function () {
       powerTools.reportData = {
         title: 'Duplicate Period Enrollments',
@@ -1560,8 +1548,7 @@ var powerTools = {
         sortKey: 'student',
         showSelectButtons: 1
       };
-    }
-    ,
+    },
     DupPeriodNumber: function () {
       powerTools.reportData = {
         title: 'Duplicate Period Number Records',
@@ -1597,8 +1584,7 @@ var powerTools = {
         sortKey: 'schoolName',
         wizardLink: 1
       };
-    }
-    ,
+    },
     DupPrefs: function () {
       powerTools.reportData = {
         title: 'Duplicate Preference Records',
@@ -1642,8 +1628,7 @@ var powerTools = {
         sortKey: 'name',
         wizardLink: 1
       };
-    }
-    ,
+    },
     DupServerConfig: function () {
       powerTools.reportData = {
         title: 'Duplicate Server Config Records',
@@ -1677,8 +1662,7 @@ var powerTools = {
         sortKey: 'name',
         wizardLink: 1
       };
-    }
-    ,
+    },
     DupServerInstance: function () {
       powerTools.reportData = {
         title: 'Duplicate Server Instance Records',
@@ -1714,8 +1698,7 @@ var powerTools = {
         sortKey: 'id',
         wizardLink: 1
       };
-    }
-    ,
+    },
     DupStoredGrades: function () {
       powerTools.reportData = {
         title: 'Duplicate StoredGrades',
@@ -1765,8 +1748,7 @@ var powerTools = {
         sortKey: 'student',
         showSelectButtons: 1
       };
-    }
-    ,
+    },
     DupStudentID: function () {
       powerTools.reportData = {
         title: 'Duplicate Student IDs',
@@ -1798,8 +1780,7 @@ var powerTools = {
         template: powerTools.templateNoCY(),
         sortKey: 'student1'
       };
-    }
-    ,
+    },
     DupStudentNumber: function () {
       powerTools.reportData = {
         title: 'Duplicate Student Numbers',
@@ -1841,8 +1822,7 @@ var powerTools = {
         template: powerTools.templateNoCY(),
         sortKey: 'studentNumber'
       };
-    }
-    ,
+    },
     DupTeacherNumber: function () {
       powerTools.reportData = {
         title: 'Duplicate Teacher Numbers',
@@ -1884,8 +1864,7 @@ var powerTools = {
         template: powerTools.templateNoCY(),
         sortKey: 'teacherNumber'
       };
-    }
-    ,
+    },
     DupTermBins: function () {
       powerTools.reportData = {
         title: 'Duplicate Final Grade Setup Records',
@@ -1927,8 +1906,7 @@ var powerTools = {
         sortKey: 'schoolName',
         wizardLink: 1
       };
-    }
-    ,
+    },
     DupTerms: function () {
       powerTools.reportData = {
         title: 'Duplicate Term Records',
@@ -1965,8 +1943,7 @@ var powerTools = {
         showSelectButtons: 1,
         wizardLink: 1
       };
-    }
-    ,
+    },
     EnrollmentReport: function () {
       powerTools.reportData = {
         title: 'Enrollment Report',
@@ -1990,8 +1967,7 @@ var powerTools = {
         }],
         template: powerTools.templateCYOnly()
       };
-    }
-    ,
+    },
     FutureActiveSchool: function () {
       powerTools.reportData = {
         title: 'Invalid Future Active Enrollments',
@@ -2043,8 +2019,7 @@ var powerTools = {
         sortKey: 'student',
         showSelectButtons: 1
       };
-    }
-    ,
+    },
     FutureDiscipline: function () {
       powerTools.reportData = {
         title: 'Discipline Logs with Future Dates',
@@ -2072,8 +2047,7 @@ var powerTools = {
         template: powerTools.templateNoCY(),
         sortKey: 'student'
       };
-    }
-    ,
+    },
     FutureIncidents: function () {
       powerTools.reportData = {
         title: 'Incidents with Future Dates',
@@ -2110,8 +2084,7 @@ var powerTools = {
         template: powerTools.templateNoCY(),
         sortKey: 'incidentId'
       };
-    }
-    ,
+    },
     GradeScaleDupCutoff: function () {
       powerTools.reportData = {
         title: 'Grade Scales with Duplicate Cutoff Percentages',
@@ -2148,8 +2121,7 @@ var powerTools = {
         template: powerTools.templateNoCY(),
         sortKey: 'name'
       };
-    }
-    ,
+    },
     IncompleteSched: function () {
       powerTools.reportData = {
         title: 'Students with Incomplete Scheduling Setup',
@@ -2197,8 +2169,7 @@ var powerTools = {
         sortKey: 'student',
         showSelectButtons: 1
       };
-    }
-    ,
+    },
     IncompleteTransfers: function () {
       powerTools.reportData = {
         title: 'Incomplete Student Transfers',
@@ -2245,8 +2216,7 @@ var powerTools = {
         sortKey: 'student',
         showSelectButtons: 1
       };
-    }
-    ,
+    },
     IncorrectLunchBal: function () {
       //noinspection HtmlUnknownTarget
       powerTools.reportData = {
@@ -2293,8 +2263,7 @@ var powerTools = {
         sortKey: 'student',
         showSelectButtons: 1
       };
-    }
-    ,
+    },
     IncorrectStoredGrades: function () {
       powerTools.reportData = {
         title: 'Incorrect Stored Grades',
@@ -2372,8 +2341,7 @@ var powerTools = {
         sortKey: 'student',
         showSelectButtons: 1
       };
-    }
-    ,
+    },
     IncorrectStudYear: function () {
       //noinspection HtmlUnknownTarget
       powerTools.reportData = {
@@ -2431,8 +2399,7 @@ var powerTools = {
         sortKey: 'student',
         showSelectButtons: 1
       };
-    }
-    ,
+    },
     InvalidCC: function () {
       powerTools.reportData = {
         title: 'Invalid Section Enrollments',
@@ -2443,7 +2410,7 @@ var powerTools = {
         'or date left of the invalid enrollment.' +
         '<p>A no-show enrollment should be indicated by the exit date matching the entry date of the enrollment.',
         fields: ['dcid', 'studentid', 'student', 'schoolName', 'courseName', 'courseNumber', 'sectionNumber',
-          'dateEnrolled', 'dateLeft'],
+                 'dateEnrolled', 'dateLeft'],
         columns: [{
           key: 'student',
           label: 'Student',
@@ -2483,8 +2450,7 @@ var powerTools = {
         sortKey: 'student',
         showSelectButtons: 1
       };
-    }
-    ,
+    },
     InvalidLunch: function () {
       powerTools.reportData = {
         title: 'Invalid Lunch Transactions',
@@ -2527,8 +2493,7 @@ var powerTools = {
         sortKey: 'student',
         showSelectButtons: 1
       };
-    }
-    ,
+    },
     InvalidSchool: function () {
       powerTools.reportData = {
         title: 'Reverse School Enrollments',
@@ -2573,8 +2538,7 @@ var powerTools = {
         sortKey: 'student',
         showSelectButtons: 1
       };
-    }
-    ,
+    },
     InvalidSpEnrollments: function () {
       powerTools.reportData = {
         title: 'Reverse Special Program Enrollments',
@@ -2618,8 +2582,7 @@ var powerTools = {
         sortKey: 'student',
         showSelectButtons: 1
       };
-    }
-    ,
+    },
     InvalidTrack: function () {
       powerTools.reportData = {
         title: 'Students with Invalid Tracks',
@@ -2671,8 +2634,7 @@ var powerTools = {
         sortKey: 'student',
         showSelectButtons: 1
       };
-    }
-    ,
+    },
     InvCourseNumberCC: function () {
       powerTools.reportData = {
         title: 'CC Record Course Number issues',
@@ -2752,8 +2714,7 @@ var powerTools = {
         }],
         template: powerTools.templateNoOption()
       };
-    }
-    ,
+    },
     MisalignedStandards: function () {
       powerTools.reportData = {
         title: 'Misaligned Standards',
@@ -2787,8 +2748,7 @@ var powerTools = {
         template: powerTools.templateNoCY(),
         sortKey: 'identifier'
       };
-    }
-    ,
+    },
     MiscReport: function () {
       powerTools.reportData = {
         title: 'Miscellaneous Report',
@@ -2812,8 +2772,7 @@ var powerTools = {
         }],
         template: powerTools.templateCYOnly()
       };
-    }
-    ,
+    },
     MissingFTEStudent: function () {
       powerTools.reportData = {
         title: 'Missing Full Time Equivalencies',
@@ -2850,8 +2809,7 @@ var powerTools = {
         sortKey: 'student',
         showSelectButtons: 1
       };
-    }
-    ,
+    },
     MissingRace: function () {
       powerTools.reportData = {
         title: 'Students Missing Ethnicity or Race',
@@ -2902,8 +2860,7 @@ var powerTools = {
           'This report selects any student who has a blank ethnicity, or does not have hispanic or latino ' +
           'declared and has no Federal Race records.';
       }
-    }
-    ,
+    },
     NonInSessionAttendance: function () {
       var accessType;
       if (powerTools.dataOptions.ddaRedirect === 'on') {
@@ -2990,8 +2947,7 @@ var powerTools = {
         showSelectButtons: 1,
         wizardLink: 1
       };
-    }
-    ,
+    },
     OrphanedAttendance: function () {
       powerTools.reportData = {
         title: 'Orphaned Attendance Records',
@@ -3004,7 +2960,7 @@ var powerTools = {
           key: 'attendanceId',
           parser: 'number'
         }, 'student', 'studentId', 'attendanceCode', 'attendanceCodeId', 'attendanceRecordCodeId', 'courseSection',
-          'courseSectionSort', 'period', 'periodId', 'schoolName', 'schoolNumber'],
+                 'courseSectionSort', 'period', 'periodId', 'schoolName', 'schoolNumber'],
         columns: [{
           key: 'attendanceId',
           label: 'ID',
@@ -3047,8 +3003,7 @@ var powerTools = {
         sortKey: 'attendanceId',
         wizardLink: 1
       };
-    }
-    ,
+    },
     OrphanedAttendanceTime: function () {
       powerTools.reportData = {
         title: 'Orphaned Attendance_Time Records',
@@ -3080,8 +3035,7 @@ var powerTools = {
         wizardLink: 1
       };
 
-    }
-    ,
+    },
     OrphanedCC: function () {
       powerTools.reportData = {
         title: 'Orphaned CC Records',
@@ -3133,15 +3087,20 @@ var powerTools = {
         sortKey: 'ccid',
         wizardLink: 1
       };
-    }
-    ,
+    },
     OrphanedFeeTransaction: function () {
+      var schoolOption;
+      if (powerTools.dataOptions.schoolid === 0) {
+        schoolOption = ', school,';
+      } else {
+        schoolOption = '';
+      }
+
       powerTools.reportData = {
         title: 'Orphaned Fee_Transaction Records',
         header: 'Orphaned Fee_Transaction Records in ' + powerTools.reportOptions.schoolName,
-        info: ('This report selects any Fee_Transaction Record where the student' +
-        powerTools.reportOptions.schoolType +
-        'or fee does not exist.<p>Selecting a record will take you to the record in Direct Database ' +
+        info: ('This report selects any Fee_Transaction Record where the student' + schoolOption +
+        ' or fee does not exist.<p>Selecting a record will take you to the record in Direct Database ' +
         powerTools.reportOptions.ddaAccess + '.'),
         fields: ['dcid', {
           key: 'feeTransactionId',
@@ -3176,8 +3135,7 @@ var powerTools = {
         sortKey: 'feeTransactionId',
         wizardLink: 1
       };
-    }
-    ,
+    },
     OrphanedHonorRoll: function () {
       if (powerTools.dataOptions.schoolid === 0) {
         powerTools.reportOptions.schoolType = 'or school ';
@@ -3217,8 +3175,7 @@ var powerTools = {
         sortKey: 'honorRollId',
         wizardLink: 1
       };
-    }
-    ,
+    },
     OrphanedPGFinalGrades: function () {
       powerTools.reportData = {
         title: 'Orphaned PGFinalGrades Records',
@@ -3251,8 +3208,7 @@ var powerTools = {
         sortKey: 'id',
         wizardLink: 1
       };
-    }
-    ,
+    },
     OrphanedReenrollments: function () {
       if (powerTools.dataOptions.schoolid === 0) {
         powerTools.reportOptions.schoolType = 'or school ';
@@ -3299,19 +3255,24 @@ var powerTools = {
         sortKey: 'id',
         wizardLink: 1
       };
-    }
-    ,
+    },
     OrphanedSection: function () {
+      var schoolOption
+      if (powerTools.dataOptions.schoolid === 0) {
+        schoolOption = ' school, ';
+      } else {
+        schoolOption = '';
+      }
+
       powerTools.reportData = {
         title: 'Orphaned Section Records',
         header: 'Orphaned Section Records in ' + powerTools.reportOptions.schoolName,
-        info: ('This report selects any Section Record where the course, teacher, ' +
-        powerTools.reportOptions.schoolType +
+        info: ('This report selects any Section Record where the course, teacher, ' + schoolOption +
         ' or term does not exist.<p>Selecting a record will take you to the record in Direct Database ' +
         powerTools.reportOptions.ddaAccess + '.'),
         fields: ['dcid', 'id', 'courseSection', 'courseSectionSort', 'teacher', 'teacherId', 'schoolName',
-          'schoolId',
-          'schoolTermId', {
+                 'schoolId',
+                 'schoolTermId', {
             key: 'sectionTermId',
             parser: 'number'
           }],
@@ -3353,11 +3314,16 @@ var powerTools = {
       };
     },
     OrphanedSpEnrollments: function () {
+      var schoolOption;
+      if (powerTools.dataOptions.schoolid === 0) {
+        schoolOption = ', school,';
+      } else {
+        schoolOption = '';
+      }
       powerTools.reportData = {
         title: 'Orphaned Special Program Records',
         header: 'Orphaned Special Program Records in ' + powerTools.reportOptions.schoolName,
-        info: ('This report selects any Special Program Enrollment where the student' +
-        powerTools.reportOptions.schoolType +
+        info: ('This report selects any Special Program Enrollment where the student' + schoolOption +
         ' or program does not exist.<p>Selecting a record will take you to the record in Direct Database ' +
         powerTools.reportOptions.ddaAccess + '.'),
         fields: ['dcid', 'id', 'student', 'studentId', 'programName', 'programId', 'schoolName', 'schoolId'],
@@ -3390,14 +3356,18 @@ var powerTools = {
         sortKey: 'id',
         wizardLink: 1
       };
-    }
-    ,
+    },
     OrphanedStandardsGrades: function () {
+      var schoolOption;
+      if (powerTools.dataOptions.schoolid === 0) {
+        schoolOption = ', school,';
+      } else {
+        schoolOption = '';
+      }
       powerTools.reportData = {
         title: 'Orphaned StandardsGrades Records',
         header: 'Orphaned StandardsGrades Records in ' + powerTools.reportOptions.schoolName,
-        info: ('This report selects any StandardsGrades Record where the student' +
-        powerTools.reportOptions.schoolType +
+        info: ('This report selects any StandardsGrades Record where the student' + schoolOption +
         ' or standard does not exist.<p>Selecting a record will take you to the record in Direct Database ' +
         powerTools.reportOptions.ddaAccess + '.'),
         fields: ['dcid', 'id', 'student', 'studentid', 'standard', 'standardId', 'schoolName', {
@@ -3438,8 +3408,7 @@ var powerTools = {
         sortKey: 'id',
         wizardLink: 1
       };
-    }
-    ,
+    },
     OrphanedStoredGrades: function () {
       powerTools.reportData = {
         title: 'Orphaned StoredGrades Records',
@@ -3491,8 +3460,7 @@ var powerTools = {
         sortKey: 'dcid',
         wizardLink: 1
       };
-    }
-    ,
+    },
     OrphanedStudentRace: function () {
       powerTools.reportData = {
         title: 'Orphaned StudentRace Records',
@@ -3527,8 +3495,7 @@ var powerTools = {
         sortKey: 'id',
         wizardLink: 1
       };
-    }
-    ,
+    },
     OrphanedStudents: function () {
       if (powerTools.dataOptions.schoolid === 0) {
         powerTools.reportOptions.schoolType = 'school does not exist, or the ';
@@ -3569,21 +3536,26 @@ var powerTools = {
         template: powerTools.templateNoCY(),
         sortKey: 'student'
       };
-    }
-    ,
+    },
     OrphanedStudentTestScore: function () {
+      var schoolOption;
+      if (powerTools.dataOptions.schoolid === 0) {
+        schoolOption = ', school,'
+      } else {
+        schoolOption = '';
+      }
       powerTools.reportData = {
         title: 'Orphaned Student Test Score Records',
         header: 'Orphaned Student Test Score Records in ' + powerTools.reportOptions.schoolName,
         info: ('This report selects any Student Test Score Record where the student, test, test score' +
-        powerTools.reportOptions.schoolType + 'or test date does not exist.<p>' +
+        schoolOption + ' or test date does not exist.<p>' +
         'Selecting a record will take you to the record in Direct Database ' + powerTools.reportOptions.ddaAccess +
         '.'),
         fields: ['dcid', {
           key: 'id',
           parser: 'number'
         }, 'student', 'studentid', 'test', 'testId', 'studentTestId', 'testScore', 'testScoreId', 'testDate',
-          'schoolName', 'schoolId'],
+                 'schoolName', 'schoolId'],
         columns: [{
           key: 'id',
           label: 'ID',
@@ -3625,8 +3597,7 @@ var powerTools = {
         sortKey: 'id',
         wizardLink: 1
       };
-    }
-    ,
+    },
     OrphanedTeacherRace: function () {
       powerTools.reportData = {
         title: 'Orphaned TeacherRace Records',
@@ -3661,8 +3632,7 @@ var powerTools = {
         sortKey: 'id',
         wizardLink: 1
       };
-    }
-    ,
+    },
     OrphanedTermBins: function () {
       if (powerTools.dataOptions.schoolid === 0) {
         powerTools.reportOptions.schoolType = 'or school ';
@@ -3708,8 +3678,7 @@ var powerTools = {
         sortKey: 'id',
         wizardLink: 1
       };
-    }
-    ,
+    },
     OrphanReport: function () {
       powerTools.reportData = {
         title: 'Orphaned Records Report',
@@ -3732,8 +3701,7 @@ var powerTools = {
         }],
         template: powerTools.templateNoOption()
       };
-    }
-    ,
+    },
     OutsideSchoolCC: function () {
       powerTools.reportData = {
         title: 'Section Enrollments Outside the School Enrollments',
@@ -3744,7 +3712,7 @@ var powerTools = {
         'Selecting a record will take you to the students all enrollments page, ' +
         'where the enrollment may be corrected.'),
         fields: ['dcid', 'studentid', 'student', 'schoolName', 'courseNumber', 'sectionNumber', 'courseName',
-          'dateEnrolled', 'dateLeft'],
+                 'dateEnrolled', 'dateLeft'],
         columns: [{
           key: 'student',
           label: 'Student',
@@ -3784,8 +3752,7 @@ var powerTools = {
         sortKey: 'student',
         showSelectButtons: 1
       };
-    }
-    ,
+    },
     OutsideSchoolSpEnrollments: function () {
       powerTools.reportData = {
         title: 'Special Program Enrollments Outside the School Enrollments',
@@ -3832,8 +3799,7 @@ var powerTools = {
         sortKey: 'student',
         showSelectButtons: 1
       };
-    }
-    ,
+    },
     OutsideYTSchool: function () {
       powerTools.reportData = {
         title: 'School Enrollments Outside the Years and Terms',
@@ -3883,8 +3849,7 @@ var powerTools = {
         sortKey: 'student',
         showSelectButtons: 1
       };
-    }
-    ,
+    },
     OverlappingCC: function () {
       powerTools.reportData = {
         title: 'Overlapping Section Enrollments',
@@ -3895,7 +3860,7 @@ var powerTools = {
         'The easiest method for correcting these records is to use the "Clean up overlapping enrollments" ' +
         'function at the bottom of the newly opened page.'),
         fields: ['dcid', 'studentid', 'student', 'schoolName', 'courseName', 'courseNumber', 'sectionNumber',
-          'yearID', 'termID'],
+                 'yearID', 'termID'],
         columns: [{
           key: 'student',
           label: 'Student',
@@ -3933,8 +3898,7 @@ var powerTools = {
         sortKey: 'student',
         showSelectButtons: 1
       };
-    }
-    ,
+    },
     OverlappingSchool: function () {
       powerTools.reportData = {
         title: 'Overlapping School Enrollments',
@@ -3980,8 +3944,7 @@ var powerTools = {
         sortKey: 'student',
         showSelectButtons: 1
       };
-    }
-    ,
+    },
     OverlappingSpEnrollments: function () {
       powerTools.reportData = {
         title: 'Overlapping Special Program Enrollments',
@@ -4019,8 +3982,7 @@ var powerTools = {
         sortKey: 'student',
         showSelectButtons: 1
       };
-    }
-    ,
+    },
     OverlappingTerms: function () {
       powerTools.reportData = {
         title: 'Overlapping Terms',
@@ -4029,7 +3991,7 @@ var powerTools = {
         'Overlapping terms can cause many problems, including issues with attendance calculations. Overlapping ' +
         'terms must be corrected manually'),
         fields: ['schoolName', 'term1Id', 'term2Id', 'schoolId', 'term1FirstDay', 'term1LastDay', 'term2FirstDay',
-          'term2LastDay'],
+                 'term2LastDay'],
         columns: [{
           key: 'schoolName',
           label: 'School Name',
@@ -4063,8 +4025,7 @@ var powerTools = {
         template: powerTools.templateNoCY(),
         sortKey: 'schoolName'
       };
-    }
-    ,
+    },
     PaddedSchoolEnrollments: function () {
       powerTools.reportData = {
         title: 'Padded School Enrollments',
@@ -4072,8 +4033,8 @@ var powerTools = {
         info: ('This report selects any student who is enrolled in school, however they are not enrolled in ' +
         'class at the beginning of their school enrollment, or they are not enrolled in class at the end of ' +
         'their school enrollment.' + '<p>' +
-        'Selecting a record will take you to the students All Enrollments page, where the duplicate period ' +
-        'enrollments may be reviewed.'),
+        'Selecting a record will take you to the students All Enrollments page, where the enrollment dates may be ' +
+        'reviewed.'),
         fields: ['dcid', 'studentid', 'student', {
           key: 'studentNumber',
           parser: 'number'
@@ -4118,8 +4079,7 @@ var powerTools = {
         sortKey: 'student',
         showSelectButtons: 1
       };
-    }
-    ,
+    },
     PastPending: function () {
       powerTools.reportData = {
         title: 'Invalid Pending Transfer Dates',
@@ -4163,8 +4123,7 @@ var powerTools = {
         sortKey: 'student',
         showSelectButtons: 1
       };
-    }
-    ,
+    },
     PossibleDupStudents: function () {
       powerTools.reportData = {
         title: 'Possible Duplicate Students',
@@ -4210,8 +4169,7 @@ var powerTools = {
         template: powerTools.templateNoCY(),
         sortKey: 'student'
       };
-    }
-    ,
+    },
     PossibleDupTeachers: function () {
       powerTools.reportData = {
         title: 'Possible Duplicate Teachers',
@@ -4219,7 +4177,7 @@ var powerTools = {
         info: ('This report selects any staff member who has another staff member with the same first name, last ' +
         'name and SSN.<p>Selecting a teacher will take you to the staff members page.'),
         fields: ['dcid', 'teacher', 'schoolName', 'status', 'teacher2dcid', 'teacher2', 'teacher2SchoolName',
-          'teacher2Status'],
+                 'teacher2Status'],
         columns: [{
           key: 'teacher',
           label: 'Teacher',
@@ -4256,8 +4214,7 @@ var powerTools = {
         template: powerTools.templateNoCY(),
         sortKey: 'teacher'
       };
-    }
-    ,
+    },
     ReportsWithSpaces: function () {
       powerTools.reportData = {
         title: 'Reports Ending in a Space',
@@ -4282,8 +4239,7 @@ var powerTools = {
         template: powerTools.templateNoCY(),
         sortKey: 'reportName'
       };
-    }
-    ,
+    },
     SchoolNetReport: function () {
       powerTools.reportData = {
         title: 'SchoolNet Report',
@@ -4307,8 +4263,7 @@ var powerTools = {
         }],
         template: powerTools.templateNoOption()
       };
-    }
-    ,
+    },
     SectionInvalidSM: function () {
       powerTools.reportData = {
         title: 'Sections Missing Section Meeting Record',
@@ -4347,8 +4302,7 @@ var powerTools = {
         template: powerTools.templateCY(),
         sortKey: 'courseNumber'
       };
-    }
-    ,
+    },
     SpEnrollmentBadGrade: function () {
       powerTools.reportData = {
         title: 'Special Program Enrollments with Incorrect Grade Levels',
@@ -4409,8 +4363,7 @@ var powerTools = {
         sortKey: 'student',
         showSelectButtons: 1
       };
-    }
-    ,
+    },
     StdConversionLongGrade: function () {
       powerTools.reportData = {
         title: 'Standard Conversion Scales Having Grades Over 8 Characters',
@@ -4434,8 +4387,7 @@ var powerTools = {
         template: powerTools.templateNoCY(),
         sortKey: 'name'
       };
-    }
-    ,
+    },
     StudentNumberIssue: function () {
       powerTools.reportData = {
         title: 'Students with Student Numbers greater than 2147483647',
@@ -4468,6 +4420,30 @@ var powerTools = {
         template: powerTools.templateCY(),
         sortKey: 'student',
         showSelectButtons: 1
+      };
+    },
+    StudentReport: function () {
+      powerTools.reportData = {
+        title: 'Student Report',
+        header: 'Student Report',
+        info: 'This report will perform a listing of the count records for each student item PowerTools ' +
+        'diagnoses.' +
+        '<br>Due to the complexity of this report, this page may take some time to complete loading.',
+        fields: ['report', 'reportName'],
+        columns: [{
+          key: 'report',
+          label: 'Report',
+          minWidth: 150,
+          sortable: false,
+          formatter: 'OverviewLink'
+        }, {
+          key: 'reportName',
+          label: 'Count of Records',
+          minWidth: 150,
+          sortable: false,
+          formatter: 'OverviewCount'
+        }],
+        template: powerTools.templateCYOnly()
       };
     }
   },
@@ -4569,26 +4545,13 @@ var powerTools = {
   },
   ddaSelectTableChangeCase: function (tableNumber, fieldNumber) {
     $j.ajax({
-      url: '/admin/tech/home.html',
+      url: '/admin/tech/usm/home.html',
       data: {
-        ac: 'specop',
-        btnSubmit: '',
-        code: '',
-        opname: 'setglobalnonatomicsync',
-        p1: '',
-        p2: '',
-        specialopserver: '0'
-      }
+        filenum: tableNumber
+      },
+      async: false
     }).success(function () {
-      $j.ajax({
-        url: '/admin/tech/usm/home.html',
-        data: {
-          filenum: tableNumber
-        },
-        async: false
-      }).success(function () {
-        powerTools.ddaChangeCase(fieldNumber);
-      });
+      powerTools.ddaChangeCase(fieldNumber);
     });
   },
   ddaChangeCase: function (fieldNumber) {
@@ -4620,20 +4583,7 @@ var powerTools = {
         }).success(function () {
           powerTools.currentRecord++;
           if (powerTools.currentRecord === powerTools.dataSet.length) {
-            $j.ajax({
-              url: '/admin/tech/home.html',
-              data: {
-                ac: 'specop',
-                btnSubmit: '',
-                code: '',
-                opname: 'setglobalatomicsync',
-                p1: '',
-                p2: '',
-                specialopserver: '0'
-              }
-            }).success(function () {
-              powerTools.initReport();
-            });
+            powerTools.initReport();
           } else {
             powerTools.ddaChangeCase(fieldNumber);
           }
@@ -4677,9 +4627,9 @@ var powerTools = {
         title: 'Duplicate Attendance Code Wizard',
         name: 'Duplicate Attendance Code',
         header: 'Repairing duplicate attendance code records in ' + powerTools.dataOptions.schoolname,
-        info: 'Use this wizard to repair duplicate attendance codes. This process will repair all attendance records, ' +
-        'remove all attendance code categories from the duplicate attendance codes, then remove the duplicate ' +
-        'attendance codes.',
+        info: 'Use this wizard to repair duplicate attendance codes. This process will repair all attendance ' +
+        'records, remove all attendance code categories from the duplicate attendance codes, then remove the ' +
+        'duplicate attendance codes.',
         jsonUrl: 'json/DupAttendanceCodeWizard.json',
         countRecords: function () {
           $j(powerTools.dataSet).each(function (index, record) {
@@ -4741,8 +4691,8 @@ var powerTools = {
         title: 'Duplicate Bell Schedules Wizard',
         name: 'Duplicate Bell Schedule',
         header: 'Repairing duplicate bell schedules in ' + powerTools.dataOptions.schoolname,
-        info: 'Use this wizard to repair duplicate bell schedules. This process will repair all calendar records, then ' +
-        'remove the duplicate bell schedules and bell schedule items.',
+        info: 'Use this wizard to repair duplicate bell schedules. This process will repair all calendar records, ' +
+        'then remove the duplicate bell schedules and bell schedule items.',
         jsonUrl: 'json/DupBellScheduleWizard.json',
         countRecords: function () {
           $j(powerTools.dataSet).each(function (index, record) {
@@ -4774,7 +4724,7 @@ var powerTools = {
         buttonText: 'Remove Duplicate Calendar Days',
         action: function () {
           powerTools.currentRecord = 0;
-          powerTools.drDelete('051','dcid');
+          powerTools.drDelete('051', 'dcid');
         }
       };
     },
@@ -4788,8 +4738,8 @@ var powerTools = {
         title: 'Duplicate Cycle Days Wizard',
         name: 'Duplicate Cycle Day',
         header: 'Repairing duplicate cycle day records in ' + powerTools.dataOptions.schoolname,
-        info: 'Use this wizard to repair duplicate cycle days. This process will repair all calendar day records, then ' +
-        'remove the duplicate cycle days.',
+        info: 'Use this wizard to repair duplicate cycle days. This process will repair all calendar day records, ' +
+        'then remove the duplicate cycle days.',
         jsonUrl: 'json/DupDaysWizard.json',
         countRecords: function () {
           $j(powerTools.dataSet).each(function (index, record) {
@@ -4820,7 +4770,7 @@ var powerTools = {
         buttonText: 'Remove Duplicate Entry Codes',
         action: function () {
           powerTools.currentRecord = 0;
-          powerTools.drDelete('006','dcid');
+          powerTools.drDelete('006', 'dcid');
         }
       };
     },
@@ -4840,7 +4790,7 @@ var powerTools = {
         buttonText: 'Remove Duplicate Exit Codes',
         action: function () {
           powerTools.currentRecord = 0;
-          powerTools.drDelete('006','dcid');
+          powerTools.drDelete('006', 'dcid');
         }
       };
     },
@@ -4862,7 +4812,7 @@ var powerTools = {
 
       function removeFTE() {
         powerTools.currentRecord = 0;
-        powerTools.drDelete('159','dcid');
+        powerTools.drDelete('159', 'dcid');
       }
 
       powerTools.wizardData = {
@@ -4901,7 +4851,7 @@ var powerTools = {
         buttonText: 'Remove Duplicate Gen Records',
         action: function () {
           powerTools.currentRecord = 0;
-          powerTools.drDelete('006','dcid');
+          powerTools.drDelete('006', 'dcid');
         }
       };
     },
@@ -4930,8 +4880,8 @@ var powerTools = {
         title: 'Duplicate Periods Wizard',
         name: 'Duplicate Period',
         header: 'Repairing duplicate periods in ' + powerTools.dataOptions.schoolname,
-        info: 'Use this wizard to repair duplicate periods. This process will repair all attendance, attendancequeue, ' +
-        'attendance_taken, and bell schedule records, then remove the duplicate Periods.',
+        info: 'Use this wizard to repair duplicate periods. This process will repair all attendance, ' +
+        'attendancequeue, attendance_taken, and bell schedule records, then remove the duplicate Periods.',
         jsonUrl: 'json/DupPeriodNumberWizard.json',
         countRecords: function () {
           $j(powerTools.dataSet).each(function (index, record) {
@@ -4962,7 +4912,7 @@ var powerTools = {
         buttonText: 'Remove Duplicate Preferences',
         action: function () {
           powerTools.currentRecord = 0;
-          powerTools.drDelete('009','dcid');
+          powerTools.drDelete('009', 'dcid');
         }
       };
     },
@@ -4983,7 +4933,7 @@ var powerTools = {
         buttonText: 'Remove Duplicate Server Config Records',
         action: function () {
           powerTools.currentRecord = 0;
-          powerTools.drDelete('175','dcid');
+          powerTools.drDelete('175', 'dcid');
         }
       };
     },
@@ -5003,7 +4953,7 @@ var powerTools = {
         buttonText: 'Remove Duplicate Server Instance Records',
         action: function () {
           powerTools.currentRecord = 0;
-          powerTools.drDelete('177','dcid');
+          powerTools.drDelete('177', 'dcid');
         }
       };
     },
@@ -5024,7 +4974,7 @@ var powerTools = {
         buttonText: 'Remove Duplicate Final Grade Setups',
         action: function () {
           powerTools.currentRecord = 0;
-          powerTools.drDelete('033','dcid');
+          powerTools.drDelete('033', 'dcid');
         }
       };
     },
@@ -5032,9 +4982,8 @@ var powerTools = {
       powerTools.wizardData = {
         title: 'Duplicate Terms Wizard',
         name: 'Duplicate Term',
-        header: 'Repairing duplicate terms records in ' + wizardOptions.schoolName,
-        info: 'Use this wizard to repair duplicate terms records. This process will turn the global sync to non-atomic,' +
-        ' remove the duplicate term records, then turn the global sync back to atomic.',
+        header: 'Repairing duplicate terms records in ' + powerTools.dataOptions.schoolname,
+        info: 'Use this wizard to repair duplicate terms records. This process will remove the duplicate term records.',
         jsonUrl: 'json/DupTermsWizard.json',
         countRecords: function () {
           $j(powerTools.dataSet).each(function (index, record) {
@@ -5045,7 +4994,7 @@ var powerTools = {
         buttonText: 'Remove Duplicate Terms',
         action: function () {
           powerTools.currentRecord = 0;
-          powerTools.drDelete('013','dcid');
+          powerTools.drDelete('013', 'dcid');
         }
       };
     },
@@ -5054,9 +5003,8 @@ var powerTools = {
         title: 'CC Records with Incorrect Course Number Wizard',
         name: 'CC Records with Incorrect Course Number',
         header: 'Repairing CC Records with Incorrect Course Number records in ' + powerTools.dataOptions.schoolname,
-        info: 'Use this wizard to repair CC Records with incorrect case sensitivity. This process will change sync to ' +
-        'non-atomic mode, correct the case sensitivity of the course number in the CC record, then change the sync ' +
-        'back to atomic mode.',
+        info: 'Use this wizard to repair CC Records with incorrect case sensitivity. This process will correct the ' +
+        'case sensitivity of the course number in the CC record.',
         jsonUrl: 'json/InvCourseCCWizard.json',
         countRecords: function () {
           $j(powerTools.dataSet).each(function (index, record) {
@@ -5075,10 +5023,10 @@ var powerTools = {
       powerTools.wizardData = {
         title: 'Section Records with Incorrect Course Number Wizard',
         name: 'Section Records with Incorrect Course Number',
-        header: 'Repairing Section Records with Incorrect Section Number records in ' + powerTools.dataOptions.schoolname,
-        info: 'Use this wizard to repair Section Records with incorrect case sensitivity. This process will change ' +
-        'sync to non-atomic mode, correct the case sensitivity of the Section number, then change the sync back to ' +
-        'atomic mode.',
+        header: 'Repairing Section Records with Incorrect Section Number records in ' +
+        powerTools.dataOptions.schoolname,
+        info: 'Use this wizard to repair Section Records with incorrect case sensitivity. This process will correct ' +
+        'the case sensitivity of the Section number.',
         jsonUrl: 'json/InvCourseNumberSectionsWizard.json',
         countRecords: function () {
           $j(powerTools.dataSet).each(function (index, record) {
@@ -5210,13 +5158,13 @@ var powerTools = {
             noSchool = $j('#NoSchool').is(':checked');
           $j(powerTools.dataSet).each(function (index, record) {
             if (
-              (noAttCode === true && record.attendanceCode == '') ||
+              (noAttCode === true && record.attendanceCode === '') ||
               (noCC === true && record.courseSection.indexOf('CCID') > -1) ||
               (noCourse === true && record.courseSection.indexOf('Course Number') > -1) ||
-              (noPeriod === true && record.period == '') ||
+              (noPeriod === true && record.period === '') ||
               (noSection === true && record.courseSection.indexOf('Section ID') > -1) ||
-              (noStudent === true && record.student == '') ||
-              (noSchool === true && record.schoolName == '')
+              (noStudent === true && record.student === '') ||
+              (noSchool === true && record.schoolName === '')
             ) {
               record.flaggedrecord = 1;
             } else {
@@ -5300,9 +5248,9 @@ var powerTools = {
             if (
               (noCourse === true && record.courseSection.indexOf('Course Number') > -1) ||
               (noSection === true && record.courseSection.indexOf('Section ID') > -1) ||
-              (noStudent === true && record.student == '') ||
-              (noTerm === true && record.termId == '') ||
-              (noSchool === true && record.schoolName == '')
+              (noStudent === true && record.student === '') ||
+              (noTerm === true && record.termId === '') ||
+              (noSchool === true && record.schoolName === '')
             ) {
               record.flaggedrecord = 1;
             } else {
@@ -5315,15 +5263,16 @@ var powerTools = {
           powerTools.currentRecord = 0;
           powerTools.drDelete('004', 'dcid');
         }
-      }
+      };
     },
-    OrphanedFeeTransation: function () {
+    OrphanedFeeTransaction: function () {
       var schoolOption;
       if (powerTools.dataOptions.schoolid === 0) {
         schoolOption = ', school,';
       } else {
         schoolOption = '';
       }
+      console.log(schoolOption);
       powerTools.wizardData = {
         title: 'Orphaned Fee Transaction Wizard',
         name: 'Orphaned Fee Transaction',
@@ -5353,9 +5302,9 @@ var powerTools = {
             noSchool = $j('#NoSchool').is(':checked');
           $j(powerTools.dataSet).each(function (index, record) {
             if (
-              (noStudent === true && record.student == '') ||
-              (noFee === true && record.feeId == '') ||
-              (noSchool === true && record.schoolName == '')
+              (noStudent === true && record.student === '') ||
+              (noFee === true && record.feeId === '') ||
+              (noSchool === true && record.schoolName === '')
             ) {
               record.flaggedrecord = 1;
             } else {
@@ -5368,11 +5317,11 @@ var powerTools = {
           powerTools.currentRecord = 0;
           powerTools.drDelete('147', 'dcid');
         }
-      }
+      };
     },
     OrphanedHonorRoll: function () {
       var schoolOption;
-      if (dataOptions.schoolid === 0) {
+      if (powerTools.dataOptions.schoolid === 0) {
         schoolOption = 'or school ';
       } else {
         schoolOption = '';
@@ -5382,8 +5331,8 @@ var powerTools = {
         title: 'Orphaned Honor Roll Wizard',
         name: 'Orphaned Honor Roll',
         header: 'Removing orphaned honor roll records in ' + powerTools.dataOptions.schoolname,
-        info: 'Use this wizard to remove orphaned honor roll records. This process will delete all honor roll records ' +
-        'where the student ' + schoolOption + 'does not exist.',
+        info: 'Use this wizard to remove orphaned honor roll records. This process will delete all honor roll ' +
+        'records where the student ' + schoolOption + 'does not exist.',
         options: {
           checkboxes: [
             {
@@ -5402,8 +5351,8 @@ var powerTools = {
             noSchool = $j('#NoSchool').is(':checked');
           $j(powerTools.dataSet).each(function (index, record) {
             if (
-              (noStudent === true && record.student == '') ||
-              (noSchool === true && record.schoolName == '')
+              (noStudent === true && record.student === '') ||
+              (noSchool === true && record.schoolName === '')
             ) {
               record.flaggedrecord = 1;
             } else {
@@ -5414,7 +5363,7 @@ var powerTools = {
         },
         action: function () {
           powerTools.currentRecord = 0;
-          drDelete('034', 'dcid');
+          powerTools.drDelete('034', 'dcid');
         }
       };
     },
@@ -5447,7 +5396,7 @@ var powerTools = {
             noCourse = $j('#NoCourse').is(':checked');
           $j(powerTools.dataSet).each(function (index, record) {
             if (
-              (noStudent === true && record.student == '') ||
+              (noStudent === true && record.student === '') ||
               (noSection === true && record.courseSection.indexOf('Section ID') > -1) ||
               (noCourse === true && record.courseSection.indexOf('Course Number') > -1)
             ) {
@@ -5497,8 +5446,8 @@ var powerTools = {
             noSchool = $j('#NoSchool').is(':checked');
           $j(powerTools.dataSet).each(function (index, record) {
             if (
-              (noStudent === true && record.student == '') ||
-              (noSchool === true && record.schoolName == '')
+              (noStudent === true && record.student === '') ||
+              (noSchool === true && record.schoolName === '')
             ) {
               record.flaggedrecord = 1;
             } else {
@@ -5517,7 +5466,7 @@ var powerTools = {
     OrphanedSection: function () {
       var schoolOption;
       if (powerTools.dataOptions.schoolid === 0) {
-        schoolOption = 'school,\nbsp;';
+        schoolOption = 'school, ';
       } else {
         schoolOption = '';
       }
@@ -5526,10 +5475,8 @@ var powerTools = {
         title: 'Orphaned Section Wizard',
         name: 'Orphaned Section',
         header: 'Removing orphaned Sections records in ' + powerTools.dataOptions.schoolname,
-        info: 'Use this wizard to remove orphaned Sections Records. This process will turn sync to non-atomic, ' +
-        'delete all Sections records where the course, teacher, ' + schoolOption +
-        'or term does not exist, based off the options ' +
-        'selected, then turn sync back to atomic mode.',
+        info: 'Use this wizard to remove orphaned Sections Records. This process will delete all Sections records ' +
+        'where the course, teacher, ' + schoolOption + 'or term does not exist, based off the options selected.',
         options: {
           checkboxes: [
             {
@@ -5560,9 +5507,9 @@ var powerTools = {
           $j(powerTools.dataSet).each(function (index, record) {
             if (
               (noCourse === true && record.courseSection.indexOf('Course ') > -1) ||
-              (noTeacher === true && record.teacher == '') ||
-              (noTerm === true && record.schoolTermId == '') ||
-              (noSchool === true && record.schoolName == '')
+              (noTeacher === true && record.teacher === '') ||
+              (noTerm === true && record.schoolTermId === '') ||
+              (noSchool === true && record.schoolName === '')
             ) {
               record.flaggedrecord = 1;
             } else {
@@ -5581,7 +5528,7 @@ var powerTools = {
     OrphanedSpEnrollments: function () {
       var schoolOption;
       if (powerTools.dataOptions.schoolid === 0) {
-        schoolOption = 'school, ';
+        schoolOption = ', school, ';
       } else {
         schoolOption = '';
       }
@@ -5614,9 +5561,9 @@ var powerTools = {
             noSchool = $j('#NoSchool').is(':checked');
           $j(powerTools.dataSet).each(function (index, record) {
             if (
-              (noStudent === true && record.student == '') ||
-              (noProgram === true && record.programName == '') ||
-              (noSchool === true && record.schoolName == '')
+              (noStudent === true && record.student === '') ||
+              (noProgram === true && record.programName === '') ||
+              (noSchool === true && record.schoolName === '')
             ) {
               record.flaggedrecord = 1;
             } else {
@@ -5668,9 +5615,9 @@ var powerTools = {
             noSchool = $j('#NoSchool').is(':checked');
           $j(powerTools.dataSet).each(function (index, record) {
             if (
-              (noStudent === true && record.student == '') ||
-              (noStandard === true && record.standard == '') ||
-              (noSchool === true && record.schoolName == '')
+              (noStudent === true && record.student === '') ||
+              (noStandard === true && record.standard === '') ||
+              (noSchool === true && record.schoolName === '')
             ) {
               record.flaggedrecord = 1;
             } else {
@@ -5731,8 +5678,8 @@ var powerTools = {
             noRaceCode = $j('#NoRaceCode').is(':checked');
           $j(powerTools.dataSet).each(function (index, record) {
             if (
-              (noStudent === true && record.student == '') ||
-              (noRaceCode === true && record.raceCode == '')
+              (noStudent === true && record.student === '') ||
+              (noRaceCode === true && record.raceCode === '')
             ) {
               record.flaggedrecord = 1;
             } else {
@@ -5795,11 +5742,11 @@ var powerTools = {
             noSchool = $j('#NoSchool').is(':checked');
           $j(powerTools.dataSet).each(function (index, record) {
             if (
-              (noStudent === true && record.student == '') ||
-              (noTest === true && record.testName == '') ||
-              (noTestScore === true && record.testScore == '') ||
-              (noStudentTest === true && record.testId == '') ||
-              (noSchool === true && record.schoolName == '')
+              (noStudent === true && record.student === '') ||
+              (noTest === true && record.testName === '') ||
+              (noTestScore === true && record.testScore === '') ||
+              (noStudentTest === true && record.testId === '') ||
+              (noSchool === true && record.schoolName === '')
             ) {
               record.flaggedrecord = 1;
             } else {
@@ -5839,8 +5786,8 @@ var powerTools = {
             noRaceCode = $j('#NoRaceCode').is(':checked');
           $j(powerTools.dataSet).each(function (index, record) {
             if (
-              (noTeacher === true && record.teacher == '') ||
-              (noRaceCode === true && record.raceCode == '')
+              (noTeacher === true && record.teacher === '') ||
+              (noRaceCode === true && record.raceCode === '')
             ) {
               record.flaggedrecord = 1;
             } else {
@@ -5868,10 +5815,10 @@ var powerTools = {
         title: 'Orphaned Termbins Wizard',
         name: 'Orphaned Termbins',
         header: 'Removing orphaned termbins records in ' + powerTools.dataOptions.schoolName,
-        info: 'Use this wizard to remove orphaned Final Grade Setup Records. This process will set sync to non-atomic, ' +
-        'delete all Final Grade Setup records where the term ' + schoolOption +
+        info: 'Use this wizard to remove orphaned Final Grade Setup Records. This process will delete all Final ' +
+        'Grade Setup records where the term ' + schoolOption +
         'does not exist, based off the options ' +
-        'selected, then set sync back to atomic mode.',
+        'selected.',
         options: {
           checkboxes: [
             {
@@ -5890,7 +5837,7 @@ var powerTools = {
           $j(powerTools.dataSet).each(function (index, record) {
             if (
               (noTerm === true && record.term.indexOf('does not exist') > -1) ||
-              (noSchool === true && record.schoolName == '')
+              (noSchool === true && record.schoolName === '')
             ) {
               record.flaggedrecord = 1;
             } else {
@@ -5932,7 +5879,7 @@ var powerTools = {
         } else {
           powerTools.drDelete(tableNumber, referenceName);
         }
-      })
+      });
     } else {
       powerTools.currentRecord++;
       if (powerTools.currentRecord === powerTools.dataSet.length) {
@@ -5942,14 +5889,14 @@ var powerTools = {
       }
     }
   },
-  loadWizard:function() {
+  loadWizard: function () {
     powerTools.wizardConfig[powerTools.dataOptions.reportid]();
     if (powerTools.wizardData.jsonUrl) {
-      $j.getJSON(powerTools.wizardData.jsonUrl, function(result) {
+      $j.getJSON(powerTools.wizardData.jsonUrl, function (result) {
         result.pop();
         powerTools.dataSet = result;
         powerTools.loadWizardPage();
-      })
+      });
     } else {
       powerTools.loadWizardPage();
     }
@@ -5988,7 +5935,8 @@ var powerTools = {
           '</td>' +
           '<td>' +
           '<fieldset id="selectOptions"></fieldset>' +
-          '<div style="padding-left:27px"><input type="checkbox" id="CheckAll"><label for="CheckAll">Select / Deselect All</label></div>' +
+          '<div style="padding-left:27px"><input type="checkbox" id="CheckAll"><label for="CheckAll">Select / ' +
+          'Deselect All</label></div>' +
           '</td>' +
           '</tr>'
         );

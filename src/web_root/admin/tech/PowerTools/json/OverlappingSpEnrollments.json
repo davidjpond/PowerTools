@@ -21,6 +21,9 @@ AND s1.enter_date < s2.exit_date
 AND s1.studentid = s3.id
 AND s1.schoolid = s4.school_number
 AND s1.programid = g1.id
+          ~[if.~[gpv:frn]>0]
+		  AND s3.id = ~(id)
+				  [/if]
 ~[if.is.a.school]AND s1.schoolid = ~[v.curschoolid][/if.is.a.school]
 ORDER BY s3.lastfirst
 ]

@@ -61,6 +61,9 @@ ON a1.ccid = c2.id
 LEFT JOIN cycle_day c3
 ON c1.cycle_day_id = c3.id
 WHERE a2.att_code IS NOT NULL
+           ~[if.~[gpv:frn]>0]
+		  AND s1.id = ~(id)
+				  [/if]
 ~[if.is.a.school]AND a1.schoolid = ~[v.curschoolid][/if.is.a.school]
 ~[if.~(gpv.curyearonly)=1]AND a1.yearid = trunc(~[v.curtermid]/100)[/if]
 AND (

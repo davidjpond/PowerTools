@@ -65,6 +65,9 @@ WHERE (s1.id IS NULL
   OR (c2.course_number IS NULL
     AND c1.course_number IS NOT NULL)
 )
+           ~[if.~[gpv:frn]>0]
+		  AND s1.id = ~(id)
+				  [/if]
 ~[if.is.a.school]AND a1.schoolid = ~[v.curschoolid][/if.is.a.school]
 ORDER BY a1.ID
 	]

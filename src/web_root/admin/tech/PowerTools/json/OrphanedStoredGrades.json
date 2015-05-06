@@ -37,6 +37,9 @@ OR (
   AND s3.ID != 0)
 OR (c1.course_number IS NULL
   AND s1.sectionid != 0))
+           ~[if.~[gpv:frn]>0]
+		  AND s1.studentid = ~(id)
+				  [/if]
 ~[if.is.a.school]AND s1.schoolid = ~[v.curschoolid][/if.is.a.school]
 ORDER BY s1.DCID
 	]

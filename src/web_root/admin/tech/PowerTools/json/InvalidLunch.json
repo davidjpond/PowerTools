@@ -16,6 +16,9 @@ WHERE g1.studentid > 0
 AND ((
 alacarte = 0
 AND transtype = 'A')
+           ~[if.~[gpv:frn]>0]
+		  AND s1.id = ~(id)
+				  [/if]
 OR REGEXP_LIKE(transtype, 'FF|FR|FE')
 OR transtype LIKE '%MLF%'
 OR REGEXP_LIKE(transtype, 'G|C'))

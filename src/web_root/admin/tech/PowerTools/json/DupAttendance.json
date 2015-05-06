@@ -25,6 +25,9 @@ OR lower(a1.att_mode_code) = 'att_modedaily'
 ~[if.is.a.school]AND s1.schoolid = ~[v.curschoolid][/if.is.a.school]
 ~[if.~(gpv.curyearonly)=1]AND a1.yearid = trunc(~[v.curtermid]/100)[/if]
 AND a1.schoolid in (SELECT school_number from schools)
+           ~[if.~[gpv:frn]>0]
+		  AND s1.id = ~(id)
+				  [/if]
 GROUP BY a1.att_date
 , a1.studentid
 , a1.ccid

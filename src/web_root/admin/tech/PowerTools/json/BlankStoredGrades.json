@@ -15,6 +15,9 @@
 		LEFT JOIN schools s3
 		ON s2.schoolid = s3.school_number
 		WHERE grade IS NULL
+		  ~[if.~[gpv:frn]>0]
+		  AND s1.studentid = ~(id)
+				  [/if]
 		AND percent = 0
 		AND comment_value IS NULL
 		~[if.is.a.school]AND s2.schoolid = ~[v.curschoolid][/if.is.a.school]

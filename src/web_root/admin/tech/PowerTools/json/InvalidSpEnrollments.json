@@ -16,6 +16,9 @@ LEFT JOIN ps.gen g1
 ON s1.programid = g1.id
 WHERE s1.enter_date > s1.exit_date
 AND s1.exit_date != '01/01/1900'
+          ~[if.~[gpv:frn]>0]
+		  AND s1.studentid = ~(id)
+				  [/if]
 ~[if.is.a.school]AND s1.schoolid = ~[v.curschoolid][/if.is.a.school]
 ORDER BY s2.lastfirst
 ]

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<!-- start right frame -->
+<head>
+  <title>PowerTools Student Report</title>
+  ~[wc:commonscripts]
+  <link href="/images/css/screen.css" rel="stylesheet" media="screen">
+  <link href="/images/css/print.css" rel="stylesheet" media="print">
+  <link href="/images/css/PowerTools.css" rel="stylesheet">
+  <!--[if IE]>
+  <style>
+    #reportInfo, #wizardLink {
+      margin-left: 20px;
+    }
+  </style>
+  <![endif]-->
+  <link rel="stylesheet" type="text/css" href="/admin/tech/PowerTools/js/yui/paginator/assets/skins/sam/paginator.css">
+  <link rel="stylesheet" type="text/css" href="/admin/tech/PowerTools/js/yui/datatable/assets/skins/sam/datatable.css">
+  <script src="/admin/tech/PowerTools/js/yui/utilities/utilities.js"></script>
+  <script src="/admin/tech/PowerTools/js/yui/paginator/paginator-min.js"></script>
+  <script src="/admin/tech/PowerTools/js/yui/datasource/datasource-min.js"></script>
+  <script src="/admin/tech/PowerTools/js/yui/datatable/datatable-min.js"></script>
+  <script src="/admin/tech/PowerTools/js/yui/json/json-min.js"></script>
+  <script src="/admin/tech/PowerTools/js/PowerTools.js"></script>
+</head>
+
+<body class="yui-skin-sam">
+
+ ~[wc:admin_header_frame_css]<!-- breadcrumb start --><a href="/admin/home.html" target="_top">~[text:psx.html.admin_students.activities.start_page]</a>
+    &gt; <a href="home.html?selectstudent=nosearch" target="_top">~[text:psx.html.admin_students.activities.student_selection]</a>
+    &gt;PowerTools Student Report<!-- breadcrumb end -->~[wc:admin_navigation_frame_css]
+
+    ~[wc:title_student_begin_css]PowerTools Student Report~[wc:title_student_end_css]
+
+    <!-- start of content and bounding box -->
+    <div class="box-round">
+      <div id="reportInfo"></div>
+
+      <div id="wizardLink"></div>
+
+      <div id="top_container" style="text-align:center;"></div>
+
+      <div id="paginated"></div>
+
+      <br>
+
+      <p id="bottom_container" style="text-align:center"></p>
+    </div>
+    <br>
+    <!-- end of content of bounding box -->
+
+    ~[wc:admin_footer_frame_css]
+  <script type="text/javascript">
+    powerTools.dataOptions = {
+      curyearonly: "~[displaypref:PowerTools-curyearonly-U~[x:userid]]",
+      curYearSelect: "",
+      ddaRedirect: "~[displaypref:PowerTools-Redirect-Orphan-DDA]",
+      ddaUserPerms: '~[if.security.pagemod=/admin/tech/usm/home.html]on[else]off[/if]',
+      expandMenu: '~[displaypref:PowerTools-navigation-menu-expanded-U~[x:userid]]',
+      frn: '~[gpv:frn]',
+      hideBlankGrades: '~[displaypref:PowerTools-Hide-Blank-Stored-Grades]',
+      hideDupGrades: '~[displaypref:PowerTools-Hide-Duplicate-Stored-Grades]',
+      hidePaddedSchool: '~[displaypref:PowerTools-Hide-Padded-School-Enrollment-Report]',
+      hideSpEnrollments: '~[displaypref:PowerTools-Hide-SPEnrollments-Reports]',
+      hispaniconly: "~[displaypref:PowerTools-Hispanic-Only-Qualifies]",
+      maxLines: "100",
+      reportid: "~(gpv.reportname)",
+      schoolid: ~(v.curschoolid),
+      schoolname: "~[schoolname]",
+      schoolNetPrep: '~[displaypref:PowerTools-Enable-SchoolNet-Prep]',
+      userid: "~[x:userid]"
+    };
+    powerTools.initReport('StudentReport');
+  </script>
+</body>
+</html><!-- end right frame -->

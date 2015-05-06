@@ -14,6 +14,9 @@ FROM ps.students s1
 LEFT JOIN ps.schools s2
 ON s1.schoolid = s2.school_number
 WHERE s1.track NOT IN ('A','B','C','D','E','F')
+          ~[if.~[gpv:frn]>0]
+		  AND s1.id = ~(id)
+				  [/if]
 ~[if.is.a.school]AND s1.schoolid = ~[v.curschoolid][/if.is.a.school]
 UNION ALL
 SELECT s1.dcid
@@ -30,6 +33,9 @@ ON r1.studentid = s1.id
 LEFT JOIN ps.schools s2
 ON r1.schoolid = s2.school_number
 WHERE r1.track NOT IN ('A','B','C','D','E','F')
+          ~[if.~[gpv:frn]>0]
+		  AND r1.studentid = ~(id)
+				  [/if]
 AND r1.studentid = s1.id
 ~[if.is.a.school]AND r1.schoolid = ~[v.curschoolid][/if.is.a.school])
 ]

@@ -19,6 +19,9 @@ ON c1.studentid = s1.id
 where studyear != case when studentid*100 > 2147483647 then (2147483648 - studentid* 100+2147483648 - case when length(abs(termid)) = 3 then '0'||substr(replace(to_char(termid),'-'),1,1) else substr(replace(to_char(termid),'-'),1,2) end) * -1
 else studentid * 100 + case when length(abs(termid)) = 3 then '0'||substr(replace(to_char(termid),'-'),1,1) else substr(replace(to_char(termid),'-'),1,2) end
 end
+		   ~[if.~[gpv:frn]>0]
+		  AND s1.id = ~(id)
+				  [/if]
 ~[if.is.a.school]AND s1.schoolid = ~[v.curschoolid][/if.is.a.school]
 ORDER BY s1.lastfirst
 	]

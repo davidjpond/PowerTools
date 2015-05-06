@@ -19,6 +19,9 @@ WHERE (s1.id IS NULL
 OR f2.ID IS NULL
 OR s2.id IS NULL
 )
+		 ~[if.~[gpv:frn]>0]
+		  AND s1.id = ~(id)
+				  [/if]
 ~[if.is.a.school]AND f1.schoolid = ~[v.curschoolid][/if.is.a.school]
 ORDER BY f1.ID
 	]

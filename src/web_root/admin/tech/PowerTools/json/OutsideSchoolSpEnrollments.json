@@ -28,6 +28,9 @@ WHERE s2.enter_date BETWEEN r1.entrydate AND r1.exitdate
 AND s2.exit_date BETWEEN r1.entrydate AND r1.exitdate
 AND r1.schoolid = s2.schoolid
 )
+		   ~[if.~[gpv:frn]>0]
+		  AND s2.studentid = ~(id)
+				  [/if]
 ~[if.is.a.school]AND s1.schoolid = ~[v.curschoolid][/if.is.a.school]
 ORDER BY s1.lastfirst
 ]

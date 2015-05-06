@@ -1,0 +1,171 @@
+{"ResultSet":[
+~[if.~[displaypref:PowerTools-Hide-Blank-Stored-Grades]<1]
+  {
+    "report" : "Blank Stored Grades *",
+    "reportName" : "BlankStoredGrades"
+  },
+[/if]
+{
+"report" : "CC Records with Incorrect Case Course Number",
+"reportName" : "InvCourseNumberCC"
+},
+  {
+"report" : "Duplicate Attendance Records *",
+"reportName" : "DupAttendance"
+},
+  {
+    "report": "Duplicate Period Enrollments *",
+    "reportName": "DupPeriodEnrollment"
+  },
+~[if.~[displaypref:PowerTools-Hide-Duplicate-Stored-Grades]<1]
+  {
+    "report" : "Duplicate Stored Grades *",
+    "reportName" : "DupStoredGrades"
+  },
+[/if]
+{
+"report" : "Incomplete Scheduling Setup",
+"reportName" : "IncompleteSched"
+},
+  {
+    "report": "Incomplete School Transfers",
+    "reportName": "IncompleteTransfers"
+  },
+{
+"report" : "Incorrect Lunch Balances",
+"reportName" : "IncorrectLunchBal"
+},
+  {
+    "report" : "Incorrect Stored Grades *",
+    "reportName" : "IncorrectStoredGrades"
+  },
+  {
+"report" : "Incorrect Studyear Records",
+"reportName" : "IncorrectStudYear"
+},
+{
+    "report": "Invalid Future Enrollment Dates",
+    "reportName": "FutureActiveSchool"
+  },
+{
+"report" : "Invalid Meal Transactions",
+"reportName" : "InvalidLunch"
+},
+  {
+    "report": "Invalid Pending Transfers",
+    "reportName": "PastPending"
+  },
+  {
+    "report": "Invalid Tracks",
+    "reportName": "InvalidTrack"
+  },
+{
+"report" : "Missing Full Time Equivalencies *",
+"reportName" : "MissingFTEStudent"
+},
+  {
+    "report": "Missing Race/Ethnicity",
+    "reportName": "MissingRace"
+  },
+{
+"report" : "Non-Session Attendance *",
+"reportName" : "NonInSessionAttendance"
+},
+{
+"report" : "Orphaned Attendance Records",
+"reportName" : "OrphanedAttendance"
+},
+{
+"report" : "Orphaned CC Records",
+"reportName" : "OrphanedCC"
+},
+{
+"report" : "Orphaned Fee_Transaction Records",
+"reportName" : "OrphanedFeeTransaction"
+},
+{
+"report" : "Orphaned HonorRoll Records",
+"reportName" : "OrphanedHonorRoll"
+},
+{
+"report" : "Orphaned PGFinalGrades Records",
+"reportName" : "OrphanedPGFinalGrades"
+},
+{
+"report" : "Orphaned Reenrollment Records",
+"reportName" : "OrphanedReenrollments"
+},
+{
+"report" : "Orphaned SpEnrollments Records",
+"reportName" : "OrphanedSpEnrollments"
+},
+{
+"report" : "Orphaned StandardsGrades Records",
+"reportName" : "OrphanedStandardsGrades"
+},
+{
+"report" : "Orphaned StoredGrades Records",
+"reportName" : "OrphanedStoredGrades"
+},
+{
+"report" : "Orphaned StudentRace Records",
+"reportName" : "OrphanedStudentRace"
+},
+{
+"report" : "Orphaned StudentTestScore Records",
+"reportName" : "OrphanedStudentTestScore"
+},
+ {
+    "report": "Overlapping School Enrollments",
+    "reportName": "OverlappingSchool"
+  },
+  {
+    "report": "Overlapping Section Enrollments *",
+    "reportName": "OverlappingCC"
+  },
+  {
+    "report": "Overlapping Special Program Enrollments",
+    "reportName": "OverlappingSpEnrollments"
+  },
+~[if.~[displaypref:PowerTools-Hide-Padded-School-Enrollment-Report]<1]
+  {
+    "report" : "Padded School Enrollments *",
+    "reportName" : "PaddedSchoolEnrollments"
+  },
+[/if]
+  {
+    "report": "Reverse School Enrollments",
+    "reportName": "InvalidSchool"
+  },
+  {
+    "report" : "Reverse Section Enrollments *",
+    "reportName" : "InvalidCC"
+  },
+  {
+    "report": "Reverse Special Program Enrollments", "reportName":
+    "InvalidSpEnrollments"
+  },
+  {
+    "report": "School Enrollments Outside the Years and Terms",
+    "reportName": "OutsideYTSchool"
+  },
+  {
+    "report": "Section Enrollments Outside School Enrollments *",
+    "reportName": "OutsideSchoolCC"
+  },
+~[if.~[displaypref:PowerTools-Hide-SPEnrollments-Reports]<1]
+  {
+    "report" : "Special Program Enrollments not within School Enrollments",
+    "reportName" : "OutsideSchoolSpEnrollments"
+  },
+  {
+    "report" : "Special Program Enrollments with invalid grade levels",
+    "reportName" : "SpEnrollmentBadGrade"
+  },
+[/if]
+{
+"report": "Student Numbers over 2147483647",
+"reportName": "StudentNumberIssue"
+},
+{}
+]}

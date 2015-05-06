@@ -18,6 +18,9 @@ FROM CC C1
 , courses c3
 , schools s2
 WHERE C1.StudentID = C2.StudentID
+          ~[if.~[gpv:frn]>0]
+		  AND s1.id = ~(id)
+				  [/if]
 AND ABS(C1.SectionID) = ABS(C2.SectionID)
 AND (C1.DCID != C2.DCID
 AND C1.Dateenrolled > C2.Dateenrolled

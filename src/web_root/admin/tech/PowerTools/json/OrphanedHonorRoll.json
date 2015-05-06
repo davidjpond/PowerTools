@@ -14,6 +14,9 @@ ON h1.schoolid = s2.school_number
 WHERE (s1.id IS NULL
 OR s2.ID IS NULL
 )
+           ~[if.~[gpv:frn]>0]
+		  AND s1.id = ~(id)
+				  [/if]
 ~[if.is.a.school]AND h1.schoolid = ~[v.curschoolid][/if.is.a.school]
 ORDER BY h1.ID
 ]

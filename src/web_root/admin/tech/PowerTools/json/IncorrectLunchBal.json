@@ -30,6 +30,9 @@ AND NOT EXISTS (
 SELECT *
 FROM ps.gldetail g1
 WHERE g1.studentid = s1.id)
+         ~[if.~[gpv:frn]>0]
+		  AND s1.id = ~(id)
+				  [/if]
 ~[if.is.a.school]AND s1.schoolid = ~[v.curschoolid][/if.is.a.school]
 ORDER BY s1.lastfirst
 ]

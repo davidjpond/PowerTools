@@ -29,6 +29,9 @@ OR s3.id IS NULL
 OR t2.ID IS NULL
 OR (s4.name IS NULL
 and s3.schoolid != 0))
+         ~[if.~[gpv:frn]>0]
+		  AND s2.id = ~(id)
+				  [/if]
 ~[if.is.a.school]AND s2.schoolid = ~[v.curschoolid][/if.is.a.school]
 ORDER BY s1.ID
 ]

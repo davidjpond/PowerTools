@@ -19,6 +19,9 @@ AND s1.exitdate <= t1.lastday +1
 AND s1.entrydate >= t1.firstday
 AND s1.entrydate <= t1.lastday +1
 AND s1.schoolid = t1.schoolid)
+		   ~[if.~[gpv:frn]>0]
+		  AND s1.id = ~(id)
+				  [/if]
 ~[if.is.a.school]AND s1.schoolid = ~[v.curschoolid][/if.is.a.school]
 AND s1.exitdate > s1.entrydate
 UNION ALL
@@ -43,6 +46,9 @@ AND r1.entrydate <= t1.lastday +1
 AND r1.schoolid = t1.schoolid)
 AND r1.exitdate > r1.entrydate
 AND r1.studentid = s1.id
+		   ~[if.~[gpv:frn]>0]
+		  AND r1.studentid = ~(id)
+				  [/if]
 ~[if.is.a.school]AND r1.schoolid = ~[v.curschoolid][/if.is.a.school]
 ORDER BY lastfirst)
 ]

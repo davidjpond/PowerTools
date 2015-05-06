@@ -28,7 +28,11 @@ ON s2.course_number = c1.course_number
 WHERE (s1.id IS NULL
 OR s2.id IS NULL
 OR c1.course_number IS NULL
-)~[if.is.a.school]AND s1.schoolid = ~[v.curschoolid][/if.is.a.school]
+)
+           ~[if.~[gpv:frn]>0]
+		  AND s1.id = ~(id)
+				  [/if]
+~[if.is.a.school]AND s1.schoolid = ~[v.curschoolid][/if.is.a.school]
 ORDER BY p1.ID
 ]
 {

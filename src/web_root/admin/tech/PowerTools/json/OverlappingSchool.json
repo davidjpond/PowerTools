@@ -33,6 +33,9 @@ SELECT *
 	LEFT JOIN schools s2
 	ON s1.schoolid = s2.school_number
 	WHERE r1.entrydate < r1.exitdate
+		  ~[if.~[gpv:frn]>0]
+		  AND r1.studentid = ~(id)
+				  [/if]
 	AND r1.studentid = s1.id
 	~[if.is.a.school]AND s1.schoolid = ~[v.curschoolid][/if.is.a.school]
 	AND ((r1.entrydate >= s1.entrydate

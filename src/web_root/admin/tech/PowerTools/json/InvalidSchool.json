@@ -15,6 +15,9 @@
 	WHERE ~[if.is.a.school]s1.schoolid = ~[v.curschoolid] AND[/if.is.a.school]
 	(s1.entrydate > s1.exitdate
 	OR s1.exitdate is null)
+		  ~[if.~[gpv:frn]>0]
+		  AND s1.id = ~(id)
+				  [/if]
 	UNION ALL
 	SELECT s1.dcid
   , s1.id
@@ -33,6 +36,9 @@
 	AND (
 	r1.entrydate > r1.exitdate
 	OR r1.exitdate is null)
+  ~[if.~[gpv:frn]>0]
+  AND r1.studentid = ~(id)
+  [/if]
 	ORDER BY lastfirst)
 ]
 {

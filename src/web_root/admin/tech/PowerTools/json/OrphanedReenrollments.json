@@ -14,7 +14,7 @@ LEFT JOIN students s1
 ON r1.studentid = s1.id
 LEFT JOIN schools s2
 ON r1.schoolid = s2.school_number
-WHERE (r1.schoolid NOT IN (
+WHERE ((r1.schoolid NOT IN (
 SELECT school_number
 FROM schools)
 OR (r1.grade_level < s2.low_grade
@@ -26,7 +26,10 @@ OR (
 r1.grade_level != '99'
 AND r1.schoolid = '999999'))
 OR (s1.id IS NULL
-OR s2.id IS NULL)
+OR s2.id IS NULL))
+           ~[if.~[gpv:frn]>0]
+		  AND s1.id = ~(id)
+				  [/if]
 ~[if.is.a.school]AND r1.schoolid = ~[v.curschoolid][/if.is.a.school]
 ORDER BY r1.ID
 ]

@@ -8,6 +8,9 @@
 	, to_char(s1.Enrollment_Transfer_Date_Pend, 'YYYY-MM-DD') penddate
 	FROM students s1
 	WHERE s1.Enrollment_Transfer_Date_Pend < CURRENT_TIMESTAMP
+		  ~[if.~[gpv:frn]>0]
+		  AND s1.id = ~(id)
+				  [/if]
 	AND s1.enrollment_transfer_date_pend <> to_date('01-JAN-1900','DD-MON-YYYY')
 	~[if.is.a.school]AND s1.schoolid = ~[v.curschoolid][/if.is.a.school]
 ]

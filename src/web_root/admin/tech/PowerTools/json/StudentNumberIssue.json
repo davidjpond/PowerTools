@@ -16,6 +16,9 @@ SELECT s1.dcid
 	END SchoolName
 FROM students s1
 WHERE student_number >= 2147483647
+		   ~[if.~[gpv:frn]>0]
+		  AND s1.id = ~(id)
+				  [/if]
 ~[if.is.a.school]AND s1.schoolid = ~[v.curschoolid][/if.is.a.school]
 ORDER BY s1.lastfirst
   ]
