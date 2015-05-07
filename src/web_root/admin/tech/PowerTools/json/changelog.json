@@ -6,6 +6,9 @@
         "item": "Added the Duplicate Student ID report to the Maintenance Reports"
       },
       {
+        "item": "Added the students PowerTools report at admin > Select Student > Powertools Report, which may be run for a single student"
+      },
+      {
         "item": "Redesigned the application as a single page app"
       },
       {

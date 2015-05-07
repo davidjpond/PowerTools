@@ -45,8 +45,6 @@ cleanandbuild:
   - 'notify:cleanandbuild'
   - 'autoprefixer:ps7'
   - 'removelogging'
-  - 'htmlmin:dist'
-  - 'prettify'
   - 'imagemin'
   - 'jsdoc:dist'
   - 'copy:alltodist'

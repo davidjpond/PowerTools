@@ -39,7 +39,7 @@ ORDER BY p1.ID
 "dcid" : "~(p1.dcid)",
 "id" : "~(p1.id)",
 "student" : "~(s1.lastfirst)",
-"studentid" : "~(p1.studentid)",
+"studentId" : "~(p1.studentid)",
 "courseSection" : "~(c1.course_section)",
 "courseSectionSort" : "~(c1.course_sectionsort)"
 },

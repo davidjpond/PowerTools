@@ -1,5 +1,5 @@
 <script>
   $j('#std_administration').append(
       ('<li><a href="/admin/tech/PowerTools/ptstudentreport.html?frn=~(studentfrn)">PowerTools Report</a></li>')
-  )
+  );
 </script>

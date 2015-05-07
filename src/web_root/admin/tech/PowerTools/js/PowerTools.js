@@ -135,7 +135,7 @@ var powerTools = {
         'submit enhancements, or to report any discrepancies, please email ' +
         '<a href="mailto:PowerToolsForPowerSchool@gmail.com">PowerToolsforPowerSchool@gmail.com</a> </div>');
     });
-    $j('#bcReportName,#top_container,#bottom_container').html(null);
+    $j('#bcReportName,#top_container,#bottom_container,h1').html(null);
     $j('#ptHomeLink,title').text('PowerTools');
     $j('#reportInfo').html('<img src="/images/PowerTools.gif" alt= "If you are seeing this message, the ' +
       'images for PowerTools are not properly loaded. Although PowerTools will function properly without the ' +
@@ -3183,7 +3183,7 @@ var powerTools = {
         info: ('This report selects any PGFinalGrades Record where the student, section, or course number does ' +
         'not exist.' + '<p>Selecting a record will take you to the record in Direct Database ' +
         powerTools.reportOptions.ddaAccess + '.'),
-        fields: ['dcid', 'id', 'student', 'studentid', 'courseSection', 'courseSectionSort'],
+        fields: ['dcid', 'id', 'student', 'studentId', 'courseSection', 'courseSectionSort'],
         columns: [{
           key: 'id',
           label: 'ID',
@@ -3257,7 +3257,7 @@ var powerTools = {
       };
     },
     OrphanedSection: function () {
-      var schoolOption
+      var schoolOption;
       if (powerTools.dataOptions.schoolid === 0) {
         schoolOption = ' school, ';
       } else {
@@ -3540,7 +3540,7 @@ var powerTools = {
     OrphanedStudentTestScore: function () {
       var schoolOption;
       if (powerTools.dataOptions.schoolid === 0) {
-        schoolOption = ', school,'
+        schoolOption = ', school,';
       } else {
         schoolOption = '';
       }
