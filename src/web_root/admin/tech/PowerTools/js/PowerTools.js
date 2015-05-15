@@ -185,7 +185,7 @@ var powerTools = {
       var myColumnDefs = powerTools.reportData.columns,
         myDataSource = new YAHOO.util.DataSource('json/' +
           powerTools.dataOptions.reportid + '.json?curyearonly=' +
-          curYearOnly + '&frn=' + powerTools.dataOptions.frn), oConfigs = {
+          curYearOnly + '&frn=' + powerTools.dataOptions.frn + '&filter='), oConfigs = {
           paginator: new YAHOO.widget.Paginator({
             rowsPerPage: powerTools.dataOptions.maxLines,
             curYearOption: curYearOnly,
@@ -204,7 +204,8 @@ var powerTools = {
             dir: YAHOO.widget.DataTable.CLASS_ASC
           },
           MSG_LOADING: 'Loading Report'
-        }, myDataTable = new YAHOO.widget.DataTable('paginated', myColumnDefs, myDataSource, oConfigs);
+        },
+        myDataTable = new YAHOO.widget.DataTable('paginated', myColumnDefs, myDataSource, oConfigs);
 
       var customFormatters = {
         Activities: function (elCell, oRecord, oColumn, oData) {
@@ -593,11 +594,44 @@ var powerTools = {
       };
       myDataSource.doBeforeCallback = function (oRequest, oFullResponse, oParsedResponse) {
         oParsedResponse.results.pop();
-        powerTools.dataSet = oParsedResponse.results;
+        powerTools.dataSet = oParsedResponse.results || [];
+          var filtered = [],
+            i,l;
+
+        if (oRequest) {
+          oRequest = oRequest.toLowerCase();
+          for (i=0, l=powerTools.dataSet.length; i<l; ++i) {
+            // TODO allow filtering of data based on powerTools.reportData.columns.key for each column, not just students
+            if (!powerTools.dataSet[i].student.toLowerCase().indexOf(oRequest)) {
+              filtered.push(powerTools.dataSet[i]);
+            }
+          }
+          oParsedResponse.results = filtered;
+        }
         window.closeLoading();
         return oParsedResponse;
       };
 
+      powerTools.reportData.filterTimeout = null;
+      powerTools.reportData.updateFilter = function () {
+        powerTools.reportData.filterTimeout = null;
+        var state = myDataTable.getState();
+        state.sortedBy = {
+          key: powerTools.reportData.sortKey,
+          dir: YAHOO.widget.DataTable.CLASS_ASC
+        };
+        // TODO Attempt to refresh data without sending a new request
+        myDataSource.sendRequest(YAHOO.util.Dom.get('filter').value, {
+          success: myDataTable.onDataReturnInitializeTable,
+          failure: myDataTable.onDataReturnInitializeTable,
+          scope: myDataTable,
+          argument: state
+        });
+      };
+      YAHOO.util.Event.on('filter','keyup',function(e) {
+        clearTimeout(powerTools.reportData.filterTimeout);
+        setTimeout(powerTools.reportData.updateFilter,300);
+      });
       return {
         oDS: myDataSource,
         oDT: myDataTable
@@ -672,13 +706,14 @@ var powerTools = {
     powerTools.loadYUIReport(selectedYear);
   },
   templateCYOnly: function () {
-    return '{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {CurrentYearDropdown}';
+    return '{FirstPageLink} {PreviousPageLink} {PageLinks}  {NextPageLink} {LastPageLink} {CurrentYearDropdown}';
   },
   templateNoOption: function () {
     return '';
   },
   templateNoCY: function () {
-    return '{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}';
+    return '{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}' +
+      '<label for="filter">Search</label> <input type="text" id="filter">';
   },
   templateCY: function () {
     return '{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}' +
