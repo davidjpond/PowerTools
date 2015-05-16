@@ -67,7 +67,7 @@ var powerTools = {
       powerTools.initReport(this.id);
     });
   },
-  initStudentReport: function() {
+  initStudentReport: function () {
     powerTools.dataOptions.reportid = 'StudentReport';
     powerTools.dataOptions.curYearSelect = '';
     $j('#wizardLink').html(null);
@@ -81,6 +81,16 @@ var powerTools = {
     powerTools.dataOptions.curYearSelect = '';
     $j('#wizardLink').html(null);
     powerTools.loadReport();
+  },
+  enableFilter: function () {
+    if ($j('#filterdata').length === 0) {
+      $j('#top_container').append('<span id="filterdata">' +
+        '<label for="filter">Search</label> <input type="text" id="filter"></span>');
+      YAHOO.util.Event.on('filter', 'keyup', function () {
+        clearTimeout(powerTools.reportData.filterTimeout);
+        setTimeout(powerTools.reportData.updateFilter, 300);
+      });
+    }
   },
   loadReport: function () {
     if (powerTools.dataOptions.ddaRedirect === 'on') {
@@ -148,7 +158,7 @@ var powerTools = {
     var changeTable = '';
     $j('#top_container,#bottom_container,#reportInfo,#paginated').html(null);
     $j('#ptHomeLink').html('<a onclick="powerTools.loadHomePage();">PowerTools</a> &gt;');
-    $j('#bcReportName,title').text('Change Log');
+    $j('#bcReportName,title,h1').text('Change Log');
     $j('#selectStudents').hide();
     $j.getJSON('json/changelog.json', function (result) {
       $j(result).each(function (index, record) {
@@ -182,31 +192,6 @@ var powerTools = {
 
     //noinspection JSUnusedLocalSymbols
     var ClientPagination = (function () {
-      var myColumnDefs = powerTools.reportData.columns,
-        myDataSource = new YAHOO.util.DataSource('json/' +
-          powerTools.dataOptions.reportid + '.json?curyearonly=' +
-          curYearOnly + '&frn=' + powerTools.dataOptions.frn + '&filter='), oConfigs = {
-          paginator: new YAHOO.widget.Paginator({
-            rowsPerPage: powerTools.dataOptions.maxLines,
-            curYearOption: curYearOnly,
-            containers: ['top_container', 'bottom_container'],
-            template: powerTools.reportData.template,
-            rowsPerPageOptions: [
-              {value: 25, text: '25 Rows'},
-              {value: 50, text: '50 Rows'},
-              {value: 100, text: '100 Rows'},
-              {value: 500, text: '500 Rows'},
-              {value: 'all', text: 'All Rows'}
-            ]
-          }),
-          sortedBy: {
-            key: powerTools.reportData.sortKey,
-            dir: YAHOO.widget.DataTable.CLASS_ASC
-          },
-          MSG_LOADING: 'Loading Report'
-        },
-        myDataTable = new YAHOO.widget.DataTable('paginated', myColumnDefs, myDataSource, oConfigs);
-
       var customFormatters = {
         Activities: function (elCell, oRecord, oColumn, oData) {
           powerTools.adminLink(elCell, oRecord, oData, 'activitiessetup/edit.html?frn=006', 'dcid');
@@ -583,10 +568,37 @@ var powerTools = {
         }
       };
 
+      var myColumnDefs = powerTools.reportData.columns,
+        myDataSource = new YAHOO.util.DataSource('json/' +
+          powerTools.dataOptions.reportid + '.json?curyearonly=' +
+          curYearOnly + '&frn=' + powerTools.dataOptions.frn + '&filter='), oConfigs = {
+          paginator: new YAHOO.widget.Paginator({
+            rowsPerPage: powerTools.dataOptions.maxLines,
+            curYearOption: curYearOnly,
+            containers: ['top_container', 'bottom_container'],
+            template: powerTools.reportData.template,
+            pageLinks: 5,
+            rowsPerPageOptions: [
+              {value: 25, text: '25 Rows'},
+              {value: 50, text: '50 Rows'},
+              {value: 100, text: '100 Rows'},
+              {value: 500, text: '500 Rows'},
+              {value: 'all', text: 'All Rows'}
+            ]
+          }),
+          sortedBy: {
+            key: powerTools.reportData.sortKey,
+            dir: YAHOO.widget.DataTable.CLASS_ASC
+          },
+          MSG_LOADING: 'Loading Report'
+        },
+        myDataTable = new YAHOO.widget.DataTable('paginated', myColumnDefs, myDataSource, oConfigs);
+
       YAHOO.widget.DataTable.Formatter = $j.extend(YAHOO.widget.DataTable.Formatter, customFormatters);
 
       //noinspection JSUnresolvedVariable
       myDataSource.responseType = YAHOO.util.XHRDataSource.TYPE_JSON;
+      myDataSource.maxCacheEntries = 4;
       myDataSource.connXhrMode = 'queueRequests';
       myDataSource.responseSchema = {
         resultsList: 'ResultSet',
@@ -595,27 +607,41 @@ var powerTools = {
       myDataSource.doBeforeCallback = function (oRequest, oFullResponse, oParsedResponse) {
         oParsedResponse.results.pop();
         powerTools.dataSet = oParsedResponse.results || [];
-          var filtered = [],
-            i,l;
+        var filtered = [],
+          i, l;
 
         if (oRequest) {
           oRequest = oRequest.toLowerCase();
-          for (i=0, l=powerTools.dataSet.length; i<l; ++i) {
-            // TODO allow filtering of data based on powerTools.reportData.columns.key for each column, not just students
-            if (!powerTools.dataSet[i].student.toLowerCase().indexOf(oRequest)) {
+          var keys = [];
+          $j(powerTools.reportData.columns).each(function(index,result) {
+            keys.push(result.key);
+          });
+          for (i = 0, l = powerTools.dataSet.length; i < l; ++i) {
+            var pushme = false;
+            for (var k=0;k<keys.length;k++) {
+              var keyitem = keys[k],
+                checkVal = powerTools.dataSet[i][keyitem].toString().toLowerCase();
+              // TODO Convert date from YYYY-MM-DD to dd/mm/yyyy for format search
+              if (!checkVal.indexOf(oRequest)) {
+                console.log(powerTools.dataSet[i][keyitem]);
+                pushme = true;
+              }
+            }
+            if (pushme == true) {
               filtered.push(powerTools.dataSet[i]);
             }
           }
           oParsedResponse.results = filtered;
         }
+        setTimeout(powerTools.enableFilter, 100);
         window.closeLoading();
         return oParsedResponse;
       };
 
       powerTools.reportData.filterTimeout = null;
       powerTools.reportData.updateFilter = function () {
-        powerTools.reportData.filterTimeout = null;
         var state = myDataTable.getState();
+        loadingDialog();
         state.sortedBy = {
           key: powerTools.reportData.sortKey,
           dir: YAHOO.widget.DataTable.CLASS_ASC
@@ -628,10 +654,6 @@ var powerTools = {
           argument: state
         });
       };
-      YAHOO.util.Event.on('filter','keyup',function(e) {
-        clearTimeout(powerTools.reportData.filterTimeout);
-        setTimeout(powerTools.reportData.updateFilter,300);
-      });
       return {
         oDS: myDataSource,
         oDT: myDataTable
@@ -712,8 +734,7 @@ var powerTools = {
     return '';
   },
   templateNoCY: function () {
-    return '{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}' +
-      '<label for="filter">Search</label> <input type="text" id="filter">';
+    return '{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}';
   },
   templateCY: function () {
     return '{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}' +
@@ -5307,7 +5328,6 @@ var powerTools = {
       } else {
         schoolOption = '';
       }
-      console.log(schoolOption);
       powerTools.wizardData = {
         title: 'Orphaned Fee Transaction Wizard',
         name: 'Orphaned Fee Transaction',
@@ -5649,6 +5669,7 @@ var powerTools = {
             noStandard = $j('#NoStandard').is(':checked'),
             noSchool = $j('#NoSchool').is(':checked');
           $j(powerTools.dataSet).each(function (index, record) {
+            //noinspection JSValidateTypes
             if (
               (noStudent === true && record.student === '') ||
               (noStandard === true && record.standard === '') ||
