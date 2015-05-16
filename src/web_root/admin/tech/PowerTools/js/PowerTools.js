@@ -82,14 +82,12 @@ var powerTools = {
     $j('#wizardLink').html(null);
     powerTools.loadReport();
   },
+  // TODO Attempt to refresh data without sending a new request
   enableFilter: function () {
     if ($j('#filterdata').length === 0) {
-      $j('#top_container').append('<span id="filterdata">' +
-        '<label for="filter">Search</label> <input type="text" id="filter"></span>');
-      YAHOO.util.Event.on('filter', 'keyup', function () {
-        clearTimeout(powerTools.reportData.filterTimeout);
-        setTimeout(powerTools.reportData.updateFilter, 300);
-      });
+      $j('#top_container').append('<br><span id="filterdata">' +
+        'Search Records: <input type="text" id="filter">' +
+        '<button onclick="powerTools.reportData.updateFilter()">Search</button></span><br>');
     }
   },
   loadReport: function () {
@@ -577,7 +575,6 @@ var powerTools = {
             curYearOption: curYearOnly,
             containers: ['top_container', 'bottom_container'],
             template: powerTools.reportData.template,
-            pageLinks: 5,
             rowsPerPageOptions: [
               {value: 25, text: '25 Rows'},
               {value: 50, text: '50 Rows'},
@@ -617,18 +614,19 @@ var powerTools = {
             keys.push(result.key);
           });
           for (i = 0, l = powerTools.dataSet.length; i < l; ++i) {
-            var pushme = false;
             for (var k=0;k<keys.length;k++) {
               var keyitem = keys[k],
                 checkVal = powerTools.dataSet[i][keyitem].toString().toLowerCase();
-              // TODO Convert date from YYYY-MM-DD to dd/mm/yyyy for format search
-              if (!checkVal.indexOf(oRequest)) {
-                console.log(powerTools.dataSet[i][keyitem]);
-                pushme = true;
+              if (checkVal.length === 10 && checkVal.indexOf('-') === 4 &&
+                new Date(checkVal).toLocaleDateString() !== 'Invalid Date') {
+                checkVal = new Date(checkVal);
+                checkVal.setDate(checkVal.getDate()+1);
+                checkVal = checkVal.toLocaleDateString();
               }
-            }
-            if (pushme == true) {
-              filtered.push(powerTools.dataSet[i]);
+              if (!checkVal.indexOf(oRequest)) {
+                filtered.push(powerTools.dataSet[i]);
+                break;
+              }
             }
           }
           oParsedResponse.results = filtered;
@@ -638,7 +636,6 @@ var powerTools = {
         return oParsedResponse;
       };
 
-      powerTools.reportData.filterTimeout = null;
       powerTools.reportData.updateFilter = function () {
         var state = myDataTable.getState();
         loadingDialog();
