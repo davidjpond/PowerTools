@@ -3,10 +3,28 @@
     "version" : "4.1.0",
     "changes" : [
       {
-        "item": "Added the ability to search reports"
+        "item": "Added the ability to search reports by the displayed value in the tables. Searches are not case specific"
       },
       {
         "item": "Added the title to the Change Log page"
+      },
+      {
+        "item": "Added the Orphaned School_Course report and the Orphaned School_Course wizard"
+      },
+      {
+        "item": "Reapplied the backup warning to all wizard pages reminding to make a datapump backup prior to running wizards"
+      },
+      {
+        "item": "Fixed an issue where the \"Students Missing Race/Ethnicity\" report would not display records"
+      },
+      {
+        "item": "Fixed an issue where the \"Students Missing Race/Ethnicity\" report did not factor the decline to  declare federal ethnicity setting"
+      },
+      {
+        "item": "Fixed an issue where the selection of students would not select any students"
+      },
+      {
+        "item": "Fixed an issue where many reports ignored the current year selection option when making students the current selection"
       }
     ]
   },

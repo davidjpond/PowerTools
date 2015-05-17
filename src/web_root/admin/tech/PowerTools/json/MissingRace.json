@@ -1,7 +1,7 @@
 {"ResultSet":[
 	~[tlist_sql;
-		SELECT s1.dcid
-    , s1.id
+      SELECT s1.dcid
+        , s1.id
 		, s1.lastfirst
     , CASE
       WHEN s1.ethnicity IS NULL
@@ -9,16 +9,18 @@
       ELSE s1.ethnicity
       END schedethnicity
     , CASE
-      WHEN (Select COUNT(s2.racecd)
+      WHEN (Select COUNT(*)
         FROM ps.studentrace s2
         WHERE s2.studentid = s1.id) = 1
       THEN (SELECT s2.racecd
         FROM ps.studentrace s2
         WHERE s2.studentid = s1.id)
-      WHEN (Select COUNT(s2.racecd)
+      WHEN (Select COUNT(*)
         FROM ps.studentrace s2
         WHERE s2.studentid = s1.id) > 1
       THEN 'Multiple races specified'
+      WHEN s1.FedRaceDecline = 1
+      THEN 'Declined Race'
       ELSE 'Not Specified'
       END fedrace
     , CASE
@@ -35,9 +37,11 @@
 		LEFT JOIN ps.schools s3
 		ON s1.schoolid = s3.school_number
 		WHERE (s1.ethnicity IS NULL
-      OR (SELECT COUNT(*)
+      OR ((SELECT COUNT(*)
         FROM ps.studentrace s2
         WHERE s2.studentid = s1.id)=0
+  AND s1.fedracedecline != 1
+  )
 	~[if.~[displaypref:PowerTools-Hispanic-Only-Qualifies]<1]
       OR s1.fedethnicity NOT IN (0,1,2))
 	 [else]
@@ -59,16 +63,16 @@
     ORDER BY s1.lastfirst
     , s1.dcid
 	]
-{
+  {
     "dcid" : "~(s1.dcid)",
     "studentid" : "~(s1.id)",
-		"student" : "~(s1.lastfirst)",
-		"ethnicity" : "~(s1.ethnicity)",
-		"race" : "~(s2.race)",
-		"fedEthnicity" : "~(s1.Fedethnicity)",
-		"schoolName" : "~(s3.name)"
-},
+    "student" : "~(s1.lastfirst)",
+	"ethnicity" : "~(s1.ethnicity)",
+	"race" : "~(s2.race)",
+	"fedEthnicity" : "~(s1.Fedethnicity)",
+	"schoolName" : "~(s3.name)"
+  },
 [/tlist_sql]
-{}
+  {}
 ]}
 

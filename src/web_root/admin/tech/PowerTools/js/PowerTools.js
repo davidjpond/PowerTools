@@ -82,7 +82,6 @@ var powerTools = {
     $j('#wizardLink').html(null);
     powerTools.loadReport();
   },
-  // TODO Attempt to refresh data without sending a new request
   enableFilter: function () {
     if ($j('#filterdata').length === 0) {
       $j('#top_container').append('<br><span id="filterdata">' +
@@ -291,6 +290,9 @@ var powerTools = {
         },
         DDASection: function (elCell, oRecord, oColumn, oData) {
           powerTools.ddaLink(elCell, oRecord, oData, '003');
+        },
+        DDASchoolCourse: function (elCell, oRecord, oColumn, oData) {
+          powerTools.ddaLink(elCell, oRecord, oData, '153');
         },
         DDASpEnrollments: function (elCell, oRecord, oColumn, oData) {
           powerTools.ddaLink(elCell, oRecord, oData, '041');
@@ -610,17 +612,17 @@ var powerTools = {
         if (oRequest) {
           oRequest = oRequest.toLowerCase();
           var keys = [];
-          $j(powerTools.reportData.columns).each(function(index,result) {
+          $j(powerTools.reportData.columns).each(function (index, result) {
             keys.push(result.key);
           });
           for (i = 0, l = powerTools.dataSet.length; i < l; ++i) {
-            for (var k=0;k<keys.length;k++) {
+            for (var k = 0; k < keys.length; k++) {
               var keyitem = keys[k],
                 checkVal = powerTools.dataSet[i][keyitem].toString().toLowerCase();
               if (checkVal.length === 10 && checkVal.indexOf('-') === 4 &&
                 new Date(checkVal).toLocaleDateString() !== 'Invalid Date') {
                 checkVal = new Date(checkVal);
-                checkVal.setDate(checkVal.getDate()+1);
+                checkVal.setDate(checkVal.getDate() + 1);
                 checkVal = checkVal.toLocaleDateString();
               }
               if (!checkVal.indexOf(oRequest)) {
@@ -825,8 +827,9 @@ var powerTools = {
   },
   clickSelectStudents: function (method) {
     loadingDialog();
+    var curYearSelected = $j('[title="Years Selected"]').val();
     $j.getJSON('json/' + powerTools.dataOptions.reportid +
-      '.json.html?curyearonly=" + powerTools.dataOptions.curyearonly', function (result) {
+      '.json?curyearonly=' + curYearSelected, function (result) {
       //noinspection JSUnresolvedVariable
       $j.each(result.ResultSet, function () {
         //noinspection JSUnresolvedVariable
@@ -3366,6 +3369,50 @@ var powerTools = {
         wizardLink: 1
       };
     },
+    OrphanedSchoolCourse: function () {
+      var schoolOption;
+      if (powerTools.dataOptions.schoolid === 0) {
+        schoolOption = ' or school';
+      } else {
+        schoolOption = '';
+      }
+
+      powerTools.reportData = {
+        title: 'Orphaned School_Course Records',
+        header: 'Orphaned School_Course Records in ' + powerTools.reportOptions.schoolName,
+        info: ('This report selects any School_Course Record where the course' + schoolOption +
+        ' does not exist.<p>Selecting a record will take you to the record in Direct Database ' +
+        powerTools.reportOptions.ddaAccess + '.'),
+        fields: ['dcid', 'id', 'courseId', 'schoolName', 'courseName'],
+        columns: [{
+          key: 'id',
+          label: 'ID',
+          minWidth: 50,
+          sortable: true,
+          formatter: 'DDASchoolCourse'
+        }, {
+          key: 'courseId',
+          label: 'Course ID',
+          minWidth: 50,
+          sortable: true
+        }, {
+          key: 'schoolName',
+          label: 'School Name',
+          minWidth: 200,
+          sortable: true,
+          formatter: 'SchoolExist'
+        }, {
+          key: 'courseName',
+          label: 'Course Name',
+          minWidth: 200,
+          sortable: true,
+          formatter: 'DoesNotExist'
+        }],
+        template: powerTools.templateNoCY(),
+        sortKey: 'id',
+        wizardLink: 1
+      };
+    },
     OrphanedSpEnrollments: function () {
       var schoolOption;
       if (powerTools.dataOptions.schoolid === 0) {
@@ -5577,6 +5624,55 @@ var powerTools = {
         }
       };
     },
+    // TODO Finish OrphanedSchoolCourse wizard
+    OrphanedSchoolCourse: function () {
+      var schoolOption;
+      if (powerTools.dataOptions.schoolid === 0) {
+        schoolOption = 'or school ';
+      } else {
+        schoolOption = '';
+      }
+
+      powerTools.wizardData = {
+        title: 'Orphaned School_Course Wizard',
+        name: 'Orphaned School_Course',
+        header: 'Removing orphaned School_Course records in ' + powerTools.dataOptions.schoolname,
+        info: 'Use this wizard to remove orphaned School_Course Records. This process will delete all School_Course ' +
+        'records where the course ' + schoolOption + 'does not exist, based off the options selected.',
+        options: {
+          checkboxes: [
+            {
+              id: 'NoCourse',
+              text: 'Course does not exist'
+            },
+            {
+              id: 'NoSchool',
+              text: 'School does not exist'
+            }
+          ]
+        },
+        countRecords: function () {
+          var noCourse = $j('#NoCourse').is(':checked'),
+            noSchool = $j('#NoSchool').is(':checked');
+          $j(powerTools.dataSet).each(function (index, record) {
+            if (
+              (noCourse === true && record.courseName === 'Course does not exist') ||
+              (noSchool === true && record.schoolName === '')
+            ) {
+              record.flaggedrecord = 1;
+            } else {
+              record.flaggedrecord = 0;
+            }
+          });
+          powerTools.countWizardResults();
+        },
+        buttonText: 'Remove Orphaned School_Courses',
+        action: function () {
+          powerTools.currentRecord = 0;
+          powerTools.drDelete('153', 'dcid');
+        }
+      };
+    },
     OrphanedSpEnrollments: function () {
       var schoolOption;
       if (powerTools.dataOptions.schoolid === 0) {
@@ -5956,7 +6052,8 @@ var powerTools = {
   },
   loadWizardPage: function () {
     $j('#bcReportName').text(powerTools.wizardData.title);
-    $j('#reportInfo').html('<p>' + powerTools.wizardData.info + '</p>');
+    $j('#reportInfo').html('<p>' + powerTools.wizardData.info + '<p>In order to ensure the entegrity of your data, ' +
+      'always make a datapump backup prior to running this wizard.');
     $j('h1').text(powerTools.wizardData.header);
     $j('#bottom_container').html('<span id="recordcount">0</span> record(s) selected<div class="button-row">' +
       '<button id="btnSubmit" disabled="disabled"></button>' +

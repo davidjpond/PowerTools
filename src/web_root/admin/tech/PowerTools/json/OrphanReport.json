@@ -30,6 +30,10 @@
 "reportName" : "OrphanedReenrollments"
 },
 {
+  "report" : "Orphaned School_Course Records",
+          "reportName" : "OrphanedSchoolCourse"
+},
+{
 "report" : "Orphaned Section Records",
 "reportName" : "OrphanedSection"
 },

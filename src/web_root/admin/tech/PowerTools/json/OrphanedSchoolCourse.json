@@ -1,0 +1,29 @@
+{
+  "ResultSet": [
+~[tlist_sql;
+SELECT sc.dcid, sc.id
+, sc.courseid
+, s.name
+, CASE
+WHEN c.course_number IS NULL
+THEN 'Course does not exist'
+ELSE c.course_number
+END coursename
+FROM school_course sc
+LEFT OUTER JOIN courses c
+ON sc.courseid = c.id
+LEFT OUTER JOIN Schools s
+ON sc.schoolid = s.school_number
+WHERE c.course_number IS NULL
+OR s.name IS NULL
+]
+{
+"dcid" : "~(c1.dcid)",
+"id" : "~(c1.id)",
+"courseId" : "~(s2.course_section)",
+"schoolName" : "~(s2.course_sectionsort)",
+"courseName" : "~(t1.lastfirst)"
+},
+[/tlist_sql]
+{}
+]}
