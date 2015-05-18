@@ -1,0 +1,31 @@
+{
+  "ResultSet": [
+    ~[tlist_sql;
+      SELECT st.id
+        , st.teacherid teacherid
+        , t.lastfirst
+        , st.sectionid sectionid
+        , CASE
+          WHEN s.course_number IS NOT NULL
+          THEN s.course_number || '.' || s.section_number
+          ELSE 'Section does not exist'
+        END coursesection
+      FROM SectionTeacher st
+      LEFT OUTER JOIN sections s
+      ON st.sectionid = s.id
+      LEFT OUTER JOIN teachers t
+      ON st.teacherid = t.id
+      WHERE t.lastfirst IS NULL
+      OR s.course_number IS NULL
+    ]
+    {
+      "id" : "~(st.id)",
+      "teacherId" : "~(st.teacherid)",
+      "teacherName" : "~(t.lastfirst)",
+      "sectionId" : "~(st.sectionid)",
+      "courseSection" : "~(st.courseNumber)"
+    },
+    [/tlist_sql]
+    {}
+  ]
+}

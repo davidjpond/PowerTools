@@ -16,6 +16,9 @@ LEFT OUTER JOIN Schools s
 ON sc.schoolid = s.school_number
 WHERE c.course_number IS NULL
 OR s.name IS NULL
+~[if.district.office]
+OR s.school_number = 999999
+            [/if.district.office]
 ]
 {
 "dcid" : "~(c1.dcid)",

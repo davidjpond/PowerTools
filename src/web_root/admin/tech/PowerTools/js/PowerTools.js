@@ -90,6 +90,7 @@ var powerTools = {
     }
   },
   loadReport: function () {
+    powerTools.dataOptions.searchString = '';
     if (powerTools.dataOptions.ddaRedirect === 'on') {
       powerTools.reportOptions.ddaAccess =
         'Access, where the invalid data can be corrected or the record may be deleted';
@@ -255,6 +256,9 @@ var powerTools = {
         CourseSection: function (elCell, oRecord) {
           var courseNumber = oRecord.getData('courseNumber'), sectionNumber = oRecord.getData('sectionNumber');
           elCell.innerHTML = courseNumber + '.' + sectionNumber;
+        },
+        CourseSectionExist: function (elCell, oRecord, oColumn, oData) {
+          powerTools.existCheck(elCell, oRecord, oData, 'sectionId', 'Section ID');
         },
         EditSectionLink: function (elCell, oRecord) {
           var courseNumber = oRecord.getData('courseNumber'),
@@ -515,6 +519,16 @@ var powerTools = {
             elCell.innerHTML = school;
           }
         },
+        SchoolExistNoGradStudents: function (elCell, oRecord) {
+          var school = oRecord.getData('schoolName');
+          if (!school) {
+            elCell.innerHTML = '<span class="errorField">School number ' + schoolNumber + ' does not exist</span>';
+          } else if (school === 'Graduated Students') {
+            elCell.innerHTML = '<span class="errorField">Graduated Students</span>';
+          } else {
+            elCell.innerHTML = school;
+          }
+        },
         SectionTermExist: function (elCell, oRecord) {
           var termId1 = oRecord.getData('schoolTermId'), termId2 = oRecord.getData('sectionTermId');
           if (!termId1) {
@@ -606,19 +620,23 @@ var powerTools = {
       myDataSource.doBeforeCallback = function (oRequest, oFullResponse, oParsedResponse) {
         oParsedResponse.results.pop();
         powerTools.dataSet = oParsedResponse.results || [];
-        var filtered = [],
+
+        var data = oParsedResponse.results || [],
+          filtered = [],
           i, l;
 
         if (oRequest) {
+          powerTools.dataOptions.searchString = $j('#filter').val();
+          powerTools.dataSet = [];
           oRequest = oRequest.toLowerCase();
           var keys = [];
           $j(powerTools.reportData.columns).each(function (index, result) {
             keys.push(result.key);
           });
-          for (i = 0, l = powerTools.dataSet.length; i < l; ++i) {
+          for (i = 0, l = data.length; i < l; ++i) {
             for (var k = 0; k < keys.length; k++) {
               var keyitem = keys[k],
-                checkVal = powerTools.dataSet[i][keyitem].toString().toLowerCase();
+                checkVal = data[i][keyitem].toString().toLowerCase();
               if (checkVal.length === 10 && checkVal.indexOf('-') === 4 &&
                 new Date(checkVal).toLocaleDateString() !== 'Invalid Date') {
                 checkVal = new Date(checkVal);
@@ -626,7 +644,8 @@ var powerTools = {
                 checkVal = checkVal.toLocaleDateString();
               }
               if (!checkVal.indexOf(oRequest)) {
-                filtered.push(powerTools.dataSet[i]);
+                filtered.push(data[i]);
+                powerTools.dataSet.push(data[i]);
                 break;
               }
             }
@@ -639,19 +658,21 @@ var powerTools = {
       };
 
       powerTools.reportData.updateFilter = function () {
-        var state = myDataTable.getState();
-        loadingDialog();
-        state.sortedBy = {
-          key: powerTools.reportData.sortKey,
-          dir: YAHOO.widget.DataTable.CLASS_ASC
-        };
-        // TODO Attempt to refresh data without sending a new request
-        myDataSource.sendRequest(YAHOO.util.Dom.get('filter').value, {
-          success: myDataTable.onDataReturnInitializeTable,
-          failure: myDataTable.onDataReturnInitializeTable,
-          scope: myDataTable,
-          argument: state
-        });
+        if ($j('#filter').val() !== powerTools.dataOptions.searchString) {
+          var state = myDataTable.getState();
+          loadingDialog();
+          state.sortedBy = {
+            key: powerTools.reportData.sortKey,
+            dir: YAHOO.widget.DataTable.CLASS_ASC
+          };
+          // TODO Attempt to refresh data without sending a new request
+          myDataSource.sendRequest(YAHOO.util.Dom.get('filter').value, {
+            success: myDataTable.onDataReturnInitializeTable,
+            failure: myDataTable.onDataReturnInitializeTable,
+            scope: myDataTable,
+            argument: state
+          });
+        }
       };
       return {
         oDS: myDataSource,
@@ -827,22 +848,17 @@ var powerTools = {
   },
   clickSelectStudents: function (method) {
     loadingDialog();
-    var curYearSelected = $j('[title="Years Selected"]').val();
-    $j.getJSON('json/' + powerTools.dataOptions.reportid +
-      '.json?curyearonly=' + curYearSelected, function (result) {
+     $j.each(powerTools.dataSet, function () {
       //noinspection JSUnresolvedVariable
-      $j.each(result.ResultSet, function () {
+      if (this.dcid) {
+        //noinspection JSUnresolvedVariable,HtmlUnknownTarget
+        $j('#StudentList').append('<li><a target="_top" href="/admin/students/home.html?frn=001' + this.dcid +
+          '">' + this.student + '</a></li>');
         //noinspection JSUnresolvedVariable
-        if (this.dcid) {
-          //noinspection JSUnresolvedVariable,HtmlUnknownTarget
-          $j('#StudentList').append('<li><a target="_top" href="/admin/students/home.html?frn=001' + this.dcid +
-            '">' + this.student + '</a></li>');
-          //noinspection JSUnresolvedVariable
-          $j('#studentSelection').append('<input type="hidden" value="' + this.studentid + '"/>');
-        }
-      });
-      powerTools.selectStudents(method);
+        $j('#studentSelection').append('<input type="hidden" value="' + this.studentid + '"/>');
+      }
     });
+    powerTools.selectStudents(method);
   },
   selectStudents: function (action) {
     var curSelect = $j.unique($j('input:hidden').map(function () {
@@ -3369,6 +3385,37 @@ var powerTools = {
         wizardLink: 1
       };
     },
+    // TODO Fix CourseSectionExist format on this report
+    // TODO Add CourseSection Wizard to delete records
+    OrphanedSectionTeacher: function () {
+      powerTools.reportData = {
+        title: 'Orphaned SectionTeacher Records',
+        header: 'Orphaned SectionTeacher Records in All Schools',
+        info: ('This report selects any SectionTeacher Record where the section or teacher does not exist.'),
+        fields: ['id', 'teacherId', 'teacherName', 'sectionId', 'courseSection'],
+        columns: [{
+          key: 'id',
+          label: 'ID',
+          minWidth: 50,
+          sortable: true
+        }, {
+          key: 'teacherName',
+          label: 'Teacher Name',
+          minWidth: 200,
+          sortable: true,
+          formatter: 'TeacherExist'
+        }, {
+          key: 'courseSection',
+          label: 'Course.Section',
+          minWidth: 200,
+          sortable: true,
+          formatter: 'CourseSectionExist'
+        }],
+        template: powerTools.templateNoCY(),
+        sortKey: 'id',
+        wizardLink: 1
+      };
+    },
     OrphanedSchoolCourse: function () {
       var schoolOption;
       if (powerTools.dataOptions.schoolid === 0) {
@@ -3400,7 +3447,7 @@ var powerTools = {
           label: 'School Name',
           minWidth: 200,
           sortable: true,
-          formatter: 'SchoolExist'
+          formatter: 'SchoolExistNoGradStudents'
         }, {
           key: 'courseName',
           label: 'Course Name',
@@ -5624,7 +5671,6 @@ var powerTools = {
         }
       };
     },
-    // TODO Finish OrphanedSchoolCourse wizard
     OrphanedSchoolCourse: function () {
       var schoolOption;
       if (powerTools.dataOptions.schoolid === 0) {
@@ -5647,7 +5693,7 @@ var powerTools = {
             },
             {
               id: 'NoSchool',
-              text: 'School does not exist'
+              text: 'School does not exist, or is Graduated Students'
             }
           ]
         },
@@ -5657,7 +5703,7 @@ var powerTools = {
           $j(powerTools.dataSet).each(function (index, record) {
             if (
               (noCourse === true && record.courseName === 'Course does not exist') ||
-              (noSchool === true && record.schoolName === '')
+              (noSchool === true && (record.schoolName === '' || record.schoolName === 'Graduated Students'))
             ) {
               record.flaggedrecord = 1;
             } else {
