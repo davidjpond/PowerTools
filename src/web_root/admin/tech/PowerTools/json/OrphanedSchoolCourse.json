@@ -3,6 +3,7 @@
 ~[tlist_sql;
 SELECT sc.dcid, sc.id
 , sc.courseid
+        , sc.schoolid
 , s.name
 , CASE
 WHEN c.course_number IS NULL
@@ -24,6 +25,7 @@ OR s.school_number = 999999
 "dcid" : "~(c1.dcid)",
 "id" : "~(c1.id)",
 "courseId" : "~(s2.course_section)",
+        "schoolNumber" : "~(sc.schoolid)",
 "schoolName" : "~(s2.course_sectionsort)",
 "courseName" : "~(t1.lastfirst)"
 },

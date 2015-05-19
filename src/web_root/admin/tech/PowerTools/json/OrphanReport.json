@@ -38,10 +38,6 @@
 "reportName" : "OrphanedSection"
 },
 {
-        "report": "Orphaned SectionTeacher Records",
-                "reportName" : "OrphanedSectionTeacher"
-},
-{
 "report" : "Orphaned SpEnrollments Records",
 "reportName" : "OrphanedSpEnrollments"
 },

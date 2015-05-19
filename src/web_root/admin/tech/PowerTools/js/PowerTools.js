@@ -1,7 +1,4 @@
 'use strict';
-var $j = jQuery.noConflict(),
-  loadingDialog = window.loadingDialog,
-  closeLoading = window.closeLoading;
 
 //noinspection JSUnusedGlobalSymbols
 var powerTools = {
@@ -84,6 +81,7 @@ var powerTools = {
   },
   enableFilter: function () {
     if ($j('#filterdata').length === 0) {
+      //noinspection JSUnresolvedFunction
       $j('#top_container').append('<br><span id="filterdata">' +
         'Search Records: <input type="text" id="filter">' +
         '<button onclick="powerTools.reportData.updateFilter()">Search</button></span><br>');
@@ -520,7 +518,8 @@ var powerTools = {
           }
         },
         SchoolExistNoGradStudents: function (elCell, oRecord) {
-          var school = oRecord.getData('schoolName');
+          var school = oRecord.getData('schoolName'),
+            schoolNumber = oRecord.getData('schoolNumber');
           if (!school) {
             elCell.innerHTML = '<span class="errorField">School number ' + schoolNumber + ' does not exist</span>';
           } else if (school === 'Graduated Students') {
@@ -611,7 +610,6 @@ var powerTools = {
 
       //noinspection JSUnresolvedVariable
       myDataSource.responseType = YAHOO.util.XHRDataSource.TYPE_JSON;
-      myDataSource.maxCacheEntries = 4;
       myDataSource.connXhrMode = 'queueRequests';
       myDataSource.responseSchema = {
         resultsList: 'ResultSet',
@@ -665,7 +663,7 @@ var powerTools = {
             key: powerTools.reportData.sortKey,
             dir: YAHOO.widget.DataTable.CLASS_ASC
           };
-          // TODO Attempt to refresh data without sending a new request
+
           myDataSource.sendRequest(YAHOO.util.Dom.get('filter').value, {
             success: myDataTable.onDataReturnInitializeTable,
             failure: myDataTable.onDataReturnInitializeTable,
@@ -848,7 +846,7 @@ var powerTools = {
   },
   clickSelectStudents: function (method) {
     loadingDialog();
-     $j.each(powerTools.dataSet, function () {
+    $j.each(powerTools.dataSet, function () {
       //noinspection JSUnresolvedVariable
       if (this.dcid) {
         //noinspection JSUnresolvedVariable,HtmlUnknownTarget
@@ -1041,7 +1039,6 @@ var powerTools = {
         template: powerTools.templateCY(),
         sortKey: 'date'
       };
-
       if (powerTools.dataOptions.schoolid === 0) {
         powerTools.reportData.header = ('There are no calendar records at the District Office');
       } else {
@@ -2940,7 +2937,6 @@ var powerTools = {
       } else {
         accessType = 'Export';
       }
-
       powerTools.reportData = {
         title: 'Non-Session Attendance',
         header: 'Students with Attendance on Non-Session Days in ' + powerTools.reportOptions.schoolName,
@@ -3167,7 +3163,6 @@ var powerTools = {
       } else {
         schoolOption = '';
       }
-
       powerTools.reportData = {
         title: 'Orphaned Fee_Transaction Records',
         header: 'Orphaned Fee_Transaction Records in ' + powerTools.reportOptions.schoolName,
@@ -3214,7 +3209,6 @@ var powerTools = {
       } else {
         powerTools.reportOptions.schoolType = '';
       }
-
       powerTools.reportData = {
         title: 'Orphaned Honor Roll Records',
         header: 'Orphaned HonorRoll Records in ' + powerTools.reportOptions.schoolName,
@@ -3335,7 +3329,6 @@ var powerTools = {
       } else {
         schoolOption = '';
       }
-
       powerTools.reportData = {
         title: 'Orphaned Section Records',
         header: 'Orphaned Section Records in ' + powerTools.reportOptions.schoolName,
@@ -3385,37 +3378,6 @@ var powerTools = {
         wizardLink: 1
       };
     },
-    // TODO Fix CourseSectionExist format on this report
-    // TODO Add CourseSection Wizard to delete records
-    OrphanedSectionTeacher: function () {
-      powerTools.reportData = {
-        title: 'Orphaned SectionTeacher Records',
-        header: 'Orphaned SectionTeacher Records in All Schools',
-        info: ('This report selects any SectionTeacher Record where the section or teacher does not exist.'),
-        fields: ['id', 'teacherId', 'teacherName', 'sectionId', 'courseSection'],
-        columns: [{
-          key: 'id',
-          label: 'ID',
-          minWidth: 50,
-          sortable: true
-        }, {
-          key: 'teacherName',
-          label: 'Teacher Name',
-          minWidth: 200,
-          sortable: true,
-          formatter: 'TeacherExist'
-        }, {
-          key: 'courseSection',
-          label: 'Course.Section',
-          minWidth: 200,
-          sortable: true,
-          formatter: 'CourseSectionExist'
-        }],
-        template: powerTools.templateNoCY(),
-        sortKey: 'id',
-        wizardLink: 1
-      };
-    },
     OrphanedSchoolCourse: function () {
       var schoolOption;
       if (powerTools.dataOptions.schoolid === 0) {
@@ -3423,14 +3385,13 @@ var powerTools = {
       } else {
         schoolOption = '';
       }
-
       powerTools.reportData = {
         title: 'Orphaned School_Course Records',
         header: 'Orphaned School_Course Records in ' + powerTools.reportOptions.schoolName,
         info: ('This report selects any School_Course Record where the course' + schoolOption +
         ' does not exist.<p>Selecting a record will take you to the record in Direct Database ' +
         powerTools.reportOptions.ddaAccess + '.'),
-        fields: ['dcid', 'id', 'courseId', 'schoolName', 'courseName'],
+        fields: ['dcid', 'id', 'courseId', 'schoolNumber', 'schoolName', 'courseName'],
         columns: [{
           key: 'id',
           label: 'ID',

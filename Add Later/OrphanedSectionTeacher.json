@@ -8,7 +8,7 @@
         , CASE
           WHEN s.course_number IS NOT NULL
           THEN s.course_number || '.' || s.section_number
-          ELSE 'Section does not exist'
+          ELSE Null
         END coursesection
       FROM SectionTeacher st
       LEFT OUTER JOIN sections s
