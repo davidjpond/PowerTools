@@ -1,5 +1,4 @@
 'use strict';
-
 //noinspection JSUnusedGlobalSymbols
 var powerTools = {
   reportData: {},
@@ -87,6 +86,10 @@ var powerTools = {
         '<button onclick="powerTools.reportData.updateFilter()">Search</button></span><br>');
     }
   },
+  openLoadingBar: function () {
+    loadingDialog();
+    $j('.ui-widget-overlay').removeClass('ui-widget-overlay');
+  },
   loadReport: function () {
     powerTools.dataOptions.searchString = '';
     if (powerTools.dataOptions.ddaRedirect === 'on') {
@@ -107,8 +110,16 @@ var powerTools = {
     powerTools.loadReportData();
     powerTools.showSelectButtons();
   },
+  detectHeaderState: function() {
+    console.log('detect');
+    if ($j('#btnContMax').attr('class') === 'expanded') {
+      $j('#nav-main,#content-main').css('top','32px');
+    } else {
+      $j('#nav-main,#content-main').css('top', '102px');
+    }
+  },
   loadReportData: function () {
-    loadingDialog();
+    powerTools.openLoadingBar();
     $j('#ptHomeLink').html('<a onClick="powerTools.loadHomePage();">' +
       'PowerTools</a> &gt;');
     $j('#bcReportName,title').text(powerTools.reportData.title);
@@ -130,6 +141,9 @@ var powerTools = {
         });
       }
     });
+    setTimeout(function() {
+      powerTools.detectHeaderState()
+    },200);
   },
   loadHomePage: function () {
     $j.getJSON('json/changelog.json', function (result) {
@@ -658,7 +672,7 @@ var powerTools = {
       powerTools.reportData.updateFilter = function () {
         if ($j('#filter').val() !== powerTools.dataOptions.searchString) {
           var state = myDataTable.getState();
-          loadingDialog();
+          powerTools.openLoadingBar();
           state.sortedBy = {
             key: powerTools.reportData.sortKey,
             dir: YAHOO.widget.DataTable.CLASS_ASC
@@ -833,7 +847,7 @@ var powerTools = {
         }
       },
       onChange: function () {
-        loadingDialog();
+        powerTools.openLoadingBar();
         powerTools.dataOptions.curYearSelect = (this.select.value);
         powerTools.reloadReport(this.select.value);
       },
@@ -845,7 +859,7 @@ var powerTools = {
     };
   },
   clickSelectStudents: function (method) {
-    loadingDialog();
+    powerTools.openLoadingBar();
     $j.each(powerTools.dataSet, function () {
       //noinspection JSUnresolvedVariable
       if (this.dcid) {
@@ -6023,7 +6037,7 @@ var powerTools = {
     }
   },
   drDelete: function (tableNumber, referenceName) {
-    loadingDialog();
+    powerTools.openLoadingBar();
     if (powerTools.dataSet[powerTools.currentRecord].flaggedrecord === 1) {
       $j.ajax({
         url: '/admin/tech/usm/home.html?ac=prim&DR-' + tableNumber +
@@ -6167,8 +6181,9 @@ $j(function () {
     powerTools.selectOptions();
   });
 }).ajaxStart(function () {
-  loadingDialog();
+  powerTools.openLoadingBar();
 }).ajaxStop(function () {
   powerTools.activateLinks('#paginated');
   closeLoading();
+
 });

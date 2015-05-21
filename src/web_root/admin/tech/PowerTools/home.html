@@ -108,6 +108,12 @@
       userid: "~[x:userid]"
     };
     powerTools.loadHomePage();
+    setTimeout(function() {
+      $j('#btnContMax').click(function () {
+        powerTools.detectHeaderState();
+      });
+    }, 500);
+
   </script>
 </body>
 </html><!-- non framed -->
