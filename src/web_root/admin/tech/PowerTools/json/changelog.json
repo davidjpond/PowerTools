@@ -3,7 +3,7 @@
     "version" : "4.2.0",
     "changes" : [
       {
-        "item" : "Removed the page disabling when the loading bar is displayed. This allows links to be active while reports are loading",
+        "item" : "Removed the page disabling when the loading bar is displayed. This allows links to be active while reports are loading"
       },
       {
         "item" : "Adjusted the left navigation menu to be scrollable instead of scrolling with the page"
