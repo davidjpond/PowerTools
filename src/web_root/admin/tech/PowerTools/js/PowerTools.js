@@ -111,7 +111,6 @@ var powerTools = {
     powerTools.showSelectButtons();
   },
   detectHeaderState: function() {
-    console.log('detect');
     if ($j('#btnContMax').attr('class') === 'expanded') {
       $j('#nav-main,#content-main').css('top','32px');
     } else {
