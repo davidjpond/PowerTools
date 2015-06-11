@@ -51,26 +51,9 @@
 
     ~[wc:admin_footer_frame_css]
   <script type="text/javascript">
-    powerTools.dataOptions = {
-      curyearonly: "~[displaypref:PowerTools-curyearonly-U~[x:userid]]",
-      curYearSelect: "",
-      ddaRedirect: "~[displaypref:PowerTools-Redirect-Orphan-DDA]",
-      ddaUserPerms: '~[if.security.pagemod=/admin/tech/usm/home.html]on[else]off[/if]',
-      expandMenu: '~[displaypref:PowerTools-navigation-menu-expanded-U~[x:userid]]',
-      frn: '~[gpv:frn]',
-      hideBlankGrades: '~[displaypref:PowerTools-Hide-Blank-Stored-Grades]',
-      hideDupGrades: '~[displaypref:PowerTools-Hide-Duplicate-Stored-Grades]',
-      hidePaddedSchool: '~[displaypref:PowerTools-Hide-Padded-School-Enrollment-Report]',
-      hideSpEnrollments: '~[displaypref:PowerTools-Hide-SPEnrollments-Reports]',
-      hispaniconly: "~[displaypref:PowerTools-Hispanic-Only-Qualifies]",
-      maxLines: "100",
-      reportid: "~(gpv.reportname)",
-      schoolid: ~(v.curschoolid),
-      schoolname: "~[schoolname]",
-      schoolNetPrep: '~[displaypref:PowerTools-Enable-SchoolNet-Prep]',
-      userid: "~[x:userid]"
-    };
-    powerTools.initReport('StudentReport');
+    $j(function() {
+      powerTools.initializeStudentPage();
+    });
   </script>
 </body>
 </html><!-- end right frame -->

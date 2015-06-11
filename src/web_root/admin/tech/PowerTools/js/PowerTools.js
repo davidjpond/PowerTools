@@ -58,6 +58,24 @@ var powerTools = {
       });
     }
   },
+  initializeHomePage: function () {
+    $j.getJSON('json/dataOptions.json', function (result) {
+      powerTools.dataOptions = result;
+      powerTools.loadHomePage();
+      setTimeout(function () {
+        $j('#btnContMax').click(function () {
+          powerTools.detectHeaderState();
+        });
+      }, 500);
+    });
+  },
+  initializeStudentPage: function () {
+    loadingDialog();
+    $j.getJSON('json/dataOptions.json', function (result) {
+      powerTools.dataOptions = result;
+      powerTools.initReport('StudentReport');
+    });
+  },
   activateLinks: function (parentDiv) {
     $j(parentDiv + ' .ptreportlink').click(function () {
       powerTools.initReport(this.id);
@@ -70,6 +88,7 @@ var powerTools = {
     powerTools.loadReport();
   },
   initReport: function (report) {
+    closeLoading();
     if (!report) {
       report = powerTools.dataOptions.reportid;
     }
@@ -87,8 +106,10 @@ var powerTools = {
     }
   },
   openLoadingBar: function () {
+    var offsets = $j('#content-main').offset(),
+      headerHeight = $j('#container').height();
     loadingDialog();
-    $j('.ui-widget-overlay').removeClass('ui-widget-overlay');
+    $j('.ui-widget-overlay').css({"left":offsets.left,"top":headerHeight});
   },
   loadReport: function () {
     powerTools.dataOptions.searchString = '';
@@ -110,9 +131,9 @@ var powerTools = {
     powerTools.loadReportData();
     powerTools.showSelectButtons();
   },
-  detectHeaderState: function() {
+  detectHeaderState: function () {
     if ($j('#btnContMax').attr('class') === 'expanded') {
-      $j('#nav-main,#content-main').css('top','32px');
+      $j('#nav-main,#content-main').css('top', '32px');
     } else {
       $j('#nav-main,#content-main').css('top', '102px');
     }
@@ -140,9 +161,9 @@ var powerTools = {
         });
       }
     });
-    setTimeout(function() {
-      powerTools.detectHeaderState()
-    },200);
+    setTimeout(function () {
+      powerTools.detectHeaderState();
+    }, 200);
   },
   loadHomePage: function () {
     $j.getJSON('json/changelog.json', function (result) {
@@ -6175,6 +6196,11 @@ YAHOO.widget.DataTable.prototype.getTdEl = function (cell) {
 };
 
 $j(function () {
+  if (document.location.href.indexOf('admin/tech/PowerTools/ptstudentreport.html') === -1) {
+    powerTools.initializeHomePage();
+  } else {
+    powerTools.initializeStudentPage();
+  }
   powerTools.curYearOption();
   $j('#top_container,#bottom_container').bind('DOMNodeInserted DOMSubtreeModified DOMNodeRemoved', function () {
     powerTools.selectOptions();
@@ -6184,5 +6210,4 @@ $j(function () {
 }).ajaxStop(function () {
   powerTools.activateLinks('#paginated');
   closeLoading();
-
 });

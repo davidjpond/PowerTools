@@ -10,7 +10,8 @@ module.exports = function () {
       ids: false,
       floats: false,
       'box-model': false,
-      'font-sizes': false
+      'font-sizes': false,
+      important: false
     },
     src: [
         prefs.options.sourcePath + 'web_root/**/*.css',
