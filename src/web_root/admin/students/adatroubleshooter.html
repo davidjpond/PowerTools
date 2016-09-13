@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<!-- start right frame -->
+<head>
+  <title>ADA Troubleshooter</title>
+  ~[wc:commonscripts]
+  <link href="/images/css/screen.css" rel="stylesheet" media="screen">
+  <link href="/images/css/print.css" rel="stylesheet" media="print">
+  <script>
+    var powerTools = powerTools || {
+        adaTroubleshooter: {
+          studentCompletionCount: 0,
+          dateEntered: '',
+          studentId: '~(id)',
+          studentFrn: '~(frn)',
+          studentInfo: {},
+          fteInfo: {},
+          calendarInfo: {},
+          submitDate: function () {
+            $j('#data').html(null);
+            powerTools.adaTroubleshooter.studentCompletionCount = 0;
+            powerTools.adaTroubleshooter.dateEntered = $j('#dateentered').val();
+            powerTools.adaTroubleshooter.retrieveStudentInfo();
+            powerTools.adaTroubleshooter.retrieveFTEInfo();
+            powerTools.adaTroubleshooter.retrieveCalendarInfo();
+          },
+          checkCompletionCount: function () {
+            powerTools.adaTroubleshooter.studentCompletionCount++;
+            if (powerTools.adaTroubleshooter.studentCompletionCount === 3) {
+              powerTools.adaTroubleshooter.displayResults();
+            }
+          },
+          retrieveStudentInfo: function () {
+            $j.getJSON('/admin/tech/PowerTools/json/adaTroubleshooter/studentinfo.json?frn=' + powerTools.adaTroubleshooter.studentFrn + '&dateentered=' + powerTools.adaTroubleshooter.dateEntered, function (result) {
+              powerTools.adaTroubleshooter.studentInfo = result;
+            }).done(function () {
+              powerTools.adaTroubleshooter.checkCompletionCount();
+            });
+          },
+          retrieveFTEInfo: function () {
+            $j.getJSON('/admin/tech/PowerTools/json/adaTroubleshooter/fteinfo.json?frn=' + powerTools.adaTroubleshooter.studentFrn + '&dateentered=' + powerTools.adaTroubleshooter.dateEntered, function (result) {
+              powerTools.adaTroubleshooter.fteInfo = result;
+            }).done(function () {
+              powerTools.adaTroubleshooter.checkCompletionCount();
+            });
+          },
+          retrieveCalendarInfo: function () {
+            $j.getJSON('/admin/tech/PowerTools/json/adaTroubleshooter/calendarinfo.json?frn=' + powerTools.adaTroubleshooter.studentFrn + '&dateentered=' + powerTools.adaTroubleshooter.dateEntered, function (result) {
+              powerTools.adaTroubleshooter.calendarInfo = result;
+            }).done(function () {
+              powerTools.adaTroubleshooter.checkCompletionCount();
+            })
+          },
+          displayStudentInfo: function () {
+            $j('#data').append(
+              '<table class="grid">' +
+              '<thead>' +
+              '<tr><th colspan="2">Student Information</th></tr>' +
+              '</thead>' +
+              '<tbody>' +
+              '<tr><td>School Enrollment Date</td><td>' + powerTools.adaTroubleshooter.studentInfo.entrydate + '</td></tr>' +
+              '<tr><td>School Exit Date</td><td>' + powerTools.adaTroubleshooter.studentInfo.exitdate + '</td></tr>' +
+              '<tr><td>Track</td><td>' + powerTools.adaTroubleshooter.studentInfo.track + '</td></tr>' +
+              '<tr><td>Membership Share</td><td>' + powerTools.adaTroubleshooter.studentInfo.membershipshare + '</td></tr>' +
+              '</tbody>' +
+              '</table>'
+            );
+          },
+          displayFTEInfo: function () {
+            $j('#data').append(
+              '<table class="grid">' +
+              '<thead>' +
+              '<tr><th colspan="2">FTE Information</th></tr>' +
+              '</thead>' +
+              '<tbody>' +
+              '<tr><td>FTE Name</td><td>' + powerTools.adaTroubleshooter.fteInfo.name + '</td></tr>' +
+              '<tr><td>FTE YearID</td><td>' + powerTools.adaTroubleshooter.fteInfo.yearid + '</td></tr>' +
+              '<tr><td>Default Attendance Mode</td><td>' + powerTools.adaTroubleshooter.fteInfo.attmodecode + '</td></tr>' +
+              '<tr><td>Default Attendance Conversion</td><td>' + powerTools.adaTroubleshooter.fteInfo.conversionmodecode + '</td></tr>' +
+              '</tbody>' +
+              '</table>'
+            );
+          },
+          displayCalendarInfo: function () {
+            $j('#data').append(
+              '<table class="grid">' +
+              '<thead>' +
+              '<tr><th colspan="2">Calendar Information</th></tr>' +
+              '</thead>' +
+              '<tbody>' +
+              '<tr><td>Date</td><td>' + powerTools.adaTroubleshooter.calendarInfo.date + '</td></tr>' +
+              '<tr><td>Day</td><td>' + powerTools.adaTroubleshooter.calendarInfo.day + '</td></tr>' +
+              '<tr><td>Bell Schedule</td><td>' + powerTools.adaTroubleshooter.calendarInfo.bellschedule + '</td></tr>' +
+              '<tr><td>Attendance Conversion</td><td>' + powerTools.adaTroubleshooter.calendarInfo.attendanceconversion + '</td></tr>' +
+              '<tr><td>Day In Session</td><td>' + powerTools.adaTroubleshooter.calendarInfo.dayinsession + '</td></tr>' +
+              '<tr><td>Membership Value</td><td>' + powerTools.adaTroubleshooter.calendarInfo.membershipvalue + '</td></tr>' +
+              '<tr><td>Track in session</td><td>' + powerTools.adaTroubleshooter.calendarInfo.trackinsession + '</td></tr>' +
+              '</tbody>'
+            )
+          },
+          displayResults: function () {
+            powerTools.adaTroubleshooter.displayStudentInfo();
+            powerTools.adaTroubleshooter.displayFTEInfo();
+            powerTools.adaTroubleshooter.displayCalendarInfo();
+          }
+        }
+
+      };
+    $j(document).ready(function () {
+      $j('#dateselectsubmit').click(function () {
+        powerTools.adaTroubleshooter.submitDate();
+      })
+    });
+  </script>
+</head>
+
+<body>
+
+~[wc:admin_header_frame_css]<!-- breadcrumb start --><a href="/admin/home.html" target="_top">~[text:psx.html.admin_students.honorroll.start_page]</a>
+&gt; <a href="home.html?selectstudent=nosearch" target="_top">~[text:psx.html.admin_students.honorroll.student_selection]</a>
+&gt;~[text:psx.html.admin_students.honorroll.honor_roll1]<!-- breadcrumb end -->~[wc:admin_navigation_frame_css]
+
+~[wc:title_student_begin_css]ADA Troubleshooter~[wc:title_student_end_css]
+<p>This utility will help to determine how Average Daily Attendance and Membership are calculated, should the attendance
+  views be updated. If the data your are displaying on this page does not match the ADA/ADM reports, try <a
+    href="/admin/reports_engine/report_w_param.html?ac=reports_get_using_ID;repo_ID=ATT_RefreshPremierMembrDefaults">refreshing
+    the Premier Attendance Views Data</a>.</p>
+<!-- start of content and bounding box -->
+<div id='Error'></div>
+<div class="box-round">
+  <form name="DataOptions" action="" method="POST">
+    <table class="linkDescList">
+      <colgroup>
+        <col>
+        <col>
+      </colgroup>
+      <thead>
+      <tr>
+        <th>Option</th>
+        <th>Value</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>
+          <label for="dateentered">Date To Troubleshoot</label>
+        </td>
+        <td>
+          <input type="text" class="psDateWidget" name="dateentered" id="dateentered"
+                 value="~[IF.~[gpv:dateselectsubmit]<>""]~[gpv:dateentered][else]~[date][/if]">
+        </td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><input name="dateselectsubmit" id="dateselectsubmit" type="button" value="Retrieve Data"></td>
+      </tr>
+      </tbody>
+    </table>
+  </form>
+  <p id="top_container" style="text-align:center"></p>
+  ~[if.~[gpv:dateselectsubmit]<>""]
+  <div id="data"></div>
+  <div id="output"></div>
+  <div id="sectiondata"></div>
+  <div id="conversiondata"></div>
+  <div id="bellscheduledata"></div>
+</div>
+<br>
+<!-- end of content of bounding box -->
+~[wc:admin_footer_frame_css]
+</body>
+</html><!-- end right frame -->

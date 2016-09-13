@@ -1,0 +1,31 @@
+{
+  ~[tlist_sql;
+  SELECT
+  to_char(entrydate, '~[datetext:mmddyyyy]'),
+  to_char(exitdate, '~[datetext:mmddyyyy]'),
+  track,
+  membershipshare
+  FROM (
+    SELECT entrydate,
+    exitdate,
+    track,
+    membershipshare
+    FROM ps.students
+    WHERE id = ~(id)
+    UNION ALL
+    SELECT entrydate,
+    exitdate,
+    track,
+    membershipshare
+    FROM ps.reenrollments
+    WHERE studentid = ~(id)
+  )
+  WHERE entrydate <= to_date('~[gpv:dateentered]','~[datetext:mmddyyyy]')
+  AND exitdate > to_date('~[gpv:dateentered]','~[datetext:mmddyyyy]')
+  ]
+  "entrydate" : "~(entrydate)",
+  "exitdate" : "~(exitdate)",
+  "track" : "~(track)",
+  "membershipshare" : "~(membershipshare)"
+[/tlist_sql]
+}

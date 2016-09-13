@@ -1,0 +1,17 @@
+[
+  ~[tlist_sql;
+SELECT a.name, a.value,
+b.name
+FROM ps.gradescaleitem a
+LEFT JOIN ps.gradescaleitem b
+ON b.id = a.gradescaleid
+WHERE a.gradescaleid =~[gpv:gradeScale]
+]
+{
+  "gradeLabel": "~(a.name)",
+  "gradeValue" : "~(a.value)",
+  "gradeScale": "~(b.name)"
+},
+[/tlist_sql]
+{}
+]
