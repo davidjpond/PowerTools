@@ -1,0 +1,77 @@
+[
+  ~[tlist_sql;
+~[if.~[gpv:calcType]=cumulative]
+SELECT a.termid, a.storecode, a.grade_level, a.course_number, a.grade,
+a.gpa_points, a.percent, a.gpa_addedvalue, a.earnedcrhrs, a.potentialcrhrs,
+a.credit_type, a.excludefromgpa, a.excludefromclassrank, a.excludefromhonorroll, a.dcid, b.section_number, c.credit_hours
+FROM ps.storedgrades a
+LEFT JOIN ps.sections b
+ON a.sectionid = b.id
+LEFT JOIN ps.courses c
+ON b.course_number = c.course_number
+WHERE studentid = ~(id)
+[/if]
+
+~[if.~[gpv:calcType]=projected]
+SELECT a.termid, a.storecode, a.grade_level, a.course_number, a.grade,
+a.gpa_points, a.percent, a.gpa_addedvalue, a.earnedcrhrs, a.potentialcrhrs,
+a.credit_type, a.excludefromgpa, a.excludefromclassrank, a.excludefromhonorroll, a.dcid, b.section_number, c.credit_hours
+FROM ps.storedgrades a
+LEFT JOIN ps.sections b
+ON a.sectionID = b.id
+LEFT JOIN ps.courses c
+ON b.course_number = c.course_number
+WHERE studentid = ~(id)
+[/if]
+
+~[if.~[gpv:calcType]=current]
+SELECT b.termid, a.finalgradename as storecode, b.grade_level, b.course_number, a.grade, e.grade_points,
+a.percent, a.varcredit as gpa_addedvalue, c.credit_hours, c.maxcredit, c.credittype, b.excludefromgpa, b.excludefromclassrank,
+b.excludefromhonorroll, a.dcid, b.section_number, c.credit_hours
+FROM ps.pgFinalGrades a
+LEFT JOIN ps.Sections b
+ON a.sectionid = b.id
+LEFT JOIN ps.courses c
+ON b.course_number = c.course_number
+LEFT JOIN ps.dm_currentgrade d
+ON a.dcid = d.pgfinalgradesdcid
+LEFT JOIN ps.gradescaleitem_backup e
+ON d.gradescaleitemdcid = e.dcid
+WHERE a.studentid=~(id) AND a.finalgradename='~[displayprefschool;curfgname]'
+[/if]
+
+~[if.~[gpv:calcType]=]
+SELECT a.termid, a.storecode, a.grade_level, a.course_number, a.grade,
+a.gpa_points, a.percent, a.gpa_addedvalue, a.earnedcrhrs, a.potentialcrhrs,
+a.credit_type, a.excludefromgpa, a.excludefromclassrank, a.excludefromhonorroll, a.dcid, b.section_number, c.credit_hours
+FROM ps.storedgrades a
+LEFT JOIN ps.sections b
+ON a.sectionid = b.id
+LEFT JOIN ps.courses c
+ON b.course_number = c.course_number
+WHERE studentid = ~(id)
+[/if]
+]
+{
+  "termid" : "~(termid)",
+  "storecode" : "~(storecode)",
+  "grade_level" : "~(grade_level)",
+  "course_number" : "~(course_number)",
+  "grade" : "~(grade)",
+  "gpa_points" : "~(e.grade_points)",
+  "percent" : "~(percent)",
+  "gpa_addedvalue" : "~(gpa_addedvalue)",
+  "earnedcrhrs" : "~(credit_hours)",
+  "potentialcrhrs" : "~(maxcredit)",
+  "credittype": "~(credittype)",
+  "querycountgpa" : "~(excludefromgpa)",
+  "queryclassrank" : "~(excludefromclassrank)",
+  "queryhonorroll" : "~(excludefromHonorRoll)",
+  "dcid": "~(a.dcid)",
+  "sectionnumber" : "~(section_number)",
+  "coursepotentialcrhrs" : "~(credit_hours)"
+},
+[/tlist_sql]
+{}
+]
+

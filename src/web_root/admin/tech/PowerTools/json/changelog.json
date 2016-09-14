@@ -1,6 +1,86 @@
 [
   {
-    "version" : "4.2.0",
+    "version" : "5.0.1",
+    "changes" : [
+      {
+        "item": "Corrected the label on the Duplicate Teacher Number report to correctly reflect teachers instead of students"
+      },
+      {
+        "item": "Corrected an issue where a GPA would not display on the GPA Validator if the formula contained carriage returns"
+      },
+      {
+        "item": "Corrected an issue where grades would not display on the GPA Validator if the GPA returned a null calculation value"
+      }
+    ]
+  },
+  {
+    "version" : "5.0.0",
+    "changes" : [
+      {
+        "item": "Added the ADA Troubleshooter to the Students pages"
+      },
+      {
+        "item": "Added the GPA Validation to the Students pages"
+      },
+      {
+        "item": "Corrected an issue where Non-session Attendance records would not delete when using the wizard"
+      },
+      {
+        "item": "Corrected an issue where the Reverse Section Enrollments report displayed the wrong title"
+      },
+      {
+        "item": "Corrected an issue with the Duplicate Gen records report and wizard where duplicates would display that did not factor in other fields used in the Gen table"
+      },
+      {
+        "item" : "Corrected an issue where the wizards would not delete data after PowerSchool 9.2"
+      },
+      {
+        "item": "Removed references to Pearson"
+      },
+      {
+        "item": "Removed the Long Standard Grade report"
+      },
+      {
+        "item": "Removed the Misaligned Standards report"
+      },
+      {
+        "item": "Removed the Orphaned Standards Grades report"
+      },
+      {
+        "item": "Removed the SchoolNet Prep Reporting functionality"
+      },
+      {
+        "item": "Renamed the PowerTools Report in the students pages to the Students Report in the PowerTools section on the student pages"
+      }
+    ]
+  },
+  {
+    "version" : "4.1.3",
+    "changes" : [
+      {
+        "item" : "Corrected an issue where a wizard would display on the home page of PowerTools if the home page is visited after the wizard"
+      },
+      {
+        "item" : "Corrected an issue where the breadcrumb bar would overflow into Powertools either when the window is resized or another plugin moved the breadcrumb bar"
+      },
+      {
+        "item" : "Corrected an issue where the version would display on the right side of the screen instead of centered"
+      },
+      {
+        "item" : "Corrected an issues where the wizards would not remove data in PowerSchool 9.0.2"
+      }
+    ]
+  },
+  {
+    "version" : "4.1.2",
+    "changes" : [
+      {
+        "item" : "Corrected an issue where the wizards would not remove data in PowerSchool 9.0"
+      }
+    ]
+  },
+  {
+    "version" : "4.1.1",
     "changes" : [
       {
         "item" : "Adjusted the page disabling when the loading bar is displayed. This allows links to be active while reports are loading"
@@ -116,7 +196,7 @@
     "version": "3.1.0",
     "changes": [
       {
-        "item": "Removed access to the wizards from Pearson Technical Support agents. These wizards should only be run by the district PowerSchool Administrators after making a backup"
+        "item": "Removed access to the wizards from PowerSchool Technical Support agents. These wizards should only be run by the district PowerSchool Administrators after making a backup"
       },
       {
         "item": "Updated all javascript to be jshint compliant"

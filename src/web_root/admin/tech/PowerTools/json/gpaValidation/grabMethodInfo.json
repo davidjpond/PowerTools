@@ -1,0 +1,25 @@
+{
+  ~[tlist_sql;
+SELECT REPLACE(TRANSLATE(valueT, 'x'||CHR(10)||CHR(13), 'x'), '"', '\"') as valueT
+FROM ps.Gen
+WHERE dcid='~[gpv:dcid]'
+]
+"methodFormula": "~(valueT)",
+[/tlist_sql]
+"methodName": "~([6]name)",
+"calcType": "~([6]value)",
+"queryTerms": "~([6]queryterms)",
+"gradeScale": "~([6]valueli)",
+"queryGrades": "~([6]querygrades)",
+"queryYears": "~([6]queryyears)",
+"queryCreditTypes": "~([6]querycredittypes)",
+"queryCountGpa": "~([6]queryflaggpa)",
+"queryClassRank": "~([6]queryflagclassrank)",
+"queryHonorRoll": "~([6]queryflaghonorroll)",
+"queryPotential": "~([6]queryflagpotcredit)",
+"projectType": "~([6]projwhichgrades)",
+"projectStoreCode": "~([6]projhiststorecode)",
+"projectExclude": "~([6]projexcludeoption)",
+"projectCheckCode": "~([6]projcheckstorecode)",
+"projectCreditOption": "~([6]projcreditoption)"
+}

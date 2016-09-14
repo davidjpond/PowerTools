@@ -23,37 +23,23 @@
   <script src="/admin/tech/PowerTools/js/yui/json/json-min.js"></script>
   <script src="/admin/tech/PowerTools/js/PowerTools.js"></script>
 </head>
-
 <body class="yui-skin-sam">
-
- ~[wc:admin_header_frame_css]<!-- breadcrumb start --><a href="/admin/home.html" target="_top">~[text:psx.html.admin_students.activities.start_page]</a>
-    &gt; <a href="home.html?selectstudent=nosearch" target="_top">~[text:psx.html.admin_students.activities.student_selection]</a>
-    &gt;PowerTools Student Report<!-- breadcrumb end -->~[wc:admin_navigation_frame_css]
-
-    ~[wc:title_student_begin_css]PowerTools Student Report~[wc:title_student_end_css]
-
-    <!-- start of content and bounding box -->
-    <div class="box-round">
-      <div id="reportInfo"></div>
-
-      <div id="wizardLink"></div>
-
-      <div id="top_container" style="text-align:center;"></div>
-
-      <div id="paginated"></div>
-
-      <br>
-
-      <p id="bottom_container" style="text-align:center"></p>
-    </div>
+  ~[wc:admin_header_frame_css]
+  <!-- breadcrumb start --><a href="/admin/home.html" target="_top">~[text:psx.html.admin_students.activities.start_page]</a>&gt; <a href="home.html?selectstudent=nosearch"
+  target="_top">~[text:psx.html.admin_students.activities.student_selection]</a>&gt;PowerTools Student Report
+  <!-- breadcrumb end -->~[wc:admin_navigation_frame_css] ~[wc:title_student_begin_css]PowerTools Student Report~[wc:title_student_end_css]
+  <!-- start of content and bounding box -->
+  <div class="box-round">
+    <div id="reportInfo"></div>
+    <div id="wizardLink"></div>
+    <div id="top_container" style="text-align:center;"></div>
+    <div id="paginated"></div>
     <br>
-    <!-- end of content of bounding box -->
-
-    ~[wc:admin_footer_frame_css]
-  <script type="text/javascript">
-    $j(function() {
-      powerTools.initializeStudentPage();
-    });
-  </script>
+    <p id="bottom_container" style="text-align:center"></p>
+  </div>
+  <br>
+  <!-- end of content of bounding box -->
+  ~[wc:admin_footer_frame_css]
 </body>
-</html><!-- end right frame -->
+</html>
+<!-- end right frame -->

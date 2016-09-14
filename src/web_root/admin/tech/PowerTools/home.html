@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <html>
 <!-- start right frame -->
-~[AuthorizeAction:prim]
+~[if.security.pagemod=/admin/tech/usm/home.html] ~[AuthorizeXFRE:DR-003.*] ~[AuthorizeXFRE:DR-004.*] ~[AuthorizeXFRE:DR-006.*]
+~[AuthorizeXFRE:DR-009.*] ~[AuthorizeXFRE:DR-013.*] ~[AuthorizeXFRE:DR-018.*] ~[AuthorizeXFRE:DR-031.*] ~[AuthorizeXFRE:DR-033.*]
+~[AuthorizeXFRE:DR-034.*] ~[AuthorizeXFRE:DR-041.*] ~[AuthorizeXFRE:DR-051.*] ~[AuthorizeXFRE:DR-089.*] ~[AuthorizeXFRE:DR-095.*]
+~[AuthorizeXFRE:DR-099.*] ~[AuthorizeXFRE:DR-147.*] ~[AuthorizeXFRE:DR-153.*] ~[AuthorizeXFRE:DR-157.*] ~[AuthorizeXFRE:DR-158.*]
+~[AuthorizeXFRE:DR-159.*] ~[AuthorizeXFRE:DR-175.*] ~[AuthorizeXFRE:DR-177.*] ~[AuthorizeXFRE:DR-201.*] ~[AuthorizeXFRE:DR-202.*]
+[/if]
 <head>
   <title></title>
   ~[wc:commonscripts]
@@ -35,17 +40,15 @@
   </div>
   <!--end BC tag-->
   <ul id="tools2">
-    ~[pluginnavlinks:admin.header]
-    ~[wc:admin_interactive_l18n_none]
-    ~[brij_render_insert:notification:authorizedNotificationCountAJAX]
+    ~[pluginnavlinks:admin.header] ~[wc:admin_interactive_l18n_none] ~[brij_render_insert:notification:authorizedNotificationCountAJAX]
     ~[reports_batch_statusicon]
     <li class="icon-btn-print"><a href="javascript:window.print()" id="btnPrint" title="~[text:psx.common.print_title]">
-      &nbsp;</a></li>
+      &nbsp;</a>
+    </li>
   </ul>
   </div>
   </div>
   <!--end usercontext bar-->
-
   <!-- start of main menu and content -->
   <div id="content" class="group">
     <div id="nav-main">
@@ -53,39 +56,30 @@
       <div id="cust-leftnav-footer">~[cust.insertion_point:leftnav.footer]</div>
     </div>
     <div id="content-main">
-  <!-- start of title -->
-  <h1></h1>
-  <!-- end of title -->
-  <!-- start of content and bounding box -->
-  <div class="box-round">
-    <div id="reportInfo"></div>
-
-    <div id="wizardLink"></div>
-
-    <div id="top_container" style="text-align:center;"></div>
-
-    <div id="paginated"></div>
-
-    <br>
-
-    <p id="bottom_container" style="text-align:center"></p>
-
-    <form class="submitOnce">
-      <div style="display:none" id="studentSelection"></div>
-      <div class="button-row" id="selectStudents">
-        <button type="button" onclick="powerTools.clickSelectStudents('replace')" id="makeSelection">Make Students
-          Current
-          Selection
-        </button>
-        <button type="button" onclick="powerTools.clickSelectStudents('add')" id="addSelection">Add Students to Current
-          Selection
-        </button>
+      <!-- start of title -->
+      <h1></h1>
+      <!-- end of title -->
+      <!-- start of content and bounding box -->
+      <div class="box-round">
+        <div id="reportInfo"></div>
+        <div id="wizardLink"></div>
+        <div id="top_container" style="text-align:center;"></div>
+        <div id="paginated"></div>
+        <br>
+        <p id="bottom_container" style="text-align:center"></p>
+        <form class="submitOnce">
+          <div style="display:none" id="studentSelection"></div>
+          <div class="button-row" id="selectStudents">
+            <button type="button" onclick="powerTools.clickSelectStudents('replace')" id="makeSelection">Make Students Current Selection
+            </button>
+            <button type="button" onclick="powerTools.clickSelectStudents('add')" id="addSelection">Add Students to Current Selection
+            </button>
+          </div>
+        </form>
       </div>
-    </form>
-  </div>
-  <br>
-  <!-- end of content of bounding box -->
-
-  ~[wc:admin_footer_css]
+      <br>
+      <!-- end of content of bounding box -->
+      ~[wc:admin_footer_css]
 </body>
-</html><!-- non framed -->
+</html>
+<!-- non framed -->

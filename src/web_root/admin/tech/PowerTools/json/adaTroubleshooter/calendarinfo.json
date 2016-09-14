@@ -1,0 +1,52 @@
+[
+  ~[tlist_sql;
+SELECT to_char(a.date_value, '~[datetext:mmddyyyy]'), a.insession, a.membershipvalue,
+a.a, a.b, a.c, a.d, a.e, a.f,
+b.name, b.id, b.attendance_conversion_id, c.day_name, d.total_minutes, d.att_mode_code,
+e.att_code, e.calculate_ada_yn, e.calculate_adm_yn, e.presence_status_cd, f.expression, g.daily_attendance_code,
+g.ada_code, g.minutes_attended, h.name
+FROM ps.calendar_day a 
+LEFT JOIN ps.bell_schedule b
+ON a.bell_schedule_id = b.id
+LEFT JOIN ps.cycle_day c
+ON a.cycle_day_id = c.id
+LEFT JOIN ps.attendance d
+ON a.id = d.calendar_dayid AND d.studentid = ~(curstudid)
+	~[if.~[gpv:otherSchools]=0]
+		AND d.schoolid=~(curschoolid)
+	[/if]
+LEFT JOIN ps.attendance_code e
+ON d.attendance_codeid = e.id
+LEFT JOIN ps.cc f
+ON d.ccid = f.id
+LEFT JOIN ps.bell_schedule_items g
+ON d.periodid = g.period_id AND a.bell_schedule_id = g.bell_schedule_id
+LEFT JOIN ps.schools h
+ON d.schoolid = h.school_number
+WHERE a.schoolid=~(curschoolid) AND a.date_value >= to_date('~[gpv:startDate]','MM/DD/YYYY') AND a.date_value <= to_date('~[gpv:endDate]','MM/DD/YYYY')
+ORDER BY a.date_value, d.att_mode_code, f.expression
+]
+{
+  "date": "~(a.date_value)",
+  "inSession": "~(a.insession)",
+  "membershipValue": "~(a.membershipvalue)",
+  "tracks": ["~(a.a)", "~(a.b)", "~(a.c)", "~(a.d)", "~(a.e)", "~(a.f)"],
+  "bellScheduleName": "~(b.name)",
+  "bellScheduleID": "~(b.id)",
+  "attConversionId": "~(b.attendance_conversion_id)",
+  "cycleDayName": "~(c.day_name)",
+  "totalMinutes": "~(d.total_minutes)",
+  "attModeCode": "~(d.att_mode_code)",
+  "attCode": "~(e.att_code)",
+  "countsInAda": "~(e.calculate_ada_yn)",
+  "countsInAdm": "~(e.calculate_adm_yn)",
+  "presenceStatus": "~(e.presence_status_cd)",
+  "expression": "~(f.expression)",
+  "dailyAttendanceCode": "~(g.daily_attendance_code)",
+  "adaCode": "~(g.adaCode)",
+  "minutesAttended": "~(g.minutes_attended)",
+  "schoolName": "~(h.name)"
+},
+[/tlist_sql]
+{}
+]

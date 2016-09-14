@@ -1,0 +1,12 @@
+[
+  ~[tlist_sql;
+SELECT name, dcid
+FROM ps.Gen
+WHERE Cat = 'gpacalcmethod']
+{
+  "methodName" : "~(name)",
+  "dcid" : "~(dcid)"
+},
+[/tlist_sql]
+{}
+]

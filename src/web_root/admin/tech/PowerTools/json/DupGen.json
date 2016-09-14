@@ -3,6 +3,14 @@
 select g.cat
 , g.name
 , g.value
+, g.valueli
+  , g.valueli2
+    , g.valueli3
+    , g.valueli4
+    , g.valuer
+      , g.valuer2
+  , g.valuet
+    , g.valuet2
 , CASE
 WHEN (g.yearid = 0 OR g.yearid IS NULL)
 THEN 'N/A'
@@ -26,7 +34,14 @@ LEFT JOIN schools s
 ON g.schoolid = s.school_number
 group by g.cat
 , g.name
-, g.value
+, g.valueli
+  , g.valueli2
+  , g.valueli3
+  , g.valueli4
+  , g.valuer
+  , g.valuer2
+  , g.valuet
+  , g.valuet2
 , g.yearid
 , g.schoolid
 having count(*)>1
@@ -36,6 +51,14 @@ ORDER BY cat
   "cat" : "~(g.cat)",
     "name" : "~(g.name)",
     "value" : "~(g.value)",
+    "valueli" : "~(g.valueli)",
+    "valueli2": "~(g.valueli2)",
+  "valueli3" :"~(g.valueli3)",
+  "valueli4" :"~(g.valueli4)",
+  "valuer" : "~(g.valuer)",
+  "valuer2": "~(g.valuer2)",
+  "valuet" : "~(g.valuet)",
+  "valuet2" : "~(g.valuet2)",
     "yearid" : "~(g.yearid)",
     "schoolName" : "~(s.name)",
     "count" : " ~(count)"

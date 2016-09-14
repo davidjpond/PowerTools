@@ -1,5 +1,11 @@
 <script>
-  $j('#std_administration').append(
-      ('<li><a href="/admin/tech/PowerTools/ptstudentreport.html?frn=~(studentfrn)">PowerTools Report</a></li>')
-  );
-</script>
+           $j('#nav-main-frame').append(
+             '<h3>PowerTools</h3><ul id="std_powerTools"></ul>'
+           );
+
+           $j('#std_powerTools').append(
+               ('<li><a href="/admin/students/adaTroubleshooter.html?frn=~(studentfrn)">ADA Troubleshooter</a></li>')+
+               ('<li><a href="/admin/students/gpaValidation.html?frn=~(studentfrn)">GPA Validation</a></li>')+
+               ('<li><a href="/admin/tech/PowerTools/ptstudentreport.html?frn=~(studentfrn)">Student Report</a></li>')
+           );
+         </script>

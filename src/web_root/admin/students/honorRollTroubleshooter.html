@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<!-- start right frame -->
+<head>
+  <title>Gpa Validation</title>
+  ~[wc:commonscripts]
+  <link href="/images/css/screen.css" rel="stylesheet" media="screen">
+  <link href="/images/css/print.css" rel="stylesheet" media="print">
+</head>
+<body>
+  ~[wc:admin_header_frame_css]
+  <!-- breadcrumb start -->
+  <a href="/admin/home.html" target="_top">~[text:psx.html.admin_students.honorroll.start_page]</a>
+  &gt; <a href="home.html?selectstudent=nosearch" target="_top">~[text:psx.html.admin_students.honorroll.student_selection]</a>
+  &gt;~[text:psx.html.admin_students.honorroll.honor_roll1]
+  <!-- breadcrumb end -->
+  ~[wc:admin_navigation_frame_css] ~[wc:title_student_begin_css]Gpa Validation~[wc:title_student_end_css]
+  <div class="box-round">
+    <div id="Error" name="Error" style="border-color: red;"></div>
+    <div name="pageInfo" id="pageInfo" style="border-color : yellow">
+      <table class="linkDescList">
+        <td>
+          <p>
+            <b>Select a calculation method from the drop-down to evaluate the current student's GPA.</b>
+          </p>
+        </td>
+        <td name="methodSelection" id="methodSelection" align="right">
+        </td>
+      </table>
+    </div>
+    <div name="method" id="method" style="border-color: purple"></div>
+    <div name="calculations" id="calculations" style="border-color: blue"></div>
+    <div name="includedGrades" id="includedGrades" style="border-color: green;"></div>
+    <div name="projectedGrades" id="projectedGrades" style="border-color: yellow;"></div>
+    <div name="excludedGrades" id="excludedGrades" style="border-color: black;"></div>
+    <!-- end of content of bounding box -->
+    ~[wc:admin_footer_frame_css]
+  </div>
+</body>
+</html>

@@ -1,0 +1,3 @@
+{
+  "gpa": "~(*gpa method=~[gpv:gpaMethod])"
+}

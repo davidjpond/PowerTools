@@ -20,14 +20,6 @@
 "reportName" : "IncorrectStoredGrades"
 },
 {
-"report" : "Misaligned Standards",
-"reportName" : "MisalignedStandards"
-},
-{
-"report" : "Standard Conversion Scales Having Grades Over 8 Characters",
-"reportName" : "StdConversionLongGrade"
-},
-{
 "report" : "Duplicate Attendance Records *",
 "reportName" : "DupAttendance"
 },

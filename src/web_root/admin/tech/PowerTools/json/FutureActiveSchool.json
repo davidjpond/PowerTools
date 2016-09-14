@@ -15,9 +15,9 @@ WHERE NOT EXISTS (
 SELECT *
 FROM ps.terms t1
 WHERE s1.entrydate = t1.firstday
-            ~[if.~[gpv:frn]>0]
-		  AND s1.id = ~(id)
-				  [/if]
+  ~[if.~[gpv:frn]>0]
+	AND s1.id = ~(id)
+	[/if]
 AND s1.schoolid = t1.schoolid
 AND t1.yearid * 100 = t1.id)
 ~[if.is.a.school]AND s1.schoolid = ~[v.curschoolid][/if.is.a.school]

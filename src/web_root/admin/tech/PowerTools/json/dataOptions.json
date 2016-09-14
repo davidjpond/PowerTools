@@ -1,10 +1,10 @@
 {
   "curyearonly": "~[displaypref:PowerTools-curyearonly-U~[x:userid]]",
-  "curYearSelect": "",
+  "curYearSelect": "~[v.curyearid]",
   "ddaRedirect": "~[displaypref:PowerTools-Redirect-Orphan-DDA]",
   "ddaUserPerms": "~[if.security.pagemod=/admin/tech/usm/home.html]on[else]off[/if]",
   "expandMenu": "~[displaypref:PowerTools-navigation-menu-expanded-U~[x:userid]]",
-  "frn": "0",
+  "frn": "~(gpv.frn)",
   "hideBlankGrades": "~[displaypref:PowerTools-Hide-Blank-Stored-Grades]",
   "hideDupGrades": "~[displaypref:PowerTools-Hide-Duplicate-Stored-Grades]",
   "hidePaddedSchool": "~[displaypref:PowerTools-Hide-Padded-School-Enrollment-Report]",

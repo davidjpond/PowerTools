@@ -1,11 +1,11 @@
 [
-~[tlist_sql;
+  ~[tlist_sql;
 SELECT p1.dcid
 FROM ps.prefs p1
 WHERE EXISTS (
 SELECT 1
 FROM ps.prefs p2
-WHERE p2.name = p1.name
+WHERE (p2.name = p1.name
 AND (p2.schoolid = p1.schoolid
 OR (p2.schoolid IS NULL
 AND p1.schoolid IS NULL))
@@ -15,11 +15,11 @@ AND p1.yearid IS NULL))
 AND (p2.userid = p1.userid
 OR (p2.userid IS NULL
 AND p1.userid IS NULL))
-AND p2.id < p1.id)
+AND p2.id < p1.id))
+OR p1.name IS NULL
 ]
-    {
-      "dcid" : "~(p1.dcid)"
-    },
+{
+"dcid": "~(p1.dcid)"},
 [/tlist_sql]
 {}
 ]

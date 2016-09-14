@@ -1,5 +1,5 @@
 {"ResultSet":[
-	~[tlist_sql;
+~[tlist_sql;
 SELECT t1.id
 , CASE
   WHEN t1.schoolid = '0'
@@ -24,7 +24,7 @@ HAVING COUNT(*) > 1
 ORDER BY SchoolName
 , t1.yearid
 , t1.id
-  ]
+]
 {
 "termId" : "~(id)",
 "schoolName" : "~(schoolname)",
@@ -33,4 +33,4 @@ ORDER BY SchoolName
 },
 [/tlist_sql]
 {}
-    ]}
+]}

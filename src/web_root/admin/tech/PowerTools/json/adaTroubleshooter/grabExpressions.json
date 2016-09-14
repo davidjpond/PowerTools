@@ -1,0 +1,15 @@
+[
+  ~[tlist_sql;
+SELECT b.abbreviation
+FROM ps.bell_schedule_items a
+LEFT JOIN ps.period b
+ON a.period_id = b.id
+WHERE bell_schedule_id = '716'
+ORDER BY a.period_id ASC
+]
+{
+  "expression": "~(b.abbreviation)"
+},
+[/tlist_sql]
+{}
+]

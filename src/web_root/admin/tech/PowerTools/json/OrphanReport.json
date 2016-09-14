@@ -42,10 +42,6 @@
 "reportName" : "OrphanedSpEnrollments"
 },
 {
-"report" : "Orphaned StandardsGrades Records",
-"reportName" : "OrphanedStandardsGrades"
-},
-{
 "report" : "Orphaned StoredGrades Records",
 "reportName" : "OrphanedStoredGrades"
 },

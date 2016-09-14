@@ -10,6 +10,7 @@ AND t1.dcid = (
 SELECT MIN(DCID)
 FROM ps.terms
 WHERE schoolid = t2.schoolid
+  AND yearid = t2.yearid
 AND id = t2.id)
 ~[if.is.a.school]AND t1.schoolid = ~[v.curschoolid][/if.is.a.school]
 ]

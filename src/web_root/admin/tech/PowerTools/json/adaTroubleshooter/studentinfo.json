@@ -1,31 +1,33 @@
+[
+        ~[tlist_sql;
+SELECT to_char(a.entrydate, '~[datetext:mmddyyyy]'), to_char(a.exitdate, '~[datetext:mmddyyyy]'), a.membershipshare, a.track, a.grade_level, a.fteid, a.schoolid, a.dcid,
+b.name, b.dflt_att_mode_code, b.dflt_conversion_mode_code
+FROM (
+SELECT entrydate, exitdate, membershipshare, track, grade_level, fteid, schoolid, dcid
+FROM ps.students
+WHERE id=~(curstudid) AND schoolid=~(curschoolid)
+UNION ALL
+SELECT entrydate, exitdate, membershipshare, track, grade_level, fteid, schoolid, dcid
+FROM ps.reenrollments
+WHERE studentid=~(curstudid) AND schoolid=~(curschoolid)
+) a
+LEFT JOIN ps.fte b
+ON b.id = a.fteid
+ORDER BY a.entrydate DESC
+]
 {
-  ~[tlist_sql;
-  SELECT
-  to_char(entrydate, '~[datetext:mmddyyyy]'),
-  to_char(exitdate, '~[datetext:mmddyyyy]'),
-  track,
-  membershipshare
-  FROM (
-    SELECT entrydate,
-    exitdate,
-    track,
-    membershipshare
-    FROM ps.students
-    WHERE id = ~(id)
-    UNION ALL
-    SELECT entrydate,
-    exitdate,
-    track,
-    membershipshare
-    FROM ps.reenrollments
-    WHERE studentid = ~(id)
-  )
-  WHERE entrydate <= to_date('~[gpv:dateentered]','~[datetext:mmddyyyy]')
-  AND exitdate > to_date('~[gpv:dateentered]','~[datetext:mmddyyyy]')
-  ]
-  "entrydate" : "~(entrydate)",
-  "exitdate" : "~(exitdate)",
-  "track" : "~(track)",
-  "membershipshare" : "~(membershipshare)"
+        "entryDate": "~(a.entrydate)",
+        "exitDate": "~(a.exitdate)",
+        "membershipShare": "~(a.membershipshare)",
+        "track": "~(a.track)",
+        "gradeLevel": "~(a.grade_level)",
+        "fteId": "~(a.fteid)",
+        "schoolid": "~(a.schoolid)",
+        "dcid": "~(a.dcid)",
+        "fteName" : "~(b.name)",
+        "attModeCode" : "~(b.dflt_att_mode_code)",
+        "conversionModeCode" : "~(b.dflt_conversion_mode_code)"
+},
 [/tlist_sql]
-}
+{}
+]
