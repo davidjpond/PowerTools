@@ -164,8 +164,8 @@ var powerTools = {
         result[0].version + '</a></span>' +
         '</h3><div id="ptinfo">This is the PowerTools Diagnostic Utility, which can be used to ' +
         'identify many known issues from within the PowerSchool application.<p> <span class="errorField">PowerTools ' +
-        'is supported by PowerSchool Technical Support, and is not supported by PowerSchool Development.</span><br>To ' +
-        'submit enhancements, or to report any discrepancies, please email ' +
+        'is supported by PowerSchool Technical Support, and is not supported by PowerSchool Development.</span><br>' +
+        'To submit enhancements, or to report any discrepancies, please email ' +
         '<a href="mailto:supportoperations@powerschool.com">supportoperations@powerschool.com</a></div>');
     });
     $j('#bcReportName,#top_container,#bottom_container,h1,#wizardLink').html(null);
@@ -924,7 +924,7 @@ var powerTools = {
         sortKey: 'activityName'
       };
     },
-   BlankStoredGrades: function () {
+    BlankStoredGrades: function () {
       powerTools.reportData = {
         title: 'Blank Stored Grades',
         header: 'Students with Blank Stored Grades in ' + powerTools.reportOptions.schoolName,
@@ -1463,7 +1463,8 @@ var powerTools = {
         title: 'Duplicate Gen Table Records',
         header: 'Duplicate Gen Table Records in All Schools',
         info: 'This report displays records in the Gen table that are duplicated. A Gen record is considered ' +
-        'duplicate when there are two records with the same category, name, school id, year id, value, valueli, valueli2, valueli3, valueli4, valuer, valuer2, valuet, valuet2 and value.',
+        'duplicate when there are two records with the same category, name, school id, year id, value, valueli, ' +
+        'valueli2, valueli3, valueli4, valuer, valuer2, valuet, valuet2 and value.',
         fields: ['cat', 'name', 'value', 'yearid', 'schoolName', {
           key: 'count',
           parser: 'number'
@@ -5658,7 +5659,10 @@ var powerTools = {
   drDelete: function (tableNumber, referenceName) {
     powerTools.openLoadingBar();
     if (powerTools.dataSet[powerTools.currentRecord].flaggedrecord === 1) {
-      $j.get('/admin/tech/usm/home.html',{'mcr': tableNumber + powerTools.dataSet[powerTools.currentRecord][referenceName]});
+      $j.get('/admin/tech/usm/home.html', {
+        'mcr': tableNumber +
+        powerTools.dataSet[powerTools.currentRecord][referenceName]
+      });
       $j.ajax({
         url: '/admin/selectiondeletedframed.html?ac=prim&DR-' + tableNumber +
         powerTools.dataSet[powerTools.currentRecord][referenceName] + '=delete'

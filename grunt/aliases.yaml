@@ -3,7 +3,6 @@ default:
   - 'jshint'
   - 'jscs'
   - 'csslint'
-  - 'inlinelint'
   - 'htmlhint'
   - 'xml_validator'
 
