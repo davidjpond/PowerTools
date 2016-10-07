@@ -10,6 +10,9 @@
       },
       {
         "item": "Corrected an issue where grades would not display on the GPA Validator if the GPA returned a null calculation value"
+      },
+      {
+        "item": "Corrected an issue where PowerTools would not pass the loading screen if the SC Level Data Core plugin was installed"
       }
     ]
   },

@@ -101,10 +101,12 @@ var powerTools = {
     }
   },
   openLoadingBar: function () {
-    var offsets = $j('#content-main').offset(),
+    console.log("Content Main: " + $j('#content-main'));
+    console.log("Container: " + $j('#container'));
+    var leftoffset = $j('#content-main').offset().left,
       headerHeight = $j('#container').height();
     loadingDialog();
-    $j('.ui-widget-overlay').css({'left': offsets.left, 'top': headerHeight});
+    $j('.ui-widget-overlay').css({'left': leftoffset, 'top': headerHeight});
   },
   loadReport: function () {
     powerTools.dataOptions.searchString = '';
