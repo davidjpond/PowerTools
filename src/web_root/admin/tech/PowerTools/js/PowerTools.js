@@ -88,7 +88,9 @@ var powerTools = {
       report = powerTools.dataOptions.reportid;
     }
     powerTools.dataOptions.reportid = report;
-    powerTools.dataOptions.curYearSelect = '';
+    if (!powerTools.dataOptions.curYearSelect) {
+      powerTools.dataOptions.curYearSelect = '';
+    }
     $j('#wizardLink').html(null);
     powerTools.loadReport();
   },
@@ -101,8 +103,8 @@ var powerTools = {
     }
   },
   openLoadingBar: function () {
-    console.log("Content Main: " + $j('#content-main'));
-    console.log("Container: " + $j('#container'));
+    console.log('Content Main: ' + $j('#content-main'));
+    console.log('Container: ' + $j('#container'));
     var leftoffset = $j('#content-main').offset().left,
       headerHeight = $j('#container').height();
     loadingDialog();
@@ -134,6 +136,7 @@ var powerTools = {
     $j('#nav-main,#content-main').css('top', loc);
   },
   loadReportData: function () {
+    var selectedYear;
     powerTools.openLoadingBar();
     $j('#ptHomeLink').html('<a onClick="powerTools.loadHomePage();">' +
       'PowerTools</a> &gt;');
@@ -141,7 +144,10 @@ var powerTools = {
     $j('#reportInfo').html('<p>' + powerTools.reportData.info + '</p>');
     $j('h1').text(powerTools.reportData.header);
     powerTools.showWizardLink();
-    powerTools.loadYUIReport();
+    if ($j('#top_container>select[title="Years Selected"')) {
+      selectedYear = $j('#top_container>select[title="Years Selected"').val();
+    }
+    powerTools.loadYUIReport(selectedYear);
   },
   loadMenu: function () {
     $j.get('template/menu.html', function (result) {
@@ -247,8 +253,8 @@ var powerTools = {
           }
         },
         BellScheduleItems: function (elCell, oRecord, oColumn, oData) {
-          var dcid = oRecord.getData('bellScheduleItemsDcid'),
-            id = oRecord.getData('bellScheduleItemsId'),
+          var dcid = oRecord.getData('bellScheduleItemDcid'),
+            id = oRecord.getData('bellScheduleItemId'),
             schoolName = oRecord.getData('schoolName'),
             yearId = oRecord.getData('yearId');
           elCell.innerHTML =

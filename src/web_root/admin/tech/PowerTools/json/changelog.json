@@ -1,5 +1,21 @@
 [
   {
+    "version" : "5.0.3",
+    "changes" : [
+      {
+        "item": "Corrected an issue where the report links did not retain the Current Year setting from the master Diagnostic Reports when visiting a child link"
+      }
+    ]
+  },
+  {
+    "version" : "5.0.2",
+    "changes" : [
+      {
+        "item": "Corrected an issue where the Duplicate Bell Schedule Items report would not display the correct link to the Bell Schedule in question"
+      }
+    ]
+  },
+  {
     "version" : "5.0.1",
     "changes" : [
       {
