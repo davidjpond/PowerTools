@@ -5301,7 +5301,13 @@ var powerTools = {
             }
           ],
           checkboxNote: 'Use caution when selecting the option "Teacher does not exist" as you may wish to simply ' +
-          'assign these sections to another teacher.'
+          'assign these sections to another teacher.',
+		  prompts: [
+		    {
+			  id: 'delsectionpassword',
+			  text: 'Delete Section Password'
+		    }
+		  ]
         },
         countRecords: function () {
           var noCourse = $j('#NoCourse').is(':checked'),
@@ -5324,7 +5330,8 @@ var powerTools = {
         },
         buttonText: 'Remove Orphaned Sections',
         action: function () {
-          powerTools.currentRecord = 0;
+		  powerTools.dataOptions.deletePass = $j('#delsectionpassword').val();
+		  powerTools.currentRecord = 0;
           powerTools.drDelete('003', 'dcid');
         }
       };
@@ -5665,6 +5672,9 @@ var powerTools = {
     }
   },
   drDelete: function (tableNumber, referenceName) {
+	if (!powerTools.dataOptions.deletePass) {
+		powerTools.dataOptions.deletePass = $j('delsectionpassword').val();
+	}
     powerTools.openLoadingBar();
     if (powerTools.dataSet[powerTools.currentRecord].flaggedrecord === 1) {
       $j.get('/admin/tech/usm/home.html', {
@@ -5673,7 +5683,8 @@ var powerTools = {
       });
       $j.ajax({
         url: '/admin/selectiondeletedframed.html?ac=prim&DR-' + tableNumber +
-        powerTools.dataSet[powerTools.currentRecord][referenceName] + '=delete'
+        powerTools.dataSet[powerTools.currentRecord][referenceName] + '=delete&delsectionpassword=' +
+		  powerTools.dataOptions.deletePass
       }).success(function () {
         powerTools.currentRecord++;
         if (powerTools.currentRecord === powerTools.dataSet.length) {
@@ -5716,6 +5727,7 @@ var powerTools = {
     $j('#btnSubmit').text(powerTools.wizardData.buttonText).click(function () {
       powerTools.wizardData.action();
     });
+	$j('#paginated').html(null);
     $j('#wizardLink').html(null);
     if (powerTools.wizardData.options) {
       $j('#top_container').html(
@@ -5731,22 +5743,22 @@ var powerTools = {
         '</table>'
       );
       if (powerTools.wizardData.options.checkboxes) {
-        $j('#paginated').html(
+        $j('#wizardOptions').html(
           '<tr>' +
-          '<td width="200">' +
+          '<td >' +
           '<label for="selectOptions">Remove records where</label>' +
           '</td>' +
-          '<td>' +
+          '<td style="text-align:left">' +
           '<fieldset id="selectOptions"></fieldset>' +
-          '<div style="padding-left:27px"><input type="checkbox" id="CheckAll"><label for="CheckAll">Select / ' +
-          'Deselect All</label></div>' +
+          '<input type="checkbox" id="CheckAll"><label for="CheckAll">Select / ' +
+          'Deselect All</label>' +
           '</td>' +
           '</tr>'
         );
         $j(powerTools.wizardData.options.checkboxes).each(function () {
           $j('#selectOptions').append(
             '<span>' +
-            '<input type="checkbox" id="' + this.id + '">' +
+            ' <input type="checkbox" id="' + this.id + '">' +
             '<label for="' + this.id + '">' + this.text + '</label>' +
             '</span><br>'
           );
@@ -5765,6 +5777,17 @@ var powerTools = {
       }
       powerTools.selectAll();
       powerTools.checkWizardBox();
+	  if (powerTools.wizardData.options.prompts) {
+        var promptOptions;
+		$j(powerTools.wizardData.options.prompts).each(function () {
+		  promptOptions = promptOptions +
+		  '<tr>' +
+		  '<td><label>' + this.text + '</label></td>' +
+		  '<td style="text-align:left"><input required type="text" id="' + this.id + '">' +
+		  '</tr>';
+		});
+		$j('#wizardOptions').append(promptOptions);
+	  }
     } else {
       $j('#top_container,#paginated,#selectOptions').html(null);
       powerTools.wizardData.countRecords();

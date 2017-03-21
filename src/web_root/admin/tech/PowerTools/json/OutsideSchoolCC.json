@@ -1,5 +1,24 @@
 {"ResultSet":[
 ~[tlist_sql;
+WITH allenrollments AS (
+SELECT id as studid
+, entrydate
+, exitdate
+FROM students
+UNION ALL
+SELECT studentid as studid
+, entrydate
+, exitdate
+FROM reenrollments)
+, enrollments AS (
+SELECT studid
+, CONNECT_BY_ROOT entrydate AS entrydate
+, exitdate
+, LEVEL
+FROM allenrollments
+CONNECT BY PRIOR studid = studid
+AND PRIOR exitdate = entrydate
+AND PRIOR entrydate != exitdate)
 SELECT s1.dcid
 , s1.id
 , s1.lastfirst
@@ -18,27 +37,16 @@ LEFT JOIN schools s2
 ON s1.schoolid = s2.school_number
 WHERE NOT EXISTS (
 SELECT *
-FROM reenrollments r1
+FROM enrollments r1
 WHERE c1.dateenrolled >= r1.entrydate
 AND c1.dateenrolled <= r1.exitdate
 AND c1.dateleft >= r1.entrydate
 AND c1.dateleft <= r1.exitdate
-AND c1.studentid = r1.studentid)
-~[if.is.a.school]AND c1.schoolid = ~[v.curschoolid][/if.is.a.school]
-~[if.~(gpv.curyearonly)=1]AND trunc(abs(c1.termid)/100) = trunc(~[v.curtermid]/100)[/if]
-AND NOT EXISTS (
-SELECT *
-FROM students s1
-WHERE c1.dateenrolled >= s1.entrydate
-AND c1.dateenrolled <= s1.exitdate
-AND c1.dateleft >= s1.entrydate
-AND c1.dateleft <= s1.exitdate
-AND c1.studentid = s1.id)
-AND c1.dateleft >= c1.dateenrolled
+AND c1.studentid = r1.studid)
 ~[if.is.a.school]AND c1.schoolid = ~[v.curschoolid][/if.is.a.school]
 ~[if.~(gpv.curyearonly)=1]AND trunc(abs(c1.termid)/100) = trunc(~[v.curtermid]/100)[/if]
           ~[if.~[gpv:frn]>0]
-		  AND r1.studentid = ~(id)
+		  AND r1.studid = ~(id)
 				  [/if]
 ORDER BY s1.lastfirst
 ]

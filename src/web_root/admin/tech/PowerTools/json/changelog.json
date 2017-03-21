@@ -1,9 +1,31 @@
 [
   {
+    "version" : "5.0.5",
+    "changes" : [
+      {
+        "item": "Corrected an issue with the GPA Validation tool which caused grades with no credit types to erroneously be included in the list of included grades"
+      }
+    ]
+  },
+  {
+    "version" : "5.0.4",
+    "changes" : [
+      {
+        "item": "Adjusted the GPA Validation tool to allow for split credits"
+      }
+    ]
+  },
+  {
     "version" : "5.0.3",
     "changes" : [
       {
         "item": "Corrected an issue where the report links did not retain the Current Year setting from the master Diagnostic Reports when visiting a child link"
+      },
+	  {
+        "item": "Corrected an issue where the Orphaned Sections Wizard would not delete data due to a lack of the \"Delete Section Password.\" Added the ability to enter the password"
+      },
+	  {
+        "item": "Corrected an issue with the Students with Section Enrollments Outside School Enrollments report where it incorrectly reported sections which spanned multiple School enrollments, however the school enrollment dates were valid multiple enrollments"
       }
     ]
   },
