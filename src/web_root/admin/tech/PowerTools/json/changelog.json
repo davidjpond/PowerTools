@@ -1,5 +1,13 @@
 [
   {
+    "version" : "5.0.6",
+    "changes" : [
+      {
+        "item": "Corrected an issue where meeting attendance records would not display in the ADA Troubleshooter"
+      }
+    ]
+  },
+  {
     "version" : "5.0.5",
     "changes" : [
       {
