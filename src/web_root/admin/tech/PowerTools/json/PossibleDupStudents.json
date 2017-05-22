@@ -15,13 +15,13 @@
 		ORDER BY s1.lastfirst
 	]
 {
-"dcid" : "~(s1.dcid)",
-"student" : "~(s1.lastfirst)",
-"studentNumber" : "~(s1.student_number)",
-"dob" : "~(s1.DOB)",
-"student2dcid" : "~(s2.dcid)",
-"student2" : "~(s2.lastfirst)",
-"student2StudentNumber" : "~(s2.student_number)"
+"dcid" : "~(s1.dcid;json)",
+"student" : "~(s1.lastfirst;json)",
+"studentNumber" : "~(s1.student_number;json)",
+"dob" : "~(s1.DOB;json)",
+"student2dcid" : "~(s2.dcid;json)",
+"student2" : "~(s2.lastfirst;json)",
+"student2StudentNumber" : "~(s2.student_number;json)"
 },
 [/tlist_sql]
 {}

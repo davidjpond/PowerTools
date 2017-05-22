@@ -41,14 +41,14 @@ AND r1.studentid = s1.id
 ]
 
 {
-"dcid" : "~(s1.dcid)",
-"studentid" : "~(s1.id)",
-"student" : "~(s1.lastfirst)",
-"schoolName" : "~(s2.name)",
-"gradeLevel" : "~(s1.grade_level)",
-"entryDate" : "~(s1.entrydate)",
-"exitDate" : "~(s1.exitdate)",
-"track" : "~(s1.track)"
+"dcid" : "~(s1.dcid;json)",
+"studentid" : "~(s1.id;json)",
+"student" : "~(s1.lastfirst;json)",
+"schoolName" : "~(s2.name;json)",
+"gradeLevel" : "~(s1.grade_level;json)",
+"entryDate" : "~(s1.entrydate;json)",
+"exitDate" : "~(s1.exitdate;json)",
+"track" : "~(s1.track;json)"
 },
 [/tlist_sql]
 {}

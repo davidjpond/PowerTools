@@ -127,14 +127,14 @@ ORDER BY lastfirst
 ]
 
   {
-    "dcid" : "~(s1.dcid)",
-    "studentid" : "~(s1.id)",
-    "student" :  "~(cc1.lastfirst)",
-    "studentNumber" : "~(cc1.student_number)",
-    "entryDate" : "~(s1.entrydate)",
-    "exitDate" : "~(s1.exitdate)",
-    "firstCC" : "~(c1.dateenrolled)",
-    "lastCC" : "~(c1.dateleft)"
+    "dcid" : "~(s1.dcid;json)",
+    "studentid" : "~(s1.id;json)",
+    "student" :  "~(cc1.lastfirst;json)",
+    "studentNumber" : "~(cc1.student_number;json)",
+    "entryDate" : "~(s1.entrydate;json)",
+    "exitDate" : "~(s1.exitdate;json)",
+    "firstCC" : "~(c1.dateenrolled;json)",
+    "lastCC" : "~(c1.dateleft;json)"
   },
 [/tlist_sql]
   {}

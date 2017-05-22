@@ -31,10 +31,10 @@ AND t1.schoolid = ~[v.curschoolid])
 ORDER BY c1.Date_Value
 ]
 {
-  "date" : "~(c1.Date_value)",
-  "cycleDay" : "~(cycle_day_id)",
-  "bellSchedule" : "~(bell_schedule_id)",
-  "membershipValue" : "~(membershipvalue)"
+  "date" : "~(c1.Date_value;json)",
+  "cycleDay" : "~(cycle_day_id;json)",
+  "bellSchedule" : "~(bell_schedule_id;json)",
+  "membershipValue" : "~(membershipvalue;json)"
 },
 [/tlist_sql]
 {}

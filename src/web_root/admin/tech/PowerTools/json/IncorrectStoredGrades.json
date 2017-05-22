@@ -49,19 +49,19 @@ AND teacherscale = '1')))
 ~[if.~(gpv.curyearonly)=1]AND trunc(s1.termid/100) = trunc(~[v.curtermid]/100)[/if]
 ]
 {
-"dcid" : "~(s2.dcid)",
-"studentid" : "~(s2.id)",
-"student" : "~(s2.lastfirst)",
-"schoolName" : "~(s3.name)",
-"courseName" : "~(s1.course_name)",
-"courseNumber" : "~(s1.course_number)",
-"storeCode" : "~(s1.storecode)",
-"termID" : "~(s1.termid)",
-"percent" : "~(s1.percent)",
-"grade" : "~(s1.grade)",
-"gradescaleGrade" : "~(g2.grade)",
-"gpaPoints" : "~(s1.gpa_points)",
-"gradePoints" : "~(g2.gradepoints)"
+"dcid" : "~(s2.dcid;json)",
+"studentid" : "~(s2.id;json)",
+"student" : "~(s2.lastfirst;json)",
+"schoolName" : "~(s3.name;json)",
+"courseName" : "~(s1.course_name;json)",
+"courseNumber" : "~(s1.course_number;json)",
+"storeCode" : "~(s1.storecode;json)",
+"termID" : "~(s1.termid;json)",
+"percent" : "~(s1.percent;json)",
+"grade" : "~(s1.grade;json)",
+"gradescaleGrade" : "~(g2.grade;json)",
+"gpaPoints" : "~(s1.gpa_points;json)",
+"gradePoints" : "~(g2.gradepoints;json)"
 },
 [/tlist_sql]
 {}

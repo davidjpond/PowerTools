@@ -25,15 +25,15 @@
 		ORDER BY s2.lastfirst
 	]
   {
-    "dcid" : "~(s2.dcid)",
-    "studentid" : "~(s2.id)",
-		"student" : "~(s2.lastfirst)",
-		"schoolName" : "~(s3.name)",
-    "courseNumber" : "~(s1.course_number)",
-		"courseName" : "~(s1.course_name)",
-		"storeCode" : "~(s1.storecode)",
-		"termID" : "~(s1.termid)",
-    "storedGradeDcid" : "~(s1.dcid)"
+    "dcid" : "~(s2.dcid;json)",
+    "studentid" : "~(s2.id;json)",
+		"student" : "~(s2.lastfirst;json)",
+		"schoolName" : "~(s3.name;json)",
+    "courseNumber" : "~(s1.course_number;json)",
+		"courseName" : "~(s1.course_name;json)",
+		"storeCode" : "~(s1.storecode;json)",
+		"termID" : "~(s1.termid;json)",
+    "storedGradeDcid" : "~(s1.dcid;json)"
   },
 	[/tlist_sql]
 {}

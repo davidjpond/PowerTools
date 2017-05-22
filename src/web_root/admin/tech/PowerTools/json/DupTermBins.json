@@ -30,11 +30,11 @@ ORDER BY SchoolName
 , t1.storecode
   ]
 {
-"storeCode" : "~(storecode)",
-"termId" : "~(term)",
-"schoolYear" : "~(schoolyear)",
-"schoolName" : "~(schoolid)",
-"count" : "~(count)"
+"storeCode" : "~(storecode;json)",
+"termId" : "~(term;json)",
+"schoolYear" : "~(schoolyear;json)",
+"schoolName" : "~(schoolid;json)",
+"count" : "~(count;json)"
 },
 [/tlist_sql]
 {}

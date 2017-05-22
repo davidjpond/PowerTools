@@ -22,12 +22,12 @@ ORDER BY s2.Course_Number
 ]
 
 {
-"dcid" : "~(s2.dcid)",
-"courseNumber" : "~(s2.Course_Number)",
-"sectionNumber" : "~(s2.Section_Number)",
-"termId" : "~(s2.TermID)",
-"expression" : "~(s2.Expression)",
-"schoolName" : "~(s3.Name)"
+"dcid" : "~(s2.dcid;json)",
+"courseNumber" : "~(s2.Course_Number;json)",
+"sectionNumber" : "~(s2.Section_Number;json)",
+"termId" : "~(s2.TermID;json)",
+"expression" : "~(s2.Expression;json)",
+"schoolName" : "~(s3.Name;json)"
 },
 [/tlist_sql]
 {}

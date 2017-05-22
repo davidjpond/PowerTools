@@ -16,14 +16,14 @@ order by sch.name
 
 ]
 {
-"schoolName" : "~(sch.name)",
-"term1Id" : "~(t1.dcid)",
-"term2Id" : "~(t2.dcid)",
-"schoolId" : "~(t2.schoolid)",
-"term1FirstDay" : "~(t1.firstday)",
-"term1LastDay" : "~(t1.lastday)",
-"term2FirstDay" : "~(t2.firstday)",
-"term2LastDay" : "~(t2.lastday)"
+"schoolName" : "~(sch.name;json)",
+"term1Id" : "~(t1.dcid;json)",
+"term2Id" : "~(t2.dcid;json)",
+"schoolId" : "~(t2.schoolid;json)",
+"term1FirstDay" : "~(t1.firstday;json)",
+"term1LastDay" : "~(t1.lastday;json)",
+"term2FirstDay" : "~(t2.firstday;json)",
+"term2LastDay" : "~(t2.lastday;json)"
 },
 [/tlist_sql]
 {}

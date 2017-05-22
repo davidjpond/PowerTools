@@ -36,12 +36,12 @@ OR c1.course_number IS NULL
 ORDER BY p1.ID
 ]
 {
-"dcid" : "~(p1.dcid)",
-"id" : "~(p1.id)",
-"student" : "~(s1.lastfirst)",
-"studentId" : "~(p1.studentid)",
-"courseSection" : "~(c1.course_section)",
-"courseSectionSort" : "~(c1.course_sectionsort)"
+"dcid" : "~(p1.dcid;json)",
+"id" : "~(p1.id;json)",
+"student" : "~(s1.lastfirst;json)",
+"studentId" : "~(p1.studentid;json)",
+"courseSection" : "~(c1.course_section;json)",
+"courseSectionSort" : "~(c1.course_sectionsort;json)"
 },
 [/tlist_sql]
 {}

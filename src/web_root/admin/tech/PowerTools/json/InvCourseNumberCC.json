@@ -26,13 +26,13 @@ AND c2.course_number != c1.course_number)
 ORDER BY s2.lastfirst
 ]
 {
-"student" : "~(Student)",
-"sectionId" : "~(sectionid)",
-"schoolName" : "~(schoolid)",
-"termId" : "~(termid)",
-"ccCourseNumber" : "~(course_number)",
-"ccSectionNumber" : "~(section_number)",
-"districtCourseNumber" : "~(courses_number)"
+"student" : "~(Student;json)",
+"sectionId" : "~(sectionid;json)",
+"schoolName" : "~(schoolid;json)",
+"termId" : "~(termid;json)",
+"ccCourseNumber" : "~(course_number;json)",
+"ccSectionNumber" : "~(section_number;json)",
+"districtCourseNumber" : "~(courses_number;json)"
 },
 [/tlist_sql]
 {}

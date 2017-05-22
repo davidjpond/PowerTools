@@ -16,7 +16,7 @@ AND server_instanceid = s2.server_instanceid
 ORDER BY s2.id;
 ]
     {
-      "dcid" : "~(s2.dcid)"
+      "dcid" : "~(s2.dcid;json)"
     },
 [/tlist_sql]
     {}

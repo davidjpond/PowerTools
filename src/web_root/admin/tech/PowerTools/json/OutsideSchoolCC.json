@@ -51,15 +51,15 @@ AND c1.studentid = r1.studid)
 ORDER BY s1.lastfirst
 ]
 {
-"dcid" : "~(s1.dcid)",
-"studentid" : "~(s1.id)",
-"student" : "~(s1.lastfirst)",
-"schoolName" : "~(s2.name)",
-"courseNumber" : "~(c1.Course_number)",
-"sectionNumber" : "~(c1.Section_number)",
-"courseName" : "~(c2.course_name)",
-"dateEnrolled" : "~(c1.dateenrolled)",
-"dateLeft" : "~(c1.dateleft)"
+"dcid" : "~(s1.dcid;json)",
+"studentid" : "~(s1.id;json)",
+"student" : "~(s1.lastfirst;json)",
+"schoolName" : "~(s2.name;json)",
+"courseNumber" : "~(c1.Course_number;json)",
+"sectionNumber" : "~(c1.Section_number;json)",
+"courseName" : "~(c2.course_name;json)",
+"dateEnrolled" : "~(c1.dateenrolled;json)",
+"dateLeft" : "~(c1.dateleft;json)"
 },
 [/tlist_sql]
 {}

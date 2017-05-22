@@ -31,11 +31,11 @@ HAVING COUNT(*) > 1
 ORDER BY p1.name
   ]
 {
-"name" : "~(Name)",
-"yearId" : "~(YearID)",
-"schoolId" : "~(SchoolID)",
-"count" : "~(count)",
-"userId" : "~(userid)"
+"name" : "~(Name;json)",
+"yearId" : "~(YearID;json)",
+"schoolId" : "~(SchoolID;json)",
+"count" : "~(count;json)",
+"userId" : "~(userid;json)"
     },
 			[/tlist_sql]
 {}

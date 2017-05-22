@@ -33,14 +33,14 @@
 		ORDER BY t1.lastfirst
 	]
 {
-"dcid" : "~(t1.dcid)",
-"teacher" : "~(t1.lastfirst)",
-"schoolName" : "~(s1.name)",
-"status" : "~(t1.status)",
-"teacher2dcid" : "~(t2.dcid)",
-"teacher2" : "~(t2.lastfirst)",
-"teacher2SchoolName" : "~(s2.name)",
-"teacher2Status" : "~(t2.status)"
+"dcid" : "~(t1.dcid;json)",
+"teacher" : "~(t1.lastfirst;json)",
+"schoolName" : "~(s1.name;json)",
+"status" : "~(t1.status;json)",
+"teacher2dcid" : "~(t2.dcid;json)",
+"teacher2" : "~(t2.lastfirst;json)",
+"teacher2SchoolName" : "~(s2.name;json)",
+"teacher2Status" : "~(t2.status;json)"
 },
 [/tlist_sql]
 {}

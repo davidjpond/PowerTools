@@ -19,9 +19,9 @@ AND letter = d2.letter)
 ORDER BY d2.id
 ]
     {
-      "dcid" : "~(d2.dcid)",
-      "goodval" : "~(d1.id)",
-      "badval" : "~(d2.id)"
+      "dcid" : "~(d2.dcid;json)",
+      "goodval" : "~(d1.id;json)",
+      "badval" : "~(d2.id;json)"
     },
 [/tlist_sql]
 {}

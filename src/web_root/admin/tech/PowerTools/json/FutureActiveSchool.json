@@ -25,14 +25,14 @@ AND entrydate > CURRENT_TIMESTAMP
 AND enroll_status = 0
 ]
 {
-    "dcid" : "~(s1.dcid)",
-    "studentid" : "~(s1.id)",
-    "student" : "~(s1.lastfirst)",
-    "schoolName" : "~(s2.name)",
-    "gradeLevel" : "~(s1.grade_level)",
-    "enrollStatus" : "~(s1.enroll_status)",
-    "entryDate" : "~(s1.entrydate)",
-    "exitDate" : "~(s1.exitdate)"
+    "dcid" : "~(s1.dcid;json)",
+    "studentid" : "~(s1.id;json)",
+    "student" : "~(s1.lastfirst;json)",
+    "schoolName" : "~(s2.name;json)",
+    "gradeLevel" : "~(s1.grade_level;json)",
+    "enrollStatus" : "~(s1.enroll_status;json)",
+    "entryDate" : "~(s1.entrydate;json)",
+    "exitDate" : "~(s1.exitdate;json)"
 },
 [/tlist_sql]
 {}

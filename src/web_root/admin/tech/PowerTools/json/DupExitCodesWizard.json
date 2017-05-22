@@ -15,7 +15,7 @@ AND name = g2.name)
 ORDER BY g2.id;
 ]
     {
-      "dcid" : "~(g2.dcid)"
+      "dcid" : "~(g2.dcid;json)"
     },
 [/tlist_sql]
     {}

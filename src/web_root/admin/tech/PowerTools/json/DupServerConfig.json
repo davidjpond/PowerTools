@@ -10,9 +10,9 @@
 	ORDER BY name
   ]
 {
-"serverInstanceId" : "~(server_instanceid)",
-"name" : "~(name)",
-"count" : "~(count)"
+"serverInstanceId" : "~(server_instanceid;json)",
+"name" : "~(name;json)",
+"count" : "~(count;json)"
 },
 [/tlist_sql]
 {}

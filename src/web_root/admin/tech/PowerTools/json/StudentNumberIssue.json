@@ -23,11 +23,11 @@ WHERE student_number >= 2147483647
 ORDER BY s1.lastfirst
   ]
 {
-"dcid" : "~(dcid)",
-"studentid": "~(s1.id)",
-"student" : "~(lastfirst)",
-"studentNumber" : "~(student_number)",
-"schoolId" : "~(schoolid)"
+"dcid" : "~(dcid;json)",
+"studentid": "~(s1.id;json)",
+"student" : "~(lastfirst;json)",
+"studentNumber" : "~(student_number;json)",
+"schoolId" : "~(schoolid;json)"
 },
 [/tlist_sql]
 {}

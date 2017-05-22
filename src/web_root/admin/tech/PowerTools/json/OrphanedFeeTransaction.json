@@ -26,14 +26,14 @@ OR s2.id IS NULL
 ORDER BY f1.ID
 	]
 {
-"dcid" : "~(f1.dcid)",
-"feeTransactionId" : "~(f1.id)",
-"student" : "~(s1.lastfirst)",
-"studentid" : "~(f1.studentid)",
-"feeName" : "~(f2.feename)",
-"feeId" : "~(f1.feeid)",
-"schoolName" : "~(s2.name)",
-"schoolNumber" : "~(f1.schoolid)"
+"dcid" : "~(f1.dcid;json)",
+"feeTransactionId" : "~(f1.id;json)",
+"student" : "~(s1.lastfirst;json)",
+"studentid" : "~(f1.studentid;json)",
+"feeName" : "~(f2.feename;json)",
+"feeId" : "~(f1.feeid;json)",
+"schoolName" : "~(s2.name;json)",
+"schoolNumber" : "~(f1.schoolid;json)"
     },
 			[/tlist_sql]
 {}

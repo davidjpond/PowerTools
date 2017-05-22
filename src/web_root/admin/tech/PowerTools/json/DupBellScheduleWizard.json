@@ -19,9 +19,9 @@ AND name = b2.name)
 ORDER BY b2.id
 ]
 {
-    "dcid" : "~(b2.dcid)",
-    "goodval" : "~(b1.id)",
-    "badval" : "~(b2.id)"
+    "dcid" : "~(b2.dcid;json)",
+    "goodval" : "~(b1.id;json)",
+    "badval" : "~(b2.id;json)"
 },
 [/tlist_sql]
 {}

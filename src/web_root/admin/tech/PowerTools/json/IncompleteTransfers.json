@@ -16,13 +16,13 @@ WHERE s1.schoolid != s1.enrollment_schoolid
 ORDER BY s1.lastfirst
 ]
 {
-"dcid" : "~(s1.dcid)",
-"studentid" : "~(s1.id)",
-"student" : "~(s1.lastfirst)",
-"gradeLevel" : "~(s1.grade_level)",
-"schoolName" : "~(s1.school)",
-"enrollmentSchoolName" : "~(s1.EnrSchoolName)",
-"exitDate" : "~(s1.ExitDate)"
+"dcid" : "~(s1.dcid;json)",
+"studentid" : "~(s1.id;json)",
+"student" : "~(s1.lastfirst;json)",
+"gradeLevel" : "~(s1.grade_level;json)",
+"schoolName" : "~(s1.school;json)",
+"enrollmentSchoolName" : "~(s1.EnrSchoolName;json)",
+"exitDate" : "~(s1.ExitDate;json)"
 },
 [/tlist_sql]
 {}

@@ -9,8 +9,8 @@ HAVING COUNT(*) > 1
 ORDER BY g1.name
 ]
 {
-"exitCode" : "~(Code)",
-"count" : "~(count)"
+"exitCode" : "~(Code;json)",
+"count" : "~(count;json)"
 },
 [/tlist_sql]
 {}

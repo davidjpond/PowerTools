@@ -56,17 +56,17 @@ ORDER BY s1.lastfirst
 ]
 
 {
-"dcid" : "~(s1.dcid)",
-"studentid" : "~(s1.id)",
-"student" : "~(s1.lastfirst)",
-"schoolName" : "~(schoolname)",
-"schoolId" : "~(s1.schoolid)",
-"nextSchoolName" : "~(s2.name)",
-"nextSchoolID" : "~(s1.next_school)",
-"nextYearGrade" : "~(s1.sched_nextyeargrade)",
-"lowGrade" : "~(s2.lowgrade)",
-"highGrade" : "~(s2.highgrade)",
-"yearOfGraduation" : "~(s1.sched_yearofgraduation)"
+"dcid" : "~(s1.dcid;json)",
+"studentid" : "~(s1.id;json)",
+"student" : "~(s1.lastfirst;json)",
+"schoolName" : "~(schoolname;json)",
+"schoolId" : "~(s1.schoolid;json)",
+"nextSchoolName" : "~(s2.name;json)",
+"nextSchoolID" : "~(s1.next_school;json)",
+"nextYearGrade" : "~(s1.sched_nextyeargrade;json)",
+"lowGrade" : "~(s2.lowgrade;json)",
+"highGrade" : "~(s2.highgrade;json)",
+"yearOfGraduation" : "~(s1.sched_yearofgraduation;json)"
 },
 [/tlist_sql]
 {}

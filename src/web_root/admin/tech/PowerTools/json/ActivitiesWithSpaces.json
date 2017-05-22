@@ -10,9 +10,9 @@ ORDER BY g1.name
 ]
 
 {
-"dcid" : "~(g1.dcid)",
-"activityName" : "~(g1.name)",
-"fieldName" : "~(g1.value)"
+"dcid" : "~(g1.dcid;json)",
+"activityName" : "~(g1.name;json)",
+"fieldName" : "~(g1.value;json)"
 },
 [/tlist_sql]
 {}

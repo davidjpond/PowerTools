@@ -1,5 +1,13 @@
 [
   {
+    "version" : "5.0.8",
+    "changes" : [
+      {
+        "item": "Corrected all queries to allow for special characters in the data - particularly quotes"
+      }
+    ]
+  },
+  {
     "version" : "5.0.7",
     "changes" : [
       {

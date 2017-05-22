@@ -21,12 +21,12 @@ OR s2.ID IS NULL
 ORDER BY h1.ID
 ]
 {
-"dcid" : "~(h1.dcid)",
-"honorRollId" : "~(h1.id)",
-"student" : "~(s1.lastfirst)",
-"studentid" : "~(h1.studentid)",
-"schoolName" : "~(s2.name)",
-"schoolId" : "~(h1.schoolid)"
+"dcid" : "~(h1.dcid;json)",
+"honorRollId" : "~(h1.id;json)",
+"student" : "~(s1.lastfirst;json)",
+"studentid" : "~(h1.studentid;json)",
+"schoolName" : "~(s2.name;json)",
+"schoolId" : "~(h1.schoolid;json)"
 },
 [/tlist_sql]
 {}

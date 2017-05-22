@@ -17,9 +17,9 @@ WHERE r1.name like '% '
 ORDER BY r1.name
 ]
 {
-"dcid" : "~(g1.dcid)",
-"reportName" : "~(g1.name)",
-"reportType" : "~(g1.type)"
+"dcid" : "~(g1.dcid;json)",
+"reportName" : "~(g1.name;json)",
+"reportType" : "~(g1.type;json)"
 },
 [/tlist_sql]
 {}

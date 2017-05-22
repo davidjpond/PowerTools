@@ -26,13 +26,13 @@ AND s1.schoolid = s1.enrollment_schoolid
 ORDER BY s1.lastfirst
 ]
 {
-"dcid" : "~(r1.dcid)",
-"student" : "~(s1.lastfirst)",
-"schoolName" : "~(s2.Schoolname)",
-"schoolId" : "~(s1.SchoolID)",
-"gradeLevel" : "~(s1.grade_level)",
-"lowGrade" : "~(s2.low_grade)",
-"highGrade" : "~(s2.high_grade)"
+"dcid" : "~(r1.dcid;json)",
+"student" : "~(s1.lastfirst;json)",
+"schoolName" : "~(s2.Schoolname;json)",
+"schoolId" : "~(s1.SchoolID;json)",
+"gradeLevel" : "~(s1.grade_level;json)",
+"lowGrade" : "~(s2.low_grade;json)",
+"highGrade" : "~(s2.high_grade;json)"
 },
 [/tlist_sql]
 {}

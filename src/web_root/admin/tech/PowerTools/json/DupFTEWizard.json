@@ -19,9 +19,9 @@ AND yearid = f2.yearid)
 ORDER BY f2.id
 ]
     {
-      "dcid" : "~(f2.dcid)",
-      "goodval" : "~(f1.id)",
-      "badval" : "~(f2.id)"
+      "dcid" : "~(f2.dcid;json)",
+      "goodval" : "~(f1.id;json)",
+      "badval" : "~(f2.id;json)"
     },
 
 [/tlist_sql]

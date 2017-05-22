@@ -26,10 +26,10 @@ ORDER BY SchoolName
 , t1.id
 ]
 {
-"termId" : "~(id)",
-"schoolName" : "~(schoolname)",
-"yearId" : "~(yearid)",
-"count" : "~(count)"
+"termId" : "~(id;json)",
+"schoolName" : "~(schoolname;json)",
+"yearId" : "~(yearid;json)",
+"count" : "~(count;json)"
 },
 [/tlist_sql]
 {}

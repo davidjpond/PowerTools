@@ -10,9 +10,9 @@
   ORDER BY a1.ID
   ]
 {
-"dcid" : "~(a1.dcid)",
-"id" : "~(a1.id)",
-"attendanceId" : "~(a1.attendanceid)"
+"dcid" : "~(a1.dcid;json)",
+"id" : "~(a1.id;json)",
+"attendanceId" : "~(a1.attendanceid;json)"
 },
 [/tlist_sql]
 {}

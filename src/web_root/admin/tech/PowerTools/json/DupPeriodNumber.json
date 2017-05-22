@@ -26,10 +26,10 @@ ORDER BY SchoolName
 , p1.period_number
   ]
 {
-"period" : "~(period_number)",
-"schoolName" : "~(schoolid)",
-"yearId" : "~(yearid)",
-"count" : "~(count)"
+"period" : "~(period_number;json)",
+"schoolName" : "~(schoolid;json)",
+"yearId" : "~(yearid;json)",
+"count" : "~(count;json)"
 },
 			[/tlist_sql]
 {}

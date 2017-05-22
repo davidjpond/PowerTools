@@ -119,18 +119,18 @@ AND a2.att_code IS NOT NULL
 ORDER BY s1.lastfirst
 ]
 {
-"dcid" : "~(s1.dcid)",
-"studentid" : "~(s1.id)",
-"student" : "~(lastfirst)",
-"schoolName" : "~(name)",
-"attendanceDcid" : "~(a1.dcid)",
-"attendanceID" : "~(a1.id)",
-"attendanceDate" : "~(date)",
-"attendanceType" : "~(transtype)",
-"ccID" : "~(CCID)",
-"periodID" : "~(Periodid)",
-"attendanceCode" : "~(att_code)",
-"errormsg" : "~(error)"
+"dcid" : "~(s1.dcid;json)",
+"studentid" : "~(s1.id;json)",
+"student" : "~(lastfirst;json)",
+"schoolName" : "~(name;json)",
+"attendanceDcid" : "~(a1.dcid;json)",
+"attendanceID" : "~(a1.id;json)",
+"attendanceDate" : "~(date;json)",
+"attendanceType" : "~(transtype;json)",
+"ccID" : "~(CCID;json)",
+"periodID" : "~(Periodid;json)",
+"attendanceCode" : "~(att_code;json)",
+"errormsg" : "~(error;json)"
 },
 [/tlist_sql]
 {}

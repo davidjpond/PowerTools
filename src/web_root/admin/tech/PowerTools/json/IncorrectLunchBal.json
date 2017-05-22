@@ -38,13 +38,13 @@ ORDER BY s1.lastfirst
 ]
 
 {
-"dcid" : "~(s1.dcid)",
-"studentid" : "~(s1.id)",
-"student" : "~(s1.lastfirst)",
-"schoolName" : "~(s2.name)",
-"startingBalance" : "~(s1.balance2)",
-"runningBalance" : "~(transactions)",
-"currentBalance" : "~(s1.balance1)"
+"dcid" : "~(s1.dcid;json)",
+"studentid" : "~(s1.id;json)",
+"student" : "~(s1.lastfirst;json)",
+"schoolName" : "~(s2.name;json)",
+"startingBalance" : "~(s1.balance2;json)",
+"runningBalance" : "~(transactions;json)",
+"currentBalance" : "~(s1.balance1;json)"
 },
 [/tlist_sql]
 {}

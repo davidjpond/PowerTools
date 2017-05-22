@@ -35,15 +35,15 @@ AND s2.school_number = c1.schoolid
 ORDER BY lastfirst
 ]
 {
-"dcid" : "~(s1.dcid)",
-"studentid" : "~(s1.id)",
-"student" : "~(s1.lastfirst)",
-"schoolName" : "~(s2.name)",
-"courseName" : "~(c3.course_name)",
-"courseNumber" : "~(c1.course_number)",
-"sectionNumber" : "~(c1.section_number)",
-"yearID" : "~(YearID)",
-"termID" : "~(TermID)"
+"dcid" : "~(s1.dcid;json)",
+"studentid" : "~(s1.id;json)",
+"student" : "~(s1.lastfirst;json)",
+"schoolName" : "~(s2.name;json)",
+"courseName" : "~(c3.course_name;json)",
+"courseNumber" : "~(c1.course_number;json)",
+"sectionNumber" : "~(c1.section_number;json)",
+"yearID" : "~(YearID;json)",
+"termID" : "~(TermID;json)"
 },
 [/tlist_sql]
 {}

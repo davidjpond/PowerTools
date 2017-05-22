@@ -26,10 +26,10 @@ ORDER BY SchoolName
 , d1.letter
 ]
 {
-"letter" : "~(name)",
-"schoolName" : "~(schoolid)",
-"yearId" : "~(yearid)",
-"count" : "~(count)"
+"letter" : "~(name;json)",
+"schoolName" : "~(schoolid;json)",
+"yearId" : "~(yearid;json)",
+"count" : "~(count;json)"
 },
 [/tlist_sql]
 {}

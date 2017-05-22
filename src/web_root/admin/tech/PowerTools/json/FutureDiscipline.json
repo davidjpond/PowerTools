@@ -14,11 +14,11 @@ ORDER BY s1.lastfirst
 , l1.discipline_actiondate
 	]
 {
-"logdcid" : "~(l1.dcid)",
-"dcid" : "~(s1.dcid)",
-"student" : "~(s1.lastfirst)",
-"date" : "~(s1.discipline_actiondate)",
-"logEntry" : "~(l1.entry)"
+"logdcid" : "~(l1.dcid;json)",
+"dcid" : "~(s1.dcid;json)",
+"student" : "~(s1.lastfirst;json)",
+"date" : "~(s1.discipline_actiondate;json)",
+"logEntry" : "~(l1.entry;json)"
 },
 [/tlist_sql]
 {}

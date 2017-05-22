@@ -11,9 +11,9 @@ WHERE c1.course_number != c2.course_number
 ORDER BY c1.id
 ]
     {
-      "id" : "~(c1.id)",
-      "badval" : "~(c1.course_number)",
-      "goodval" : "~(c2.course_number)"
+      "id" : "~(c1.id;json)",
+      "badval" : "~(c1.course_number;json)",
+      "goodval" : "~(c2.course_number;json)"
     },
 [/tlist_sql]
     {}

@@ -12,7 +12,7 @@ WHERE id = s2.id)
 ORDER BY s2.dcid
 ]
     {
-      "dcid" : "~(s2.dcid)"
+      "dcid" : "~(s2.dcid;json)"
     },
 [/tlist_sql]
 {}

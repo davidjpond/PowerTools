@@ -30,12 +30,12 @@ ORDER BY f1.yearid
 , f1.name
 ]
 {
-"schoolName" : "~(s1.name)",
-"fte" : "~(f1.name)",
-"schoolYear" : "~(f1.yearid)",
-"attendanceModeCode" : "~(f1.dflt_att_mode_code)",
-"attendanceConversion" : "~(f1.dflt_conversion_mode_code)",
-"calc" : "~(att_calccntpresentsabsences)"
+"schoolName" : "~(s1.name;json)",
+"fte" : "~(f1.name;json)",
+"schoolYear" : "~(f1.yearid;json)",
+"attendanceModeCode" : "~(f1.dflt_att_mode_code;json)",
+"attendanceConversion" : "~(f1.dflt_conversion_mode_code;json)",
+"calc" : "~(att_calccntpresentsabsences;json)"
 },
 [/tlist_sql]
 {}

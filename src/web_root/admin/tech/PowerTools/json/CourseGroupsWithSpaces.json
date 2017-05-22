@@ -27,10 +27,10 @@ AND name like '% '
 ORDER BY name
 ]
 {
-"dcid" : "~(g1.dcid",
-"courseGroup" : "~(g1.name)",
-"type" : "~(g1.ValueLi)",
-"schoolName" : "~(g1.Schoolid)"
+"dcid" : "~(g1.dcid;json)",
+"courseGroup" : "~(g1.name;json)",
+"type" : "~(g1.ValueLi;json)",
+"schoolName" : "~(g1.Schoolid;json)"
 },
 [/tlist_sql]
 {}

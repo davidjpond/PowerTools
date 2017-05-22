@@ -22,12 +22,12 @@ OR s.school_number = 999999
             [/if.district.office]
 ]
 {
-"dcid" : "~(c1.dcid)",
-"id" : "~(c1.id)",
-"courseId" : "~(s2.course_section)",
-        "schoolNumber" : "~(sc.schoolid)",
-"schoolName" : "~(s2.course_sectionsort)",
-"courseName" : "~(t1.lastfirst)"
+"dcid" : "~(c1.dcid;json)",
+"id" : "~(c1.id;json)",
+"courseId" : "~(s2.course_section;json)",
+        "schoolNumber" : "~(sc.schoolid;json)",
+"schoolName" : "~(s2.course_sectionsort;json)",
+"courseName" : "~(t1.lastfirst;json)"
 },
 [/tlist_sql]
 {}

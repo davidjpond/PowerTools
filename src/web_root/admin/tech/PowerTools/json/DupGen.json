@@ -48,20 +48,20 @@ having count(*)>1
 ORDER BY cat
 ]
 {
-  "cat" : "~(g.cat)",
-    "name" : "~(g.name)",
-    "value" : "~(g.value)",
-    "valueli" : "~(g.valueli)",
-    "valueli2": "~(g.valueli2)",
-  "valueli3" :"~(g.valueli3)",
-  "valueli4" :"~(g.valueli4)",
-  "valuer" : "~(g.valuer)",
-  "valuer2": "~(g.valuer2)",
-  "valuet" : "~(g.valuet)",
-  "valuet2" : "~(g.valuet2)",
-    "yearid" : "~(g.yearid)",
-    "schoolName" : "~(s.name)",
-    "count" : " ~(count)"
+  "cat" : "~(g.cat;json)",
+    "name" : "~(g.name;json)",
+    "value" : "~(g.value;json)",
+    "valueli" : "~(g.valueli;json)",
+    "valueli2": "~(g.valueli2;json)",
+  "valueli3" :"~(g.valueli3;json)",
+  "valueli4" :"~(g.valueli4;json)",
+  "valuer" : "~(g.valuer;json)",
+  "valuer2": "~(g.valuer2;json)",
+  "valuet" : "~(g.valuet;json)",
+  "valuet2" : "~(g.valuet2;json)",
+    "yearid" : "~(g.yearid;json)",
+    "schoolName" : "~(s.name;json)",
+    "count" : " ~(count;json)"
 },
  [/tlist_sql]
 {}
