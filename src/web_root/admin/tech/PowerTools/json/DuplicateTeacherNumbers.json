@@ -19,13 +19,13 @@ WHERE t1.staffstatus = 1
 ORDER BY t1.lastfirst;
 	]
 {
-"dcid" : "~(t1.dcid)",
-"teacher" : "~(t1.lastfirst)",
-"schoolName" : "~(s1.name)",
-"teacher2dcid" : "~(t2.dcid)",
-"teacher2" : "~(t2.lastfirst)",
-"teacher2SchoolName" : "~(s2.name)",
-"teacherNumber" : "~(t1.teachernumber)"
+"dcid" : "~(t1.dcid;json)",
+"teacher" : "~(t1.lastfirst;json)",
+"schoolName" : "~(s1.name;json)",
+"teacher2dcid" : "~(t2.dcid;json)",
+"teacher2" : "~(t2.lastfirst;json)",
+"teacher2SchoolName" : "~(s2.name;json)",
+"teacherNumber" : "~(t1.teachernumber;json)"
 },
 [/tlist_sql]
 {}

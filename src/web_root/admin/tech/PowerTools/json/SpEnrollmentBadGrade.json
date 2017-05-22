@@ -62,15 +62,15 @@ AND r1.grade_level != s2.gradelevel
 ORDER BY lastfirst
 ]
 {
-"dcid" : "~(dcid)",
-"studentid" : "~(id)",
-"student" : "~(lastfirst)",
-"schoolName" : "~(schoolname)",
-"programName" : "~(name)",
-"gradeLevel" : "~(s1.grade_level)",
-"programGrade" : "~(s2.grade_level)",
-"entryDate" : "~(entrydate)",
-"exitDate" : "~(exitdate)"
+"dcid" : "~(dcid;json)",
+"studentid" : "~(id;json)",
+"student" : "~(lastfirst;json)",
+"schoolName" : "~(schoolname;json)",
+"programName" : "~(name;json)",
+"gradeLevel" : "~(s1.grade_level;json)",
+"programGrade" : "~(s2.grade_level;json)",
+"entryDate" : "~(entrydate;json)",
+"exitDate" : "~(exitdate;json)"
 },
 [/tlist_sql]
 {}

@@ -49,13 +49,13 @@ SELECT *
 	ORDER BY lastfirst)
 ]
 {
-"dcid" : "~(dcid)",
-"studentid" : "~(s1.id)",
-"student" : "~(lastfirst)",
-"schoolName" : "~(name)",
-"gradeLevel" : "~(grade_level)",
-"entryDate" : "~(entrydate)",
-"exitDate" : "~(exitdate)"
+"dcid" : "~(dcid;json)",
+"studentid" : "~(s1.id;json)",
+"student" : "~(lastfirst;json)",
+"schoolName" : "~(name;json)",
+"gradeLevel" : "~(grade_level;json)",
+"entryDate" : "~(entrydate;json)",
+"exitDate" : "~(exitdate;json)"
     },
 [/tlist_sql]
 {}

@@ -62,12 +62,12 @@ AND Schoolid=r1.schoolid)
 ORDER BY lastfirst)
 ]
 {
-"dcid" : "~(s1.dcid)",
-"studentid" : "~(s1.id)",
-"student" : "~(s1.lastfirst)",
-"schoolName" : "~(s2.name)",
-"entryDate" : "~(s1.Entrydate)",
-"exitDate" : "~(s1.Exitdate)"
+"dcid" : "~(s1.dcid;json)",
+"studentid" : "~(s1.id;json)",
+"student" : "~(s1.lastfirst;json)",
+"schoolName" : "~(s2.name;json)",
+"entryDate" : "~(s1.Entrydate;json)",
+"exitDate" : "~(s1.Exitdate;json)"
 },
 [/tlist_sql]
 {}

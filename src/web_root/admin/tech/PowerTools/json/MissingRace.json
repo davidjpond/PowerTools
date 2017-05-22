@@ -64,13 +64,13 @@
     , s1.dcid
 	]
   {
-    "dcid" : "~(s1.dcid)",
-    "studentid" : "~(s1.id)",
-    "student" : "~(s1.lastfirst)",
-	"ethnicity" : "~(s1.ethnicity)",
-	"race" : "~(s2.race)",
-	"fedEthnicity" : "~(s1.Fedethnicity)",
-	"schoolName" : "~(s3.name)"
+    "dcid" : "~(s1.dcid;json)",
+    "studentid" : "~(s1.id;json)",
+    "student" : "~(s1.lastfirst;json)",
+	"ethnicity" : "~(s1.ethnicity;json)",
+	"race" : "~(s2.race;json)",
+	"fedEthnicity" : "~(s1.Fedethnicity;json)",
+	"schoolName" : "~(s3.name;json)"
   },
 [/tlist_sql]
   {}

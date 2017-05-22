@@ -18,12 +18,12 @@ WHERE (t2.ID IS NULL
 ORDER BY t1.ID
 	]
 {
-"dcid" : "~(t1.dcid)",
-"id" : "~(t1.id)",
-"teacher" : "~(t2.lastfirst)",
-"teacherid" : "~(t1.teacherid)",
-"raceCode" : "~(g1.name)",
-"raceCodeId" : "~(t1.racecd)"
+"dcid" : "~(t1.dcid;json)",
+"id" : "~(t1.id;json)",
+"teacher" : "~(t2.lastfirst;json)",
+"teacherid" : "~(t1.teacherid;json)",
+"raceCode" : "~(g1.name;json)",
+"raceCodeId" : "~(t1.racecd;json)"
 },
 [/tlist_sql]
 {}

@@ -25,13 +25,13 @@ OR REGEXP_LIKE(transtype, 'G|C'))
 ~[if.is.a.school]AND g1.schoolid = ~[v.curschoolid][/if.is.a.school]
 ]
 {
-"dcid" : "~(dcid)",
-"studentid" : "~(s1.id)",
-"student" : "~(lastfirst)",
-"schoolName" : "~(schoolname)",
-"date" : "~(date)",
-"transType" : "~(transtype)",
-"currentBal" : "~(balance1)"
+"dcid" : "~(dcid;json)",
+"studentid" : "~(s1.id;json)",
+"student" : "~(lastfirst;json)",
+"schoolName" : "~(schoolname;json)",
+"date" : "~(date;json)",
+"transType" : "~(transtype;json)",
+"currentBal" : "~(balance1;json)"
 },
 [/tlist_sql]
 {}

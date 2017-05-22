@@ -11,10 +11,10 @@ WHERE i1.incident_ts > CURRENT_TIMESTAMP
 ORDER BY i1.incident_id
 	]
 {
-"incidentId" : "~(i1.incident_id)",
-"schoolName" : "~(s1.name)",
-"incidentDate" : "~(i1.incident_date)",
-"title" : "~(i1.incident_title)"
+"incidentId" : "~(i1.incident_id;json)",
+"schoolName" : "~(s1.name;json)",
+"incidentDate" : "~(i1.incident_date;json)",
+"title" : "~(i1.incident_title;json)"
 },
 [/tlist_sql]
 {}

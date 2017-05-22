@@ -53,13 +53,13 @@ ORDER BY SchoolName
 , BellScheduleName
 ]
 {
-"name" : "~(b2.name)",
-"period" : "~(p1.period_number)",
-"schoolName" : "~(b2.schoolid)",
-"yearId" : "~(b2.yearid)",
-"bellScheduleItemDcid" : "~(b1.dcid)",
-"bellScheduleItemId" : "~(b1.id)",
-"count" : "~(count)"
+"name" : "~(b2.name;json)",
+"period" : "~(p1.period_number;json)",
+"schoolName" : "~(b2.schoolid;json)",
+"yearId" : "~(b2.yearid;json)",
+"bellScheduleItemDcid" : "~(b1.dcid;json)",
+"bellScheduleItemId" : "~(b1.id;json)",
+"count" : "~(count;json)"
 },
 [/tlist_sql]
 {}

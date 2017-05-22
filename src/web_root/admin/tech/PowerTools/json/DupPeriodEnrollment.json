@@ -65,13 +65,13 @@ AND cc1.schoolid = cc2.schoolid
 ~[if.~(gpv.curyearonly)=1]AND trunc(cc1.termid/100) = trunc(~[v.curtermid]/100)[/if]
 ORDER BY cc1.lastfirst]
 {
-"dcid" : "~(cc1.dcid)",
-"studentid" : "~(cc1.studentid)",
-"student" : "~(cc1.lastfirst)",
-"schoolName" : "~(cc1.schoolname)",
-"studentNumber" : "~(cc1.student_number)",
-"dateEnrolled" : "~(cc1.dateenrolled)",
-"periodNumber" : "~(cc1.period_number)"
+"dcid" : "~(cc1.dcid;json)",
+"studentid" : "~(cc1.studentid;json)",
+"student" : "~(cc1.lastfirst;json)",
+"schoolName" : "~(cc1.schoolname;json)",
+"studentNumber" : "~(cc1.student_number;json)",
+"dateEnrolled" : "~(cc1.dateenrolled;json)",
+"periodNumber" : "~(cc1.period_number;json)"
 },
 [/tlist_sql]
 {}

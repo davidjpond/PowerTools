@@ -19,13 +19,13 @@ ON t2.schoolid = s2.school_number
 ORDER BY t1.teachernumber
 ]
 {
-"teacherNumber" : "~(t1.teachernumber)",
-"dcid" : "~(t1.dcid)",
-"teacher" : "~(t1.lastfirst)",
-"schoolName" : "~(s3.name)",
-"teacher2dcid" : "~(t2.dcid)",
-"teacher2" : "~(t2.lastfirst)",
-"school2Name" : "~(s2.name)"
+"teacherNumber" : "~(t1.teachernumber;json)",
+"dcid" : "~(t1.dcid;json)",
+"teacher" : "~(t1.lastfirst;json)",
+"schoolName" : "~(s3.name;json)",
+"teacher2dcid" : "~(t2.dcid;json)",
+"teacher2" : "~(t2.lastfirst;json)",
+"school2Name" : "~(s2.name;json)"
 },
 [/tlist_sql]
 {}

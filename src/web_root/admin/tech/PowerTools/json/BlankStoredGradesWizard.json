@@ -10,7 +10,7 @@ AND comment_value IS NULL
 ~[if.is.a.school]AND s2.schoolid = ~[v.curschoolid][/if.is.a.school]
 ]
     {
-      "dcid" : "~(s1.dcid)"
+      "dcid" : "~(s1.dcid;json)"
     },
 [/tlist_sql]
 {}

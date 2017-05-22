@@ -24,13 +24,13 @@ ORDER BY s2.lastfirst
 ]
 
 {
-"dcid" : "~(dcid)",
-"studentid" : "~(s2.id)",
-"student" : "~(lastfirst)",
-"schoolName" : "~(schoolname)",
-"programName" : "~(name)",
-"entryDate" : "~(entrydate)",
-"exitDate" : "~(exitdate)"
+"dcid" : "~(dcid;json)",
+"studentid" : "~(s2.id;json)",
+"student" : "~(lastfirst;json)",
+"schoolName" : "~(schoolname;json)",
+"programName" : "~(name;json)",
+"entryDate" : "~(entrydate;json)",
+"exitDate" : "~(exitdate;json)"
 },
 [/tlist_sql]
 {}

@@ -44,14 +44,14 @@ OR (c1.course_number IS NULL
 ORDER BY s1.DCID
 	]
 {
-"dcid" : "~(s1.dcid)",
-"student" : "~(s2.lastfirst)",
-"studentId" : "~(s1.studentid)",
-"courseSection" : "~(s3.course_section)",
-"courseSectionSort" : "~(s3.course_sectionsort)",
-"courseName" : "~(s1.coursename)",
-"termId" : "~(s1.termid)",
-"schoolName" : "~(s1.schoolname)"
+"dcid" : "~(s1.dcid;json)",
+"student" : "~(s2.lastfirst;json)",
+"studentId" : "~(s1.studentid;json)",
+"courseSection" : "~(s3.course_section;json)",
+"courseSectionSort" : "~(s3.course_sectionsort;json)",
+"courseName" : "~(s1.coursename;json)",
+"termId" : "~(s1.termid;json)",
+"schoolName" : "~(s1.schoolname;json)"
 },
 [/tlist_sql]
 {}

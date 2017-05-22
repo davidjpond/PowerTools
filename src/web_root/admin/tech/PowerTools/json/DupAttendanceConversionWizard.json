@@ -19,9 +19,9 @@ AND schoolid = a2.schoolid)
 ORDER BY a2.id
 ]
     {
-      "dcid" : "~(a2.dcid)",
-      "goodval" : "~(a1.id)",
-      "badval" : "~(a2.id)"
+      "dcid" : "~(a2.dcid;json)",
+      "goodval" : "~(a1.id;json)",
+      "badval" : "~(a2.id;json)"
     },
 [/tlist_sql]
     {}

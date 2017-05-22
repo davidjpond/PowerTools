@@ -36,16 +36,16 @@ OR t2.id IS NULL)
 ORDER BY s1.ID
 ]
 {
-"dcid" : "~(c1.dcid)",
-"id" : "~(c1.id)",
-"courseSection" : "~(s2.course_section)",
-"courseSectionSort" : "~(s2.course_sectionsort)",
-"teacher" : "~(t1.lastfirst)",
-"teacherId" : "~(s1.teacher)",
-"schoolName" : "~(s2.schoolname)",
-"schoolId" : "~(s1.schoolid)",
-"schoolTermId" : "~(t2.id)",
-"sectionTermId" : "~(s1.temrid)"
+"dcid" : "~(c1.dcid;json)",
+"id" : "~(c1.id;json)",
+"courseSection" : "~(s2.course_section;json)",
+"courseSectionSort" : "~(s2.course_sectionsort;json)",
+"teacher" : "~(t1.lastfirst;json)",
+"teacherId" : "~(s1.teacher;json)",
+"schoolName" : "~(s2.schoolname;json)",
+"schoolId" : "~(s1.schoolid;json)",
+"schoolTermId" : "~(t2.id;json)",
+"sectionTermId" : "~(s1.temrid;json)"
 },
 [/tlist_sql]
 {}

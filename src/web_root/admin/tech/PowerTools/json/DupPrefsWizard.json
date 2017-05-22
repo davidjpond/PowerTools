@@ -19,7 +19,7 @@ AND p2.id < p1.id))
 OR p1.name IS NULL
 ]
 {
-"dcid": "~(p1.dcid)"},
+"dcid": "~(p1.dcid;json)"},
 [/tlist_sql]
 {}
 ]

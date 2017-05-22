@@ -15,12 +15,12 @@
 	~[if.is.a.school]AND s1.schoolid = ~[v.curschoolid][/if.is.a.school]
 ]
 {
-"dcid" : "~(dcid)",
-"studentid" : "~(s1.id)",
-"student" : "~(lastfirst)",
-"gradeLevel" : "~(grade_level)",
-"enrollmentStatus" : "~(Enrollment Status)",
-"pendingDate" : "~(penddate)"
+"dcid" : "~(dcid;json)",
+"studentid" : "~(s1.id;json)",
+"student" : "~(lastfirst;json)",
+"gradeLevel" : "~(grade_level;json)",
+"enrollmentStatus" : "~(Enrollment Status;json)",
+"pendingDate" : "~(penddate;json)"
 },
 [/tlist_sql]
 {}

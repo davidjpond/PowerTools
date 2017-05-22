@@ -41,15 +41,15 @@ HAVING count(*) > 1
 ORDER BY s1.lastfirst
 ]
 {
-"dcid" : "~(dcid)",
-"studentid" : "~(s1.id)",
-"student" : "~(lastfirst)",
-"schoolName" : "~(schoolname)",
-"attDate" : "~(att_date)",
-"ccID" : "~(CCID)",
-"periodID" : "~(PeriodID)",
-"attendanceType" : "~(Attendancetype)",
-"count" : "~(count)"
+"dcid" : "~(dcid;json)",
+"studentid" : "~(s1.id;json)",
+"student" : "~(lastfirst;json)",
+"schoolName" : "~(schoolname;json)",
+"attDate" : "~(att_date;json)",
+"ccID" : "~(CCID;json)",
+"periodID" : "~(PeriodID;json)",
+"attendanceType" : "~(Attendancetype;json)",
+"count" : "~(count;json)"
 },
 [/tlist_sql]
 {}

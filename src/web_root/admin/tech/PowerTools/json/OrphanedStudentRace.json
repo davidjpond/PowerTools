@@ -21,12 +21,12 @@ OR g1.Name IS NULL)
 ORDER BY s1.DCID
 	]
 {
-"dcid" : "~(s1.dcid)",
-"id" : "~(s1.id)",
-"student" : "~(s2.lastfirst)",
-"studentid" : "~(s1.studentid)",
-"raceCode" : "~(g1.name)",
-"raceCodeId" : "~(s1.racecd)"
+"dcid" : "~(s1.dcid;json)",
+"id" : "~(s1.id;json)",
+"student" : "~(s2.lastfirst;json)",
+"studentid" : "~(s1.studentid;json)",
+"raceCode" : "~(g1.name;json)",
+"raceCodeId" : "~(s1.racecd;json)"
 },
 			[/tlist_sql]
 {}

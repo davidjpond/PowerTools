@@ -35,13 +35,13 @@ AND r1.schoolid = s2.schoolid
 ORDER BY s1.lastfirst
 ]
 {
-"dcid" : "~(s1.dcid)",
-"studentid" : "~(s1.id)",
-"student" : "~(s1.lastfirst)",
-"programName" : "~(g1.Name)",
-"schoolName" : "~(s3.name)",
-"entryDate" : "~(s2.Enter_Date)",
-"exitDate" : "~(s2.Exit_date)"
+"dcid" : "~(s1.dcid;json)",
+"studentid" : "~(s1.id;json)",
+"student" : "~(s1.lastfirst;json)",
+"programName" : "~(g1.Name;json)",
+"schoolName" : "~(s3.name;json)",
+"entryDate" : "~(s2.Enter_Date;json)",
+"exitDate" : "~(s2.Exit_date;json)"
 },
 [/tlist_sql]
 {}

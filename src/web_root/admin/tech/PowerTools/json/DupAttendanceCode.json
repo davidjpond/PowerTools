@@ -26,10 +26,10 @@ ORDER BY SchoolName
 , a1.att_code
   ]
 {
-"attendanceCode" : "~(att_code)",
-"yearId" : "~(yearid)",
-"schoolName" : "~(schoolid)",
-"count" : "~(count)"
+"attendanceCode" : "~(att_code;json)",
+"yearId" : "~(yearid;json)",
+"schoolName" : "~(schoolid;json)",
+"count" : "~(count;json)"
 },
 [/tlist_sql]
 {}

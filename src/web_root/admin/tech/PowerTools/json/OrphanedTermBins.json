@@ -28,13 +28,13 @@ OR s1.ID IS NULL
 ORDER BY t1.ID
 	]
 {
-"dcid" : "~(t1.dcid)",
-"id" : "~(t1.id)",
-"storeCode" : "~(t1.storecode)",
-"term" : "~(t2.name)",
-"schoolName" : "~(s1.name)",
-"schoolId" : "~(t1.schoolid)",
-"termName" : "~(s1.namesort)"
+"dcid" : "~(t1.dcid;json)",
+"id" : "~(t1.id;json)",
+"storeCode" : "~(t1.storecode;json)",
+"term" : "~(t2.name;json)",
+"schoolName" : "~(s1.name;json)",
+"schoolId" : "~(t1.schoolid;json)",
+"termName" : "~(s1.namesort;json)"
 },
 [/tlist_sql]
 {}

@@ -26,8 +26,8 @@ AND yearid = a2.yearid)
 ORDER BY a2.id
 ]
     {
-      "goodval" : "~(a1.id)",
-      "badval" : "~(a2.id)"
+      "goodval" : "~(a1.id;json)",
+      "badval" : "~(a2.id;json)"
     },
 [/tlist_sql]
     {}

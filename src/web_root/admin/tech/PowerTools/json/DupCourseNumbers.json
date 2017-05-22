@@ -8,8 +8,8 @@ HAVING COUNT(id)>1
 ORDER BY course_number
 ]
 {
-"courseNumber" : "~(course_number)",
-"count" : "~(count)"
+"courseNumber" : "~(course_number;json)",
+"count" : "~(count;json)"
 },
 [/tlist_sql]
 {}

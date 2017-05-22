@@ -26,14 +26,14 @@ OR s3.ID IS NULL)
 ORDER BY s1.ID
 ]
 {
-"dcid" : "~(r1.dcid)",
-"id" : "~(r1.id)",
-"student" : "~(s1.lastfirst)",
-"studentId" : "~(s1.studentid)",
-"programName" : "~(g1.name)",
-"programId" : "~(s1.programid)",
-"schoolName" : "~(s3.name)",
-"schoolId" : "~(s1.schoolid)"
+"dcid" : "~(r1.dcid;json)",
+"id" : "~(r1.id;json)",
+"student" : "~(s1.lastfirst;json)",
+"studentId" : "~(s1.studentid;json)",
+"programName" : "~(g1.name;json)",
+"programId" : "~(s1.programid;json)",
+"schoolName" : "~(s3.name;json)",
+"schoolId" : "~(s1.schoolid;json)"
 },
 [/tlist_sql]
 {}

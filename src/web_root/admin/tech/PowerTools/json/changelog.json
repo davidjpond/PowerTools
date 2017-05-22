@@ -1,5 +1,73 @@
 [
   {
+    "version" : "5.0.8",
+    "changes" : [
+      {
+        "item": "Corrected all queries to allow for special characters in the data - particularly quotes"
+      }
+    ]
+  },
+  {
+    "version" : "5.0.7",
+    "changes" : [
+      {
+        "item": "Corrected an issue where Safari would not display the reports"
+      }
+    ]
+  },
+  {
+    "version" : "5.0.6",
+    "changes" : [
+      {
+        "item": "Corrected an issue where meeting attendance records would not display in the ADA Troubleshooter"
+      },
+	  {
+        "item": "Corrected an issue where substrings of credittypes would appear as valid in the GPA Valitation tool"
+      },
+	  {
+        "item": "Corrected an issue where grades excluded in the single year special case where only term is selected would erroneously flag the term as the issue instead of the year in the GPA Validation tool"
+      }
+    ]
+  },
+  {
+    "version" : "5.0.5",
+    "changes" : [
+      {
+        "item": "Corrected an issue with the GPA Validation tool which caused grades with no credit types to erroneously be included in the list of included grades"
+      }
+    ]
+  },
+  {
+    "version" : "5.0.4",
+    "changes" : [
+      {
+        "item": "Adjusted the GPA Validation tool to allow for split credits"
+      }
+    ]
+  },
+  {
+    "version" : "5.0.3",
+    "changes" : [
+      {
+        "item": "Corrected an issue where the report links did not retain the Current Year setting from the master Diagnostic Reports when visiting a child link"
+      },
+	  {
+        "item": "Corrected an issue where the Orphaned Sections Wizard would not delete data due to a lack of the \"Delete Section Password.\" Added the ability to enter the password"
+      },
+	  {
+        "item": "Corrected an issue with the Students with Section Enrollments Outside School Enrollments report where it incorrectly reported sections which spanned multiple School enrollments, however the school enrollment dates were valid multiple enrollments"
+      }
+    ]
+  },
+  {
+    "version" : "5.0.2",
+    "changes" : [
+      {
+        "item": "Corrected an issue where the Duplicate Bell Schedule Items report would not display the correct link to the Bell Schedule in question"
+      }
+    ]
+  },
+  {
     "version" : "5.0.1",
     "changes" : [
       {

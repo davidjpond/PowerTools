@@ -14,10 +14,10 @@
 	ORDER BY id
   ]
 {
-"id" : "~(id)",
-"hostIp" : "~(host_ip)",
-"userSuppliedName" : "~(user_supplied_name)",
-"serverState" : "~(server_state)"
+"id" : "~(id;json)",
+"hostIp" : "~(host_ip;json)",
+"userSuppliedName" : "~(user_supplied_name;json)",
+"serverState" : "~(server_state;json)"
 },
 [/tlist_sql]
 {}

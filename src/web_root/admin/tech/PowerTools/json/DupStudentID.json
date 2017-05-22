@@ -13,11 +13,11 @@ OR s1.lastfirst < s2.lastfirst
 ORDER BY s1.lastfirst
 ]
 {
-"id" : "~(id)",
-"dcid" : "~(s1.dcid)",
-"student1" : "~(s1.lastfirst)",
-"student2dcid" : "~(s2.dcid)",
-"student2" : "~(s2.lastfirst)"
+"id" : "~(id;json)",
+"dcid" : "~(s1.dcid;json)",
+"student1" : "~(s1.lastfirst;json)",
+"student2dcid" : "~(s2.dcid;json)",
+"student2" : "~(s2.lastfirst;json)"
 },
 [/tlist_sql]
 {}

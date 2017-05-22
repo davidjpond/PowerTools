@@ -45,7 +45,7 @@ AND g1.yearid IS NULL))
 AND g2.id < g1.id)
 ]
 {
-"dcid" : "~(g1.dcid)"
+"dcid" : "~(g1.dcid;json)"
 },
 [/tlist_sql]
 {}

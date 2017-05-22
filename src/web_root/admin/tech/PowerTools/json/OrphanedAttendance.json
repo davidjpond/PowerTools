@@ -72,19 +72,19 @@ WHERE (s1.id IS NULL
 ORDER BY a1.ID
 	]
 {
-		"attendanceDcid" : "~(a1.dcid)",
-		"attendanceId" : "~(a1.id)",
-		"student" : "~(s1.lastfirst)",
-		"studentId" : "~(a1.studentid)",
-		"attendanceCode" : "~(a1.att_code)",
-		"attendanceCodeId" : "~(a2.id)",
-		"attendanceRecordCodeId" : "~(a1.att_codesort)",
-		"courseSection" : "~(c1.course_section)",
-		"courseSectionSort" : "~(c1.course_sectionsort)",
-		"period" : "~(p1.period)",
-		"periodId" : "~(a1.periodid)",
-		"schoolName" : "~(s2.Schoolname)",
-		"schoolNumber" : "~(s2.schoolid)"
+		"attendanceDcid" : "~(a1.dcid;json)",
+		"attendanceId" : "~(a1.id;json)",
+		"student" : "~(s1.lastfirst;json)",
+		"studentId" : "~(a1.studentid;json)",
+		"attendanceCode" : "~(a1.att_code;json)",
+		"attendanceCodeId" : "~(a2.id;json)",
+		"attendanceRecordCodeId" : "~(a1.att_codesort;json)",
+		"courseSection" : "~(c1.course_section;json)",
+		"courseSectionSort" : "~(c1.course_sectionsort;json)",
+		"period" : "~(p1.period;json)",
+		"periodId" : "~(a1.periodid;json)",
+		"schoolName" : "~(s2.Schoolname;json)",
+		"schoolNumber" : "~(s2.schoolid;json)"
     },
 			[/tlist_sql]
 {}

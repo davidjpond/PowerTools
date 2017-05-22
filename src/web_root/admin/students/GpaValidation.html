@@ -21,78 +21,78 @@
       };
     }
     var powerTools = powerTools || {
-      gpaValidation: {
-        studentFrn: '~(frn)',
-        gpaMethod: '',
-        gpa: {},
-        check: 0,
-        methodList: [],
-        methodInfo: {},
-        gradeScale: [],
-        includedGrades: [],
-        excludedGrades: [],
-        excludedTriggers: [],
-        projectedGrades: [],
-        errors: [],
-        /* Checks for duplicate stored grades and prints them in the error div */
-        checkForDuplicates: function() {
-          var duplicateRecords = [];
-          $j.getJSON('/admin/tech/PowerTools/json/DupStoredGrades.json?frn=' + powerTools.gpaValidation.studentFrn,
-            function(result) {
-              result.ResultSet.pop();
-              duplicateRecords = result.ResultSet;
+        gpaValidation: {
+          studentFrn: '~(frn)',
+          gpaMethod: '',
+          gpa: {},
+          check: 0,
+          methodList: [],
+          methodInfo: {},
+          gradeScale: [],
+          includedGrades: [],
+          excludedGrades: [],
+          excludedTriggers: [],
+          projectedGrades: [],
+          errors: [],
+          /* Checks for duplicate stored grades and prints them in the error div */
+          checkForDuplicates: function() {
+            var duplicateRecords = [];
+            $j.getJSON('/admin/tech/PowerTools/json/DupStoredGrades.json?frn=' + powerTools.gpaValidation.studentFrn,
+              function(result) {
+                result.ResultSet.pop();
+                duplicateRecords = result.ResultSet;
+              });
+            for (var i = 0; i < duplicateRecords.length; i++) {
+              powerTools.GpaValidation.displayError('Duplicate Stored Grade For: ' + duplicateRecords[i].storeCode + ',' +
+                duplicateRecords[i].courseName);
+            }
+          },
+          /*this will build the drop down list for the methods */
+          retrieveGpaMethods: function() {
+            $j.getJSON('/admin/tech/PowerTools/json/gpaValidation/grabMethods.json', function(result) {
+              result.pop();
+              powerTools.gpaValidation.methodList = result;
+            }).done(function() {
+              powerTools.gpaValidation.displayGpaMethods();
             });
-          for (var i = 0; i < duplicateRecords.length; i++) {
-            powerTools.GpaValidation.displayError('Duplicate Stored Grade For: ' + duplicateRecords[i].storeCode + ',' +
-              duplicateRecords[i].courseName);
-          }
-        },
-        /*this will build the drop down list for the methods */
-        retrieveGpaMethods: function() {
-          $j.getJSON('/admin/tech/PowerTools/json/gpaValidation/grabMethods.json', function(result) {
-            result.pop();
-            powerTools.gpaValidation.methodList = result;
-          }).done(function() {
-            powerTools.gpaValidation.displayGpaMethods();
-          });
-        },
-        displayGpaMethods: function() {
-          $j('#methodSelection').append(
-            '<select id="methodSelector" href="#">' +
-            '<option value="-1"> ...Select Method...</option>'
-          );
-          for (var i = 0; i < powerTools.gpaValidation.methodList.length; i++) {
-            $j('#methodSelector').append('<option value="' + powerTools.gpaValidation.methodList[i].dcid + '">' +
-              powerTools.gpaValidation.methodList[i].methodName + '</option>');
-          }
-          $j('#methodSelection').append(
-            '</select>'
-          )
-        },
-        /* On submit this will get the method info and stores it as strings in gpaMethodInfo[] */
-        submitMethod: function() {
-          powerTools.gpaValidation.check = 0;
-          powerTools.gpaValidation.includedGrades = [];
-          powerTools.gpaValidation.excludedGrades = [];
-          powerTools.gpaValidation.excludedTriggers = [];
-          powerTools.gpaValidation.projectedGrades = [];
-          powerTools.gpaValidation.retrieveMethodData();
-        },
-        retrieveMethodData: function() {
-          /* Populate method Info using FRN for DATs to custom fields and DCID for SQL call*/
-          $j.getJSON('/admin/tech/PowerTools/json/gpaValidation/grabMethodInfo.json?frn=' +
-            '006' + powerTools.gpaValidation.gpaMethod + '&dcid=' + powerTools.gpaValidation.gpaMethod, function(result) {
+          },
+          displayGpaMethods: function() {
+            $j('#methodSelection').append(
+              '<select id="methodSelector" href="#">' +
+              '<option value="-1"> ...Select Method...</option>'
+            );
+            for (var i = 0; i < powerTools.gpaValidation.methodList.length; i++) {
+              $j('#methodSelector').append('<option value="' + powerTools.gpaValidation.methodList[i].dcid + '">' +
+                powerTools.gpaValidation.methodList[i].methodName + '</option>');
+            }
+            $j('#methodSelection').append(
+              '</select>'
+            )
+          },
+          /* On submit this will get the method info and stores it as strings in gpaMethodInfo[] */
+          submitMethod: function() {
+            powerTools.gpaValidation.check = 0;
+            powerTools.gpaValidation.includedGrades = [];
+            powerTools.gpaValidation.excludedGrades = [];
+            powerTools.gpaValidation.excludedTriggers = [];
+            powerTools.gpaValidation.projectedGrades = [];
+            powerTools.gpaValidation.retrieveMethodData();
+          },
+          retrieveMethodData: function() {
+            /* Populate method Info using FRN for DATs to custom fields and DCID for SQL call*/
+            $j.getJSON('/admin/tech/PowerTools/json/gpaValidation/grabMethodInfo.json?frn=' +
+              '006' + powerTools.gpaValidation.gpaMethod + '&dcid=' + powerTools.gpaValidation.gpaMethod, function(result) {
               result = JSON.stringify(result).replace(/&nbsp;/g, '');
               /*should NULL calcType = cumulative */
               result = JSON.parse(result);
               powerTools.gpaValidation.methodInfo = result;
             }).done(function() {
-            powerTools.gpaValidation.retrieveGradeScaleInfo();
-          });
-        },
-        retrieveGradeScaleInfo: function() {
-          $j.getJSON('/admin/tech/PowerTools/json/gpaValidation/grabGradeScale.json?gradeScale=' +
-            powerTools.gpaValidation.methodInfo.gradeScale, function(result) {
+              powerTools.gpaValidation.retrieveGradeScaleInfo();
+            });
+          },
+          retrieveGradeScaleInfo: function() {
+            $j.getJSON('/admin/tech/PowerTools/json/gpaValidation/grabGradeScale.json?gradeScale=' +
+              powerTools.gpaValidation.methodInfo.gradeScale, function(result) {
               result.pop();
               if (result.length > 0) {
                 powerTools.gpaValidation.gradeScale = result;
@@ -102,44 +102,46 @@
                 }];
               }
             }).done(function() {
-            powerTools.gpaValidation.retrieveGrades();
-            powerTools.gpaValidation.retrieveGpa();
-          })
-        },
-        /* this will pull all relevant grade records and sort them into either includedGrades[] or excludedGrades[] */
-        retrieveGrades: function() {
-          var gradePushed;
-          var current = [];
-          var thisYearFlag = null;
-          var currentYear;
-          var triggers = {
-            queryTerms: 0,
-            queryGrades: 0,
-            queryYears: 0,
-            queryCreditTypes: 0,
-            countgpa: 0,
-            classrank: 0,
-            honorroll: 0,
-            potentialcrhrs: 0
-          };;
-          /* will get the current year if the method will default to current year */
-          if (powerTools.gpaValidation.methodInfo.calcType != 'current') {
-            $j.ajaxSetup({
-              async: false
-            });
-            $j.getJSON('/admin/tech/PowerTools/json/dataOptions.json', function(result) {
-              currentYear = result.curYearSelect;
-            });
-            if (!powerTools.gpaValidation.methodInfo.queryYears && !powerTools.gpaValidation.methodInfo.queryGrades &&
-              powerTools.gpaValidation.methodInfo.queryTerms) {
-              thisYearFlag = "Yes";
+              powerTools.gpaValidation.retrieveGrades();
+              powerTools.gpaValidation.retrieveGpa();
+            })
+          },
+          /* this will pull all relevant grade records and sort them into either includedGrades[] or excludedGrades[] */
+          retrieveGrades: function() {
+            var gradePushed;
+            var current = [];
+            var thisYearFlag = null;
+            var currentYear;
+            var courseCreditTypeSplit = [];
+			var methodCreditTypeSplit = [];
+            var triggers = {
+              queryTerms: 0,
+              queryGrades: 0,
+              queryYears: 0,
+              queryCreditTypes: 0,
+              countgpa: 0,
+              classrank: 0,
+              honorroll: 0,
+              potentialcrhrs: 0
+            };
+            /* will get the current year if the method will default to current year */
+            if (powerTools.gpaValidation.methodInfo.calcType != 'current') {
+              $j.ajaxSetup({
+                async: false
+              });
+              $j.getJSON('/admin/tech/PowerTools/json/dataOptions.json', function(result) {
+                currentYear = result.curYearSelect;
+              });
+              if (!powerTools.gpaValidation.methodInfo.queryYears && !powerTools.gpaValidation.methodInfo.queryGrades &&
+                powerTools.gpaValidation.methodInfo.queryTerms) {
+                thisYearFlag = "Yes";
+              }
+              $j.ajaxSetup({
+                async: true
+              });
             }
-            $j.ajaxSetup({
-              async: true
-            });
-          }
-          $j.getJSON('/admin/tech/PowerTools/json/gpaValidation/grabGpa.json?frn=' + powerTools.gpaValidation.studentFrn +
-            '&calcType=' + powerTools.gpaValidation.methodInfo.calcType, function(result) {
+            $j.getJSON('/admin/tech/PowerTools/json/gpaValidation/grabGpa.json?frn=' + powerTools.gpaValidation.studentFrn +
+              '&calcType=' + powerTools.gpaValidation.methodInfo.calcType, function(result) {
               result.pop();
               /* if the grades are cumulative or projected this block will trigger */
               if (powerTools.gpaValidation.methodInfo.calcType == 'cumulative' || powerTools.gpaValidation.methodInfo.calcType ==
@@ -151,7 +153,12 @@
                     null || Math.floor(result[i].termid / 100) == currentYear)) {
                     gradePushed += 1;
                   } else {
-                    triggers.queryTerms = 1;
+                	  if(!(isIn(powerTools.gpaValidation.methodInfo.queryTerms, result[i].storecode))){
+                    	triggers.queryTerms = 1;
+                	  }
+                	  if(!(thisYearFlag == null || Math.floor(result[i].termid / 100) == currentYear)){
+                		  triggers.queryYears = 1;
+                	  }
                   }
                   if (isIn(powerTools.gpaValidation.methodInfo.queryGrades, result[i].grade_level)) {
                     gradePushed += 1;
@@ -164,10 +171,27 @@
                   } else {
                     triggers.queryYears = 1;
                   }
-                  if (isIn(powerTools.gpaValidation.methodInfo.queryCreditTypes, result[i].credittype)) {
-                    gradePushed += 1;
-                  } else {
+				  /*credittype check*/
+				  if(powerTools.gpaValidation.methodInfo.queryCreditTypes==""){
+					gradePushed += 1;
+				  }
+                  else if(result[i].credittype == ""){
                     triggers.queryCreditTypes = 1;
+                  }
+                  else{
+					courseCreditTypeSplit = result[i].credittype.split(",");
+					methodCreditTypeSplit = powerTools.gpaValidation.methodInfo.queryCreditTypes.split(",");
+					loop1:
+                    for(var j = 0; j < courseCreditTypeSplit.length; j++){
+						for(var k = 0; k < methodCreditTypeSplit.length; k++){
+						  if (courseCreditTypeSplit[j].trim().toUpperCase()== methodCreditTypeSplit[k].trim().toUpperCase()) {
+							gradePushed += 1;
+							break loop1;
+						  } else if(j == courseCreditTypeSplit.length-1 && k == methodCreditTypeSplit.length-1) {
+							triggers.queryCreditTypes = 1;
+						  }
+						}
+                    }
                   }
                   if ((!powerTools.gpaValidation.methodInfo.queryCountGpa || result[i].querycountgpa == 0) &&
                     (!powerTools.gpaValidation.methodInfo.queryClassRank || result[i].queryclassrank == 0) &&
@@ -246,11 +270,11 @@
                   });
                   $j.getJSON('/admin/tech/PowerTools/json/gpaValidation/grabGpa.json?frn=' + powerTools.gpaValidation.studentFrn +
                     '&calcType=' + 'current', function(result) {
-                      result.pop();
-                      for (var i = 0; i < result.length; i++) {
-                        current.push(result[i]);
-                      }
-                    });
+                    result.pop();
+                    for (var i = 0; i < result.length; i++) {
+                      current.push(result[i]);
+                    }
+                  });
                   $j.ajaxSetup({
                     async: true
                   });
@@ -265,412 +289,412 @@
                 }
               }
             }).done(function() {
-            powerTools.gpaValidation.readyCheck();
-          });
-          /* Returns true if the method is blank or if record exists in the method */
-          function isIn(method, record) {
-            if (!method || method.includes(record)) {
-              return true;
-            }
-            return false;
-          }
-          /* Returns true if the gradeScale is blank or if the grade exists in the grade scale */
-          function validGradeScale(record) {
-            if (!powerTools.gpaValidation.gradeScale == false) {
-              return true;
-            }
-            for (var i = 0; i < powerTools.gpaValidation.gradeScale.length; i++) {
-              if (record.grade == gradeScale[i].gradeLabel) {
+              powerTools.gpaValidation.readyCheck();
+            });
+            /* Returns true if the method is blank or if record exists in the method */
+            function isIn(method, record) {
+              if (!method || method.includes(record)) {
                 return true;
               }
+              return false;
             }
-            return false;
-          }
-          /* returns true if the record is a current course and it meets the projected search critera */
-          function checkForCurrent(record) {
-            for (var j = 0; j < powerTools.gpaValidation.includedGrades.length; j++) {
-              if (Math.floor(powerTools.gpaValidation.includedGrades[j].termid / 100) == Math.floor(record.termid / 100) &&
-                powerTools.gpaValidation.includedGrades[j].course_number == record.course_number) {
-                if (powerTools.gpaValidation.methodInfo.projectExclude == 'anystorecode' && record.storecode !=
-                  powerTools.gpaValidation.includedGrades[j].storecode) {
-                  return false;
-                }
-                if (powerTools.gpaValidation.methodInfo.projectCheckCode == '' &&
-                  powerTools.gpaValidation.includedGrades[j].storeCode != record.storeCode) {
-                  return false;
-                } else if (powerTools.gpaValidation.methodInfo.projectCheckCode == powerTools.gpaValidation.includedGrades[
-                  j].storeCode) {
-                  return false;
+            /* Returns true if the gradeScale is blank or if the grade exists in the grade scale */
+            function validGradeScale(record) {
+              if (!powerTools.gpaValidation.gradeScale == false) {
+                return true;
+              }
+              for (var i = 0; i < powerTools.gpaValidation.gradeScale.length; i++) {
+                if (record.grade == gradeScale[i].gradeLabel) {
+                  return true;
                 }
               }
+              return false;
             }
-            return true;
-          }
-        },
-        /* this will use powerSchool to calculate the gpa for display */
-        retrieveGpa: function() {
-          $j.getJSON('/admin/tech/PowerTools/json/gpaValidation/calculateGpa.json?frn=' + powerTools.gpaValidation.studentFrn +
-            '&gpaMethod="' +
-            encodeURIComponent(powerTools.gpaValidation.methodInfo.methodName) + '"', function(result) {
+            /* returns true if the record is a current course and it meets the projected search critera */
+            function checkForCurrent(record) {
+              for (var j = 0; j < powerTools.gpaValidation.includedGrades.length; j++) {
+                if (Math.floor(powerTools.gpaValidation.includedGrades[j].termid / 100) == Math.floor(record.termid / 100) &&
+                  powerTools.gpaValidation.includedGrades[j].course_number == record.course_number) {
+                  if (powerTools.gpaValidation.methodInfo.projectExclude == 'anystorecode' && record.storecode !=
+                    powerTools.gpaValidation.includedGrades[j].storecode) {
+                    return false;
+                  }
+                  if (powerTools.gpaValidation.methodInfo.projectCheckCode == '' &&
+                    powerTools.gpaValidation.includedGrades[j].storeCode != record.storeCode) {
+                    return false;
+                  } else if (powerTools.gpaValidation.methodInfo.projectCheckCode == powerTools.gpaValidation.includedGrades[
+                      j].storeCode) {
+                    return false;
+                  }
+                }
+              }
+              return true;
+            }
+          },
+          /* this will use powerSchool to calculate the gpa for display */
+          retrieveGpa: function() {
+            $j.getJSON('/admin/tech/PowerTools/json/gpaValidation/calculateGpa.json?frn=' + powerTools.gpaValidation.studentFrn +
+              '&gpaMethod="' +
+              powerTools.gpaValidation.methodInfo.methodName + '"', function(result) {
               powerTools.gpaValidation.gpa = result;
             }).done(function() {
-            powerTools.gpaValidation.readyCheck();
-          });
-        },
-        /* waits to see that all relevant functions have compleated before displaying the data */
-        readyCheck: function() {
-          powerTools.gpaValidation.check++;
-          if (powerTools.gpaValidation.check === 2) {
-            powerTools.gpaValidation.displayGpaData();
-          }
-        },
-        /* Link to edit stored grades to insert into anchor on grade
+              powerTools.gpaValidation.readyCheck();
+            });
+          },
+          /* waits to see that all relevant functions have compleated before displaying the data */
+          readyCheck: function() {
+            powerTools.gpaValidation.check++;
+            if (powerTools.gpaValidation.check === 2) {
+              powerTools.gpaValidation.displayGpaData();
+            }
+          },
+          /* Link to edit stored grades to insert into anchor on grade
            '<a href="/admin/students/esg.html?frn=031' + powerTools.adaTroubleshooter.includedGrades[i].dcid + '">'
            */
-        /* display function shows all grade data: Method, info, and records (included and excluded) */
-        displayGpaData: function() {
-          /* clear Divs before displaying records */
-          $j('#calculations').empty();
-          $j('#method').empty();
-          $j('#includedGrades').empty();
-          $j('#excludedGrades').empty();
-          $j('#projectedGrades').empty();
-          /* Calculations on Grades before displaying the results */
-          var calcRecords = {
-            pointSum: 0,
-            percentSum: 0,
-            addedValueSum: 0,
-            earned: 0,
-            potential: 0,
-            weightedNoAV: 0,
-            simpleNoAV: 0,
-            numOfYears: 0,
-            countOfGrades: 0
-          };
-          changeValues();
-          calcRecords.countOfGrades = powerTools.gpaValidation.includedGrades.length + powerTools.gpaValidation.projectedGrades
-            .length
-          /* For Loop to generate GPA Sums for Calculations Table */
-          for (var i = 0; i < powerTools.gpaValidation.includedGrades.length; i++) {
-            /* Creating sums and gpa_sums for included grades */
-            calcRecords.pointSum += isANumber(Number(powerTools.gpaValidation.includedGrades[i].gpa_points));
-            calcRecords.percentSum += isANumber(Number(powerTools.gpaValidation.includedGrades[i].percent));
-            calcRecords.addedValueSum += isANumber(Number(powerTools.gpaValidation.includedGrades[i].gpa_addedvalue));
-            calcRecords.earned += isANumber(Number(powerTools.gpaValidation.includedGrades[i].earnedcrhrs));
-            calcRecords.potential += isANumber(Number(powerTools.gpaValidation.includedGrades[i].potentialcrhrs));
-            calcRecords.weightedNoAV += Number(powerTools.gpaValidation.includedGrades[i].gpa_points * powerTools.gpaValidation
-              .includedGrades[i].potentialcrhrs);
-            /* Adding projected grades to sums if they exist */
-            if (i < powerTools.gpaValidation.projectedGrades.length) {
-              calcRecords.pointSum += isANumber(Number(powerTools.gpaValidation.projectedGrades[i].gpa_points));
-              calcRecords.percentSum += isANumber(Number(powerTools.gpaValidation.projectedGrades[i].percent));
-              calcRecords.addedValueSum += isANumber(Number(powerTools.gpaValidation.projectedGrades[i].gpa_addedvalue));
-              calcRecords.earned += isANumber(Number(powerTools.gpaValidation.projectedGrades[i].earnedcrhrs));
-              calcRecords.potential += isANumber(Number(powerTools.gpaValidation.projectedGrades[i].potentialcrhrs));
-              calcRecords.weightedNoAV += Number(powerTools.gpaValidation.projectedGrades[i].gpa_points * powerTools.gpaValidation
-                .projectedGrades[i].potentialcrhrs);
-            }
-          }
-          /* Completing calculations using sums from above */
-          calcRecords.weightedNoAV = Math.round(calcRecords.weightedNoAV / calcRecords.potential);
-          calcRecords.simpleNoAV = Math.round(calcRecords.pointSum / powerTools.gpaValidation.includedGrades.length);
-          /* Generate Method Tables for displaying name and valueT */
-          $j('#method').append(
-            '<table class = "grid"><th colspan="2" align="center"><b>Calculation Method Info</b></th>' +
-            '<tr><td><b>Name:</b></td><td>' + powerTools.gpaValidation.methodInfo.methodName + '</td></tr>' +
-            '<tr><td><b>Formula:</b></td><td><a href="/admin/schoolsetup/gpa/calculationmethod.html?frn=006' +
-            powerTools.gpaValidation.gpaMethod + '" target="_parent">' + powerTools.gpaValidation.methodInfo.methodFormula +
-            '</a></td></tr>' +
-            '<tr><td><b>Grade Point Average (GPA):</b></td><td>' + powerTools.gpaValidation.gpa.gpa + '</td></tr>' +
-            '<tr><td> Calculation Type:</td><td>' + powerTools.gpaValidation.methodInfo.calcType + '</td></tr>' +
-            '<tr><td>Grade Scale:</td><td>' + powerTools.gpaValidation.methodInfo.gradeScale + '</td></tr>' +
-            '<tr><td> Count of Grades in GPA Calculation:</td><td>' + calcRecords.countOfGrades + '</td></tr>' +
-            '<tr><td> Number of Years:</td><td>' + calcRecords.numOfYears + '</td></tr>' +
-            '<tr><td> Sum of GPA Points:</td><td>' + calcRecords.pointSum.toFixed(2) + '</td></tr>' +
-            '<tr><td> Sum of GPA Percent:</td><td>' + calcRecords.percentSum.toFixed(2) + '</td></tr>' +
-            '<tr><td> Sum of GPA Added Value Points:</td><td>' + calcRecords.addedValueSum.toFixed(2) + '</td></tr>' +
-            '<tr><td> Sum of GPA Earned Credits:</td><td>' + calcRecords.earned.toFixed(2) + '</td></tr>' +
-            '<tr><td> Sum of GPA Potential Credits:</td><td>' + calcRecords.potential.toFixed(2) + '</td></tr>'
-          );
-          /* Generate Tables for Calculations to Show */
-          $j('#calculations').append(
-            '<table class = "grid" id="calcTable"><th colspan="2" align="center"><b>Query Options</b></th>' +
-            '<tr><td> Terms Included:</td><td><a href="/admin/schoolsetup/gpa/calculationmethod.html?frn=006' +
-            powerTools.gpaValidation.gpaMethod + '" target="_parent">' + powerTools.gpaValidation.methodInfo.queryTerms +
-            '</a></td></tr>' +
-            '<tr><td> Grade Levels Included:</td><td><a href="/admin/schoolsetup/gpa/calculationmethod.html?frn=006' +
-            powerTools.gpaValidation.gpaMethod + '" target="_parent">' + powerTools.gpaValidation.methodInfo.queryGrades +
-            '</a></td></tr>' +
-            '<tr><td> Years Included:</td><td><a href="/admin/schoolsetup/gpa/calculationmethod.html?frn=006' +
-            powerTools.gpaValidation.gpaMethod + '" target="_parent">' + powerTools.gpaValidation.methodInfo.queryYears +
-            '</a></td></tr>' +
-            '<tr><td> Credit Types Included:</td><td><a href="/admin/schoolsetup/gpa/calculationmethod.html?frn=006' +
-            powerTools.gpaValidation.gpaMethod + '" target="_parent">' + powerTools.gpaValidation.methodInfo.queryCreditTypes +
-            '</a></td></tr>' +
-            '<tr><td> Only Grades that Count in GPA:</td><td><a href="/admin/schoolsetup/gpa/calculationmethod.html?frn=006' +
-            powerTools.gpaValidation.gpaMethod + '" target="_parent">' + powerTools.gpaValidation.methodInfo.queryCountGpa +
-            '</a></td></tr>' +
-            '<tr><td> Only Grades that Count in Class Rank:</td><td><a href="/admin/schoolsetup/gpa/calculationmethod.html?frn=006' +
-            powerTools.gpaValidation.gpaMethod + '" target="_parent">' + powerTools.gpaValidation.methodInfo.queryClassRank +
-            '</a></td></tr>' +
-            '<tr><td> Only Grades that Count in Honor Roll:</td><td><a href="/admin/schoolsetup/gpa/calculationmethod.html?frn=006' +
-            powerTools.gpaValidation.gpaMethod + '" target="_parent">' + powerTools.gpaValidation.methodInfo.queryHonorRoll +
-            '</a></td></tr>' +
-            '<tr><td> Only Grades that Have Potential Credit:</td><td><a href="/admin/schoolsetup/gpa/calculationmethod.html?frn=006' +
-            powerTools.gpaValidation.gpaMethod + '" target="_parent">' + powerTools.gpaValidation.methodInfo.queryPotential +
-            '</a></td></tr>' +
-            '</table>'
-          );
-          /* check if projected options need to be displayed, only show if projected grades used */
-          if (powerTools.gpaValidation.methodInfo.calcType == 'projected') {
-            $j('#calcTable').append(
-              '<tr><td> Projected Grades Are:</td><td>' + powerTools.gpaValidation.methodInfo.projectType + ' ' +
-              powerTools.gpaValidation.methodInfo.projectStoreCode + '</td></tr>' +
-              '<tr><td> Do Not Store Grade if:</td><td>' + powerTools.gpaValidation.methodInfo.projectExclude + ' ' +
-              powerTools.gpaValidation.methodInfo.projectCheckCode + '</td></tr>' +
-              '<tr><td> Stored Credit Hours:</td><td>' + powerTools.gpaValidation.methodInfo.projectCreditOption +
-              '</td></tr>'
-            )
-          };
-          /*table for all of the included grades and their relevant information */
-          $j('#includedGrades').append(
-            '<table class = "grid"><th colspan="15" align="center"><b>Grades Included in GPA</b></th>' +
-            '<tr><td>Term ID</td><td>Store Code</td><td>Grade Level</td><td>Course Number</td><td>Section Number</td>' +
-            '<td>Grade</td><td>Points</td><td>Percent</td><td>Added Value</td><td>Earned Credit</td><td>Potential Credit</td>' +
-            '<td>Credit Type</td><td>Exclude from GPA</td><td>Exclude from Class Rank</td><td>Exclude from HonorRoll</td></tr>' +
-            '<tbody id="tbody2">'
-          );
-          for (var i = 0; i < powerTools.gpaValidation.includedGrades.length; i++) {
-            $j('#tbody2').append(
-              '<tr>' +
-              '<td>' + powerTools.gpaValidation.includedGrades[i].termid + '</td>' +
-              '<td>' + powerTools.gpaValidation.includedGrades[i].storecode + '</td>' +
-              '<td>' + powerTools.gpaValidation.includedGrades[i].grade_level + '</td>' +
-              '<td>' + powerTools.gpaValidation.includedGrades[i].course_number + '</td>' +
-              '<td>' + powerTools.gpaValidation.includedGrades[i].sectionnumber + '</td>' +
-              '<td style="font-weight:bold"><a id="inRecord' + i + '" target="_parent">' + powerTools.gpaValidation.includedGrades[
-                i].grade + '</a></td>' +
-              '<td>' + powerTools.gpaValidation.includedGrades[i].gpa_points + '</td>' +
-              '<td>' + powerTools.gpaValidation.includedGrades[i].percent + '</td>' +
-              '<td>' + powerTools.gpaValidation.includedGrades[i].gpa_addedvalue + '</td>' +
-              '<td>' + powerTools.gpaValidation.includedGrades[i].earnedcrhrs + '</td>' +
-              '<td>' + powerTools.gpaValidation.includedGrades[i].potentialcrhrs + '</td>' +
-              '<td>' + powerTools.gpaValidation.includedGrades[i].credittype + '</td>' +
-              '<td>' + powerTools.gpaValidation.includedGrades[i].querycountgpa + '</td>' +
-              '<td>' + powerTools.gpaValidation.includedGrades[i].queryclassrank + '</td>' +
-              '<td>' + powerTools.gpaValidation.includedGrades[i].queryhonorroll + '</td>' +
-              '</tr>'
-            );
-          }
-          $j('#includedGrades').append(
-            '</tbody>' +
-            '</table>'
-          );
-          /* If Projected grades is not empty this will build the table that will display them */
-          if (powerTools.gpaValidation.projectedGrades.length > 0) {
-            $j('#projectedGrades').append(
-              '<table class = "grid"><th colspan="15" align="center"><b>Grades Projected in GPA</b></th>' +
-              '<tr><td>Term ID</td><td>Store Code</td><td>Grade Level</td><td>Course Number</td><td>Section Number</td>' +
-              '<td>Grade</td><td>Points</td><td>Percent</td><td>Added Value</td><td>Earned Credit</td><td>Potential Credit</td>' +
-              '<td>Credit Type</td><td>Exclude from GPA</td><td>Exclude from Class Rank</td><td>Exclude from HonorRoll</td></tr>' +
-              '<tbody id="tbody4">'
-            );
-            for (var i = 0; i < powerTools.gpaValidation.projectedGrades.length; i++) {
-              $j('#tbody4').append(
-                '<tr>' +
-                '<td style="color:green;">' + powerTools.gpaValidation.projectedGrades[i].termid + '</td>' +
-                '<td style="color:green;">' + powerTools.gpaValidation.projectedGrades[i].storecode + '</td>' +
-                '<td style="color:green;">' + powerTools.gpaValidation.projectedGrades[i].grade_level + '</td>' +
-                '<td style="color:green;">' + powerTools.gpaValidation.projectedGrades[i].course_number + '</td>' +
-                '<td style="color:green;">' + powerTools.gpaValidation.projectedGrades[i].sectionnumber + '</td>' +
-                '<td style="color:green;">' + powerTools.gpaValidation.projectedGrades[i].grade + '</td>' +
-                '<td style="color:green;">' + powerTools.gpaValidation.projectedGrades[i].gpa_points + '</td>' +
-                '<td style="color:green;">' + powerTools.gpaValidation.projectedGrades[i].percent + '</td>' +
-                '<td style="color:green;">' + powerTools.gpaValidation.projectedGrades[i].gpa_addedvalue + '</td>' +
-                '<td style="color:green;">' + powerTools.gpaValidation.projectedGrades[i].earnedcrhrs + '</td>' +
-                '<td style="color:green;">' + powerTools.gpaValidation.projectedGrades[i].potentialcrhrs + '</td>' +
-                '<td style="color:green;">' + powerTools.gpaValidation.projectedGrades[i].credittype + '</td>' +
-                '<td style="color:green;">' + powerTools.gpaValidation.projectedGrades[i].querycountgpa + '</td>' +
-                '<td style="color:green;">' + powerTools.gpaValidation.projectedGrades[i].queryclassrank + '</td>' +
-                '<td style="color:green;">' + powerTools.gpaValidation.projectedGrades[i].queryhonorroll + '</td>' +
-                '</tr>'
-              );
-            }
-            $j('#projectedGrades').append(
-              '</tbody>' +
-              '</table>'
-            );
-          }
-          /* This will add the table for all of the grades that are excluded from the gpa calculation */
-          if (powerTools.gpaValidation.excludedGrades.length > 0) {
-            $j('#excludedGrades').append(
-              '<table class = "grid"><th colspan="15" align="center"><b>Grades Excluded in GPA</b></th>' +
-              '<tr><td>Term ID</td><td>Store Code</td><td>Grade Level</td><td>Course Number</td><td>Section Number</td>' +
-              '<td>Grade</td><td>Points</td><td>Percent</td><td>Added Value</td><td>Earned Credit</td><td>Potential Credit</td>' +
-              '<td>Credit Type</td><td>Exclude from GPA</td><td>Exclude from Class Rank</td><td>Exclude from HonorRoll</td></tr>' +
-              '<tbody id="tbody3">'
-            );
-            for (var i = 0; i < powerTools.gpaValidation.excludedGrades.length; i++) {
-              $j('#tbody3').append(
-                '<tr>' +
-                '<td id="queryYears' + i + '">' + powerTools.gpaValidation.excludedGrades[i].termid + '</td>' +
-                '<td id="queryTerms' + i + '">' + powerTools.gpaValidation.excludedGrades[i].storecode + '</td>' +
-                '<td id="queryGrades' + i + '">' + powerTools.gpaValidation.excludedGrades[i].grade_level + '</td>' +
-                '<td>' + powerTools.gpaValidation.excludedGrades[i].course_number + '</td>' +
-                '<td>' + powerTools.gpaValidation.excludedGrades[i].sectionnumber + '</td>' +
-                '<td style="font-weight:bold"><a id="exRecord' + i + '" target="_parent">' + powerTools.gpaValidation.excludedGrades[
-                  i].grade + '</a></td>' +
-                '<td>' + powerTools.gpaValidation.excludedGrades[i].gpa_points + '</td>' +
-                '<td>' + powerTools.gpaValidation.excludedGrades[i].percent + '</td>' +
-                '<td>' + powerTools.gpaValidation.excludedGrades[i].gpa_addedvalue + '</td>' +
-                '<td>' + powerTools.gpaValidation.excludedGrades[i].earnedcrhrs + '</td>' +
-                '<td id="potentialcrhrs' + i + '">' + powerTools.gpaValidation.excludedGrades[i].potentialcrhrs +
-                '</td>' +
-                '<td id="queryCreditTypes' + i + '">' + powerTools.gpaValidation.excludedGrades[i].credittype + '</td>' +
-                '<td id="countgpa' + i + '">' + powerTools.gpaValidation.excludedGrades[i].querycountgpa + '</td>' +
-                '<td id="classrank' + i + '">' + powerTools.gpaValidation.excludedGrades[i].queryclassrank + '</td>' +
-                '<td id="honorroll' + i + '">' + powerTools.gpaValidation.excludedGrades[i].queryhonorroll + '</td>' +
-                '</tr>'
-              );
-            }
-            $j('#excludedGrades').append(
-              '</tbody>' +
-              '</table>'
-            );
-          }
-          /* Replaces anything that is not a number with 0 */
-          function isANumber(num) {
-            if (num !== num) return 0;
-            else return num;
-          }
-          /* changes all null values to presets */
-          function changeValues() {
-            var yearsArr = [0];
-            var uniqueYear;
+          /* display function shows all grade data: Method, info, and records (included and excluded) */
+          displayGpaData: function() {
+            /* clear Divs before displaying records */
+            $j('#calculations').empty();
+            $j('#method').empty();
+            $j('#includedGrades').empty();
+            $j('#excludedGrades').empty();
+            $j('#projectedGrades').empty();
+            /* Calculations on Grades before displaying the results */
+            var calcRecords = {
+              pointSum: 0,
+              percentSum: 0,
+              addedValueSum: 0,
+              earned: 0,
+              potential: 0,
+              weightedNoAV: 0,
+              simpleNoAV: 0,
+              numOfYears: 0,
+              countOfGrades: 0
+            };
+            changeValues();
+            calcRecords.countOfGrades = powerTools.gpaValidation.includedGrades.length + powerTools.gpaValidation.projectedGrades
+                .length;
+            /* For Loop to generate GPA Sums for Calculations Table */
             for (var i = 0; i < powerTools.gpaValidation.includedGrades.length; i++) {
-              changeRecords(powerTools.gpaValidation.includedGrades[i]);
-              uniqueYear = 1;
-              for (var j = 0; j < yearsArr.length; j++) {
-                if (Math.floor(powerTools.gpaValidation.includedGrades[i].termid / 100) == yearsArr[j]) {
-                  uniqueYear = 0;
-                  break;
+              /* Creating sums and gpa_sums for included grades */
+              calcRecords.pointSum += isANumber(Number(powerTools.gpaValidation.includedGrades[i].gpa_points));
+              calcRecords.percentSum += isANumber(Number(powerTools.gpaValidation.includedGrades[i].percent));
+              calcRecords.addedValueSum += isANumber(Number(powerTools.gpaValidation.includedGrades[i].gpa_addedvalue));
+              calcRecords.earned += isANumber(Number(powerTools.gpaValidation.includedGrades[i].earnedcrhrs));
+              calcRecords.potential += isANumber(Number(powerTools.gpaValidation.includedGrades[i].potentialcrhrs));
+              calcRecords.weightedNoAV += Number(powerTools.gpaValidation.includedGrades[i].gpa_points * powerTools.gpaValidation
+                  .includedGrades[i].potentialcrhrs);
+              /* Adding projected grades to sums if they exist */
+              if (i < powerTools.gpaValidation.projectedGrades.length) {
+                calcRecords.pointSum += isANumber(Number(powerTools.gpaValidation.projectedGrades[i].gpa_points));
+                calcRecords.percentSum += isANumber(Number(powerTools.gpaValidation.projectedGrades[i].percent));
+                calcRecords.addedValueSum += isANumber(Number(powerTools.gpaValidation.projectedGrades[i].gpa_addedvalue));
+                calcRecords.earned += isANumber(Number(powerTools.gpaValidation.projectedGrades[i].earnedcrhrs));
+                calcRecords.potential += isANumber(Number(powerTools.gpaValidation.projectedGrades[i].potentialcrhrs));
+                calcRecords.weightedNoAV += Number(powerTools.gpaValidation.projectedGrades[i].gpa_points * powerTools.gpaValidation
+                    .projectedGrades[i].potentialcrhrs);
+              }
+            }
+            /* Completing calculations using sums from above */
+            calcRecords.weightedNoAV = Math.round(calcRecords.weightedNoAV / calcRecords.potential);
+            calcRecords.simpleNoAV = Math.round(calcRecords.pointSum / powerTools.gpaValidation.includedGrades.length);
+            /* Generate Method Tables for displaying name and valueT */
+            $j('#method').append(
+              '<table class = "grid"><th colspan="2" align="center"><b>Calculation Method Info</b></th>' +
+              '<tr><td><b>Name:</b></td><td>' + powerTools.gpaValidation.methodInfo.methodName + '</td></tr>' +
+              '<tr><td><b>Formula:</b></td><td><a href="/admin/schoolsetup/gpa/calculationmethod.html?frn=006' +
+              powerTools.gpaValidation.gpaMethod + '" target="_parent">' + powerTools.gpaValidation.methodInfo.methodFormula +
+              '</a></td></tr>' +
+              '<tr><td><b>Grade Point Average (GPA):</b></td><td>' + powerTools.gpaValidation.gpa.gpa + '</td></tr>' +
+              '<tr><td> Calculation Type:</td><td>' + powerTools.gpaValidation.methodInfo.calcType + '</td></tr>' +
+              '<tr><td>Grade Scale:</td><td>' + powerTools.gpaValidation.methodInfo.gradeScale + '</td></tr>' +
+              '<tr><td> Count of Grades in GPA Calculation:</td><td>' + calcRecords.countOfGrades + '</td></tr>' +
+              '<tr><td> Number of Years:</td><td>' + calcRecords.numOfYears + '</td></tr>' +
+              '<tr><td> Sum of GPA Points:</td><td>' + calcRecords.pointSum.toFixed(2) + '</td></tr>' +
+              '<tr><td> Sum of GPA Percent:</td><td>' + calcRecords.percentSum.toFixed(2) + '</td></tr>' +
+              '<tr><td> Sum of GPA Added Value Points:</td><td>' + calcRecords.addedValueSum.toFixed(2) + '</td></tr>' +
+              '<tr><td> Sum of GPA Earned Credits:</td><td>' + calcRecords.earned.toFixed(2) + '</td></tr>' +
+              '<tr><td> Sum of GPA Potential Credits:</td><td>' + calcRecords.potential.toFixed(2) + '</td></tr>'
+            );
+            /* Generate Tables for Calculations to Show */
+            $j('#calculations').append(
+              '<table class = "grid" id="calcTable"><th colspan="2" align="center"><b>Query Options</b></th>' +
+              '<tr><td> Terms Included:</td><td><a href="/admin/schoolsetup/gpa/calculationmethod.html?frn=006' +
+              powerTools.gpaValidation.gpaMethod + '" target="_parent">' + powerTools.gpaValidation.methodInfo.queryTerms +
+              '</a></td></tr>' +
+              '<tr><td> Grade Levels Included:</td><td><a href="/admin/schoolsetup/gpa/calculationmethod.html?frn=006' +
+              powerTools.gpaValidation.gpaMethod + '" target="_parent">' + powerTools.gpaValidation.methodInfo.queryGrades +
+              '</a></td></tr>' +
+              '<tr><td> Years Included:</td><td><a href="/admin/schoolsetup/gpa/calculationmethod.html?frn=006' +
+              powerTools.gpaValidation.gpaMethod + '" target="_parent">' + powerTools.gpaValidation.methodInfo.queryYears +
+              '</a></td></tr>' +
+              '<tr><td> Credit Types Included:</td><td><a href="/admin/schoolsetup/gpa/calculationmethod.html?frn=006' +
+              powerTools.gpaValidation.gpaMethod + '" target="_parent">' + powerTools.gpaValidation.methodInfo.queryCreditTypes +
+              '</a></td></tr>' +
+              '<tr><td> Only Grades that Count in GPA:</td><td><a href="/admin/schoolsetup/gpa/calculationmethod.html?frn=006' +
+              powerTools.gpaValidation.gpaMethod + '" target="_parent">' + powerTools.gpaValidation.methodInfo.queryCountGpa +
+              '</a></td></tr>' +
+              '<tr><td> Only Grades that Count in Class Rank:</td><td><a href="/admin/schoolsetup/gpa/calculationmethod.html?frn=006' +
+              powerTools.gpaValidation.gpaMethod + '" target="_parent">' + powerTools.gpaValidation.methodInfo.queryClassRank +
+              '</a></td></tr>' +
+              '<tr><td> Only Grades that Count in Honor Roll:</td><td><a href="/admin/schoolsetup/gpa/calculationmethod.html?frn=006' +
+              powerTools.gpaValidation.gpaMethod + '" target="_parent">' + powerTools.gpaValidation.methodInfo.queryHonorRoll +
+              '</a></td></tr>' +
+              '<tr><td> Only Grades that Have Potential Credit:</td><td><a href="/admin/schoolsetup/gpa/calculationmethod.html?frn=006' +
+              powerTools.gpaValidation.gpaMethod + '" target="_parent">' + powerTools.gpaValidation.methodInfo.queryPotential +
+              '</a></td></tr>' +
+              '</table>'
+            );
+            /* check if projected options need to be displayed, only show if projected grades used */
+            if (powerTools.gpaValidation.methodInfo.calcType == 'projected') {
+              $j('#calcTable').append(
+                '<tr><td> Projected Grades Are:</td><td>' + powerTools.gpaValidation.methodInfo.projectType + ' ' +
+                powerTools.gpaValidation.methodInfo.projectStoreCode + '</td></tr>' +
+                '<tr><td> Do Not Store Grade if:</td><td>' + powerTools.gpaValidation.methodInfo.projectExclude + ' ' +
+                powerTools.gpaValidation.methodInfo.projectCheckCode + '</td></tr>' +
+                '<tr><td> Stored Credit Hours:</td><td>' + powerTools.gpaValidation.methodInfo.projectCreditOption +
+                '</td></tr>'
+              )
+            }
+            /*table for all of the included grades and their relevant information */
+            $j('#includedGrades').append(
+              '<table class = "grid"><th colspan="15" align="center"><b>Grades Included in GPA</b></th>' +
+              '<tr><td>Term ID</td><td>Store Code</td><td>Grade Level</td><td>Course Number</td><td>Section Number</td>' +
+              '<td>Grade</td><td>Points</td><td>Percent</td><td>Added Value</td><td>Earned Credit</td><td>Potential Credit</td>' +
+              '<td>Credit Type</td><td>Exclude from GPA</td><td>Exclude from Class Rank</td><td>Exclude from HonorRoll</td></tr>' +
+              '<tbody id="tbody2">'
+            );
+            for (var i = 0; i < powerTools.gpaValidation.includedGrades.length; i++) {
+              $j('#tbody2').append(
+                '<tr>' +
+                '<td>' + powerTools.gpaValidation.includedGrades[i].termid + '</td>' +
+                '<td>' + powerTools.gpaValidation.includedGrades[i].storecode + '</td>' +
+                '<td>' + powerTools.gpaValidation.includedGrades[i].grade_level + '</td>' +
+                '<td>' + powerTools.gpaValidation.includedGrades[i].course_number + '</td>' +
+                '<td>' + powerTools.gpaValidation.includedGrades[i].sectionnumber + '</td>' +
+                '<td style="font-weight:bold"><a id="inRecord' + i + '" target="_parent">' + powerTools.gpaValidation.includedGrades[
+                  i].grade + '</a></td>' +
+                '<td>' + powerTools.gpaValidation.includedGrades[i].gpa_points + '</td>' +
+                '<td>' + powerTools.gpaValidation.includedGrades[i].percent + '</td>' +
+                '<td>' + powerTools.gpaValidation.includedGrades[i].gpa_addedvalue + '</td>' +
+                '<td>' + powerTools.gpaValidation.includedGrades[i].earnedcrhrs + '</td>' +
+                '<td>' + powerTools.gpaValidation.includedGrades[i].potentialcrhrs + '</td>' +
+                '<td>' + powerTools.gpaValidation.includedGrades[i].credittype + '</td>' +
+                '<td>' + powerTools.gpaValidation.includedGrades[i].querycountgpa + '</td>' +
+                '<td>' + powerTools.gpaValidation.includedGrades[i].queryclassrank + '</td>' +
+                '<td>' + powerTools.gpaValidation.includedGrades[i].queryhonorroll + '</td>' +
+                '</tr>'
+              );
+            }
+            $j('#includedGrades').append(
+              '</tbody>' +
+              '</table>'
+            );
+            /* If Projected grades is not empty this will build the table that will display them */
+            if (powerTools.gpaValidation.projectedGrades.length > 0) {
+              $j('#projectedGrades').append(
+                '<table class = "grid"><th colspan="15" align="center"><b>Grades Projected in GPA</b></th>' +
+                '<tr><td>Term ID</td><td>Store Code</td><td>Grade Level</td><td>Course Number</td><td>Section Number</td>' +
+                '<td>Grade</td><td>Points</td><td>Percent</td><td>Added Value</td><td>Earned Credit</td><td>Potential Credit</td>' +
+                '<td>Credit Type</td><td>Exclude from GPA</td><td>Exclude from Class Rank</td><td>Exclude from HonorRoll</td></tr>' +
+                '<tbody id="tbody4">'
+              );
+              for (var i = 0; i < powerTools.gpaValidation.projectedGrades.length; i++) {
+                $j('#tbody4').append(
+                  '<tr>' +
+                  '<td style="color:green;">' + powerTools.gpaValidation.projectedGrades[i].termid + '</td>' +
+                  '<td style="color:green;">' + powerTools.gpaValidation.projectedGrades[i].storecode + '</td>' +
+                  '<td style="color:green;">' + powerTools.gpaValidation.projectedGrades[i].grade_level + '</td>' +
+                  '<td style="color:green;">' + powerTools.gpaValidation.projectedGrades[i].course_number + '</td>' +
+                  '<td style="color:green;">' + powerTools.gpaValidation.projectedGrades[i].sectionnumber + '</td>' +
+                  '<td style="color:green;">' + powerTools.gpaValidation.projectedGrades[i].grade + '</td>' +
+                  '<td style="color:green;">' + powerTools.gpaValidation.projectedGrades[i].gpa_points + '</td>' +
+                  '<td style="color:green;">' + powerTools.gpaValidation.projectedGrades[i].percent + '</td>' +
+                  '<td style="color:green;">' + powerTools.gpaValidation.projectedGrades[i].gpa_addedvalue + '</td>' +
+                  '<td style="color:green;">' + powerTools.gpaValidation.projectedGrades[i].earnedcrhrs + '</td>' +
+                  '<td style="color:green;">' + powerTools.gpaValidation.projectedGrades[i].potentialcrhrs + '</td>' +
+                  '<td style="color:green;">' + powerTools.gpaValidation.projectedGrades[i].credittype + '</td>' +
+                  '<td style="color:green;">' + powerTools.gpaValidation.projectedGrades[i].querycountgpa + '</td>' +
+                  '<td style="color:green;">' + powerTools.gpaValidation.projectedGrades[i].queryclassrank + '</td>' +
+                  '<td style="color:green;">' + powerTools.gpaValidation.projectedGrades[i].queryhonorroll + '</td>' +
+                  '</tr>'
+                );
+              }
+              $j('#projectedGrades').append(
+                '</tbody>' +
+                '</table>'
+              );
+            }
+            /* This will add the table for all of the grades that are excluded from the gpa calculation */
+            if (powerTools.gpaValidation.excludedGrades.length > 0) {
+              $j('#excludedGrades').append(
+                '<table class = "grid"><th colspan="15" align="center"><b>Grades Excluded in GPA</b></th>' +
+                '<tr><td>Term ID</td><td>Store Code</td><td>Grade Level</td><td>Course Number</td><td>Section Number</td>' +
+                '<td>Grade</td><td>Points</td><td>Percent</td><td>Added Value</td><td>Earned Credit</td><td>Potential Credit</td>' +
+                '<td>Credit Type</td><td>Exclude from GPA</td><td>Exclude from Class Rank</td><td>Exclude from HonorRoll</td></tr>' +
+                '<tbody id="tbody3">'
+              );
+              for (var i = 0; i < powerTools.gpaValidation.excludedGrades.length; i++) {
+                $j('#tbody3').append(
+                  '<tr>' +
+                  '<td id="queryYears' + i + '">' + powerTools.gpaValidation.excludedGrades[i].termid + '</td>' +
+                  '<td id="queryTerms' + i + '">' + powerTools.gpaValidation.excludedGrades[i].storecode + '</td>' +
+                  '<td id="queryGrades' + i + '">' + powerTools.gpaValidation.excludedGrades[i].grade_level + '</td>' +
+                  '<td>' + powerTools.gpaValidation.excludedGrades[i].course_number + '</td>' +
+                  '<td>' + powerTools.gpaValidation.excludedGrades[i].sectionnumber + '</td>' +
+                  '<td style="font-weight:bold"><a id="exRecord' + i + '" target="_parent">' + powerTools.gpaValidation.excludedGrades[
+                    i].grade + '</a></td>' +
+                  '<td>' + powerTools.gpaValidation.excludedGrades[i].gpa_points + '</td>' +
+                  '<td>' + powerTools.gpaValidation.excludedGrades[i].percent + '</td>' +
+                  '<td>' + powerTools.gpaValidation.excludedGrades[i].gpa_addedvalue + '</td>' +
+                  '<td>' + powerTools.gpaValidation.excludedGrades[i].earnedcrhrs + '</td>' +
+                  '<td id="potentialcrhrs' + i + '">' + powerTools.gpaValidation.excludedGrades[i].potentialcrhrs +
+                  '</td>' +
+                  '<td id="queryCreditTypes' + i + '">' + powerTools.gpaValidation.excludedGrades[i].credittype + '</td>' +
+                  '<td id="countgpa' + i + '">' + powerTools.gpaValidation.excludedGrades[i].querycountgpa + '</td>' +
+                  '<td id="classrank' + i + '">' + powerTools.gpaValidation.excludedGrades[i].queryclassrank + '</td>' +
+                  '<td id="honorroll' + i + '">' + powerTools.gpaValidation.excludedGrades[i].queryhonorroll + '</td>' +
+                  '</tr>'
+                );
+              }
+              $j('#excludedGrades').append(
+                '</tbody>' +
+                '</table>'
+              );
+            }
+            /* Replaces anything that is not a number with 0 */
+            function isANumber(num) {
+              if (num !== num) return 0;
+              else return num;
+            }
+            /* changes all null values to presets */
+            function changeValues() {
+              var yearsArr = [0];
+              var uniqueYear;
+              for (var i = 0; i < powerTools.gpaValidation.includedGrades.length; i++) {
+                changeRecords(powerTools.gpaValidation.includedGrades[i]);
+                uniqueYear = 1;
+                for (var j = 0; j < yearsArr.length; j++) {
+                  if (Math.floor(powerTools.gpaValidation.includedGrades[i].termid / 100) == yearsArr[j]) {
+                    uniqueYear = 0;
+                    break;
+                  }
+                }
+                if (uniqueYear == 1) {
+                  yearsArr.push(Math.floor(powerTools.gpaValidation.includedGrades[i].termid / 100));
                 }
               }
-              if (uniqueYear == 1) {
-                yearsArr.push(Math.floor(powerTools.gpaValidation.includedGrades[i].termid / 100));
+              if (!powerTools.gpaValidation.methodInfo.queryYears && !powerTools.gpaValidation.methodInfo.queryGrades &&
+                powerTools.gpaValidation.methodInfo.queryTerms && powerTools.gpaValidation.includedGrades.length > 0) {
+                calcRecords.numOfYears = 1;
+                powerTools.gpaValidation.methodInfo.queryYears = '(Special Case: Current)';
+                powerTools.gpaValidation.methodInfo.queryGrades = '(Default: All)';
+              } else {
+                calcRecords.numOfYears = yearsArr.length - 1;
+              }
+              for (var i = 0; i < powerTools.gpaValidation.projectedGrades.length; i++) {
+                changeRecords(powerTools.gpaValidation.projectedGrades[i]);
+              }
+              for (var i = 0; i < powerTools.gpaValidation.excludedGrades.length; i++) {
+                changeRecords(powerTools.gpaValidation.excludedGrades[i]);
+              }
+              powerTools.gpaValidation.methodInfo.queryCountGpa = Boolean(powerTools.gpaValidation.methodInfo.queryCountGpa);
+              powerTools.gpaValidation.methodInfo.queryClassRank = Boolean(powerTools.gpaValidation.methodInfo.queryClassRank);
+              powerTools.gpaValidation.methodInfo.queryHonorRoll = Boolean(powerTools.gpaValidation.methodInfo.queryHonorRoll);
+              powerTools.gpaValidation.methodInfo.queryPotential = Boolean(powerTools.gpaValidation.methodInfo.queryPotential);
+              if (powerTools.gpaValidation.methodInfo.calcType == '') {
+                powerTools.gpaValidation.methodInfo.calcType = '(Default: Cumulative)';
+              }
+              if (powerTools.gpaValidation.gradeScale[0].gradeScale == '') {
+                powerTools.gpaValidation.methodInfo.gradeScale = '(Default: Scale on Record)';
+              } else {
+                powerTools.gpaValidation.methodInfo.gradeScale = powerTools.gpaValidation.gradeScale[0].gradeScale;
+              }
+              if (powerTools.gpaValidation.methodInfo.queryTerms == '') {
+                powerTools.gpaValidation.methodInfo.queryTerms = '(Default: All)';
+              }
+              if (powerTools.gpaValidation.methodInfo.queryGrades == '') {
+                powerTools.gpaValidation.methodInfo.queryGrades = '(Default: All)';
+              }
+              if (powerTools.gpaValidation.methodInfo.queryCreditTypes == '') {
+                powerTools.gpaValidation.methodInfo.queryCreditTypes = '(Default: All)';
+              }
+              if (powerTools.gpaValidation.methodInfo.queryYears == '') {
+                powerTools.gpaValidation.methodInfo.queryYears = '(Default: All)';
               }
             }
-            if (!powerTools.gpaValidation.methodInfo.queryYegrunars && !powerTools.gpaValidation.methodInfo.queryGrades &&
-              powerTools.gpaValidation.methodInfo.queryTerms) {
-              calcRecords.numOfYears = 1;
-              powerTools.gpaValidation.methodInfo.queryYears = '(Special Case: Current)';
-              powerTools.gpaValidation.methodInfo.queryGrades = '(Default: All)';
-            } else {
-              calcRecords.numOfYears = yearsArr.length - 1;
+            /* sets all of the null values for records to appropriate values */
+            function changeRecords(record) {
+              if (!record.gpa_addedvalue) record.gpa_addedvalue = '(Blank)';
+              if (!record.earnedcrhrs) record.earnedcrhrs = '(Blank)';
+              if (!record.potentialcrhrs) record.potentialcrhrs = '(Blank)';
+              if (!record.sectionnumber) record.sectionnumber = '(Blank)';
+              //(record.querycountgpa == 1) ? record.querycountgpa = 'true' : record.querycountgpa = 'false';
+              //(record.queryclassrank == 1) ? record.queryclassrank = 'true' : record.queryclassrank = 'false';
+              //(record.queryhonorroll == 1) ? record.queryhonorroll = 'true' : record.queryhonorroll = 'false';
+              if (record.credittype == '') {
+                record.credittype = '(Blank)';
+              }
+              if (record.course_number == '') {
+                record.course_number = '(Blank)';
+              }
             }
-            for (var i = 0; i < powerTools.gpaValidation.projectedGrades.length; i++) {
-              changeRecords(powerTools.gpaValidation.projectedGrades[i]);
-            }
+            powerTools.gpaValidation.showExcludedCause();
+            powerTools.gpaValidation.addGradeLinks();
+          },
+          showExcludedCause: function() {
             for (var i = 0; i < powerTools.gpaValidation.excludedGrades.length; i++) {
-              changeRecords(powerTools.gpaValidation.excludedGrades[i]);
+              if (powerTools.gpaValidation.excludedTriggers[i].queryTerms == 1) {
+                $j('#queryTerms' + i).attr('style', 'color:red');
+              }
+              if (powerTools.gpaValidation.excludedTriggers[i].queryGrades == 1) {
+                $j('#queryGrades' + i).attr('style', 'color:red');
+              }
+              if (powerTools.gpaValidation.excludedTriggers[i].queryYears == 1) {
+                $j('#queryYears' + i).attr('style', 'color:red');
+              }
+              if (powerTools.gpaValidation.excludedTriggers[i].queryCreditTypes == 1) {
+                $j('#queryCreditTypes' + i).attr('style', 'color:red');
+              }
+              if (powerTools.gpaValidation.excludedTriggers[i].countgpa == 1) {
+                $j('#countgpa' + i).attr('style', 'color:red');
+              }
+              if (powerTools.gpaValidation.excludedTriggers[i].classrank == 1) {
+                $j('#classrank' + i).attr('style', 'color:red');
+              }
+              if (powerTools.gpaValidation.excludedTriggers[i].honorroll == 1) {
+                $j('#honorroll' + i).attr('style', 'color:red');
+              }
+              if (powerTools.gpaValidation.excludedTriggers[i].potentialcrhrs == 1) {
+                $j('#potentialcrhrs' + i).attr('style', 'color:red');
+              }
             }
-            powerTools.gpaValidation.methodInfo.queryCountGpa = Boolean(powerTools.gpaValidation.methodInfo.queryCountGpa);
-            powerTools.gpaValidation.methodInfo.queryClassRank = Boolean(powerTools.gpaValidation.methodInfo.queryClassRank);
-            powerTools.gpaValidation.methodInfo.queryHonorRoll = Boolean(powerTools.gpaValidation.methodInfo.queryHonorRoll);
-            powerTools.gpaValidation.methodInfo.queryPotential = Boolean(powerTools.gpaValidation.methodInfo.queryPotential);
-            if (powerTools.gpaValidation.methodInfo.calcType == '') {
-              powerTools.gpaValidation.methodInfo.calcType = '(Default: Cumulative)';
+          },
+          addGradeLinks: function() {
+            if (powerTools.gpaValidation.methodInfo.calcType != 'current') {
+              for (var i = 0; i < powerTools.gpaValidation.includedGrades.length; i++) {
+                $j('#inRecord' + i).attr('href', '/admin/students/esg.html?frn=031' + powerTools.gpaValidation.includedGrades[
+                    i].dcid);
+              }
+              for (var i = 0; i < powerTools.gpaValidation.excludedGrades.length; i++) {
+                $j('#exRecord' + i).attr('href', '/admin/students/esg.html?frn=031' + powerTools.gpaValidation.excludedGrades[
+                    i].dcid)
+              }
             }
-            if (powerTools.gpaValidation.gradeScale[0].gradeScale == '') {
-              powerTools.gpaValidation.methodInfo.gradeScale = '(Default: Scale on Record)';
-            } else {
-              powerTools.gpaValidation.methodInfo.gradeScale = powerTools.gpaValidation.gradeScale[0].gradeScale;
+          },
+          displayError: function(error) {
+            for (var i = 0; i < powerTools.gpaValidation.errors.length; i++) {
+              if (error == powerTools.gpaValidation.errors[i]) {
+                return;
+              }
             }
-            if (powerTools.gpaValidation.methodInfo.queryTerms == '') {
-              powerTools.gpaValidation.methodInfo.queryTerms = '(Default: All)';
-            }
-            if (powerTools.gpaValidation.methodInfo.queryGrades == '') {
-              powerTools.gpaValidation.methodInfo.queryGrades = '(Default: All)';
-            }
-            if (powerTools.gpaValidation.methodInfo.queryCreditTypes == '') {
-              powerTools.gpaValidation.methodInfo.queryCreditTypes = '(Default: All)';
-            }
-            if (powerTools.gpaValidation.methodInfo.queryYears == '') {
-              powerTools.gpaValidation.methodInfo.queryYears = '(Default: All)';
-            }
+            powerTools.gpaValidation.errors.push(error);
+            $j('#error').append(
+              '<table class="linkDescList"><tbody><th style="color:red">' + error + '</th></tbody></table>'
+            );
           }
-          /* sets all of the null values for records to appropriate values */
-          function changeRecords(record) {
-            if (!record.gpa_addedvalue) record.gpa_addedvalue = '(Blank)';
-            if (!record.earnedcrhrs) record.earnedcrhrs = '(Blank)';
-            if (!record.potentialcrhrs) record.potentialcrhrs = '(Blank)';
-            if (!record.sectionnumber) record.sectionnumber = '(Blank)';
-            //(record.querycountgpa == 1) ? record.querycountgpa = 'true' : record.querycountgpa = 'false';
-            //(record.queryclassrank == 1) ? record.queryclassrank = 'true' : record.queryclassrank = 'false';
-            //(record.queryhonorroll == 1) ? record.queryhonorroll = 'true' : record.queryhonorroll = 'false';
-            if (record.credittype == '') {
-              record.credittype = '(Blank)';
-            }
-            if (record.course_number == '') {
-              record.course_number = '(Blank)';
-            }
-          }
-          powerTools.gpaValidation.showExcludedCause();
-          powerTools.gpaValidation.addGradeLinks();
-        },
-        showExcludedCause: function() {
-          for (var i = 0; i < powerTools.gpaValidation.excludedGrades.length; i++) {
-            if (powerTools.gpaValidation.excludedTriggers[i].queryTerms == 1) {
-              $j('#queryTerms' + i).attr('style', 'color:red');
-            }
-            if (powerTools.gpaValidation.excludedTriggers[i].queryGrades == 1) {
-              $j('#queryGrades' + i).attr('style', 'color:red');
-            }
-            if (powerTools.gpaValidation.excludedTriggers[i].queryYears == 1) {
-              $j('#queryYears' + i).attr('style', 'color:red');
-            }
-            if (powerTools.gpaValidation.excludedTriggers[i].queryCreditTypes == 1) {
-              $j('#queryCreditTypes' + i).attr('style', 'color:red');
-            }
-            if (powerTools.gpaValidation.excludedTriggers[i].countgpa == 1) {
-              $j('#countgpa' + i).attr('style', 'color:red');
-            }
-            if (powerTools.gpaValidation.excludedTriggers[i].classrank == 1) {
-              $j('#classrank' + i).attr('style', 'color:red');
-            }
-            if (powerTools.gpaValidation.excludedTriggers[i].honorroll == 1) {
-              $j('#honorroll' + i).attr('style', 'color:red');
-            }
-            if (powerTools.gpaValidation.excludedTriggers[i].potentialcrhrs == 1) {
-              $j('#potentialcrhrs' + i).attr('style', 'color:red');
-            }
-          }
-        },
-        addGradeLinks: function() {
-          if (powerTools.gpaValidation.methodInfo.calcType != 'current') {
-            for (var i = 0; i < powerTools.gpaValidation.includedGrades.length; i++) {
-              $j('#inRecord' + i).attr('href', '/admin/students/esg.html?frn=031' + powerTools.gpaValidation.includedGrades[
-                i].dcid);
-            }
-            for (var i = 0; i < powerTools.gpaValidation.excludedGrades.length; i++) {
-              $j('#exRecord' + i).attr('href', '/admin/students/esg.html?frn=031' + powerTools.gpaValidation.excludedGrades[
-                i].dcid)
-            }
-          }
-        },
-        displayError: function(error) {
-          for (var i = 0; i < powerTools.gpaValidation.errors.length; i++) {
-            if (error == powerTools.gpaValidation.errors[i]) {
-              return;
-            }
-          }
-          powerTools.gpaValidation.errors.push(error);
-          $j('#error').append(
-            '<table class="linkDescList"><tbody><th style="color:red">' + error + '</th></tbody></table>'
-          );
-        },
-      }
-    };
+        }
+      };
     /* when document loads retrieve the methods for the selection and wait for selection to call methodSubmit */
     $j(document).ready(function() {
       powerTools.gpaValidation.retrieveGpaMethods();
@@ -680,44 +704,38 @@
           powerTools.gpaValidation.gpaMethod = $j('#methodSelector').val();
           powerTools.gpaValidation.submitMethod();
         }
-      });
-      $j(document).ajaxStart(function() {
-        loadingDialog();
-      });
-      $j(document).ajaxStop(function() {
-        closeLoading();
-      });
+      })
     });
   </script>
 </head>
 <body>
-  ~[wc:admin_header_frame_css]
-  <!-- breadcrumb start -->
-  <a href="/admin/home.html" target="_top">~[text:psx.html.admin_students.honorroll.start_page]</a>
-  &gt; <a href="home.html?selectstudent=nosearch" target="_top">~[text:psx.html.admin_students.honorroll.student_selection]</a>
-  &gt; Gpa Validation
-  <!-- breadcrumb end -->
-  ~[wc:admin_navigation_frame_css] ~[wc:title_student_begin_css]Gpa Validation~[wc:title_student_end_css]
-  <div class="box-round">
-    <div id="Error" name="Error" style="border-color: red;"></div>
-    <div name="pageInfo" id="pageInfo" style="border-color : yellow">
-      <table class="linkDescList">
-        <td>
-          <p>
-            <b>Select a calculation method from the drop-down to evaluate the current student's GPA.</b>
-          </p>
-        </td>
-        <td name="methodSelection" id="methodSelection" align="right">
-        </td>
-      </table>
-    </div>
-    <div name="method" id="method" style="border-color: purple"></div>
-    <div name="calculations" id="calculations" style="border-color: blue"></div>
-    <div name="includedGrades" id="includedGrades" style="border-color: green;"></div>
-    <div name="projectedGrades" id="projectedGrades" style="border-color: yellow;"></div>
-    <div name="excludedGrades" id="excludedGrades" style="border-color: black;"></div>
-    <!-- end of content of bounding box -->
-    ~[wc:admin_footer_frame_css]
+~[wc:admin_header_frame_css]
+<!-- breadcrumb start -->
+<a href="/admin/home.html" target="_top">~[text:psx.html.admin_students.honorroll.start_page]</a>
+&gt; <a href="home.html?selectstudent=nosearch" target="_top">~[text:psx.html.admin_students.honorroll.student_selection]</a>
+&gt; Gpa Validation
+<!-- breadcrumb end -->
+~[wc:admin_navigation_frame_css] ~[wc:title_student_begin_css]Gpa Validation~[wc:title_student_end_css]
+<div class="box-round">
+  <div id="Error" name="Error" style="border-color: red;"></div>
+  <div name="pageInfo" id="pageInfo" style="border-color : yellow">
+    <table class="linkDescList">
+      <td>
+        <p>
+          <b>Select a calculation method from the drop-down to evaluate the current student's GPA.</b>
+        </p>
+      </td>
+      <td name="methodSelection" id="methodSelection" align="right">
+      </td>
+    </table>
   </div>
+  <div name="method" id="method" style="border-color: purple"></div>
+  <div name="calculations" id="calculations" style="border-color: blue"></div>
+  <div name="includedGrades" id="includedGrades" style="border-color: green;"></div>
+  <div name="projectedGrades" id="projectedGrades" style="border-color: yellow;"></div>
+  <div name="excludedGrades" id="excludedGrades" style="border-color: black;"></div>
+  <!-- end of content of bounding box -->
+  ~[wc:admin_footer_frame_css]
+</div>
 </body>
 </html>

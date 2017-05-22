@@ -23,9 +23,9 @@ ORDER BY SchoolName
 , c1.date_value
   ]
 {
-"date" : "~(date_value)",
-"schoolName" : "~(schoolid)",
-"count" : "~(count)"
+"date" : "~(date_value;json)",
+"schoolName" : "~(schoolid;json)",
+"count" : "~(count;json)"
 },
 			[/tlist_sql]
 {}

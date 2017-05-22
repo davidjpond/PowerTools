@@ -18,9 +18,9 @@ AND period_number = p2.period_number)
 ~[if.is.a.school]AND p2.Schoolid = ~[v.curschoolid][/if]
 ]
     {
-      "dcid" : "~(p2.dcid)",
-      "goodval" : "~(p1.id)",
-      "badval" : "~(p2.id)"
+      "dcid" : "~(p2.dcid;json)",
+      "goodval" : "~(p1.id;json)",
+      "badval" : "~(p2.id;json)"
     },
 [/tlist_sql]
 {}

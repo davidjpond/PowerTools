@@ -28,12 +28,12 @@ AND s1.programid = g1.id
 ORDER BY s3.lastfirst
 ]
 {
-"dcid" : "~(s3.dcid)",
-"studentid" : "~(s3.id)",
-"student" : "~(s3.lastfirst)",
-"specialProgram" : "~(g1.name)",
-"entryDate" : "~(date)",
-"schoolName" : "~(s4.name)"
+"dcid" : "~(s3.dcid;json)",
+"studentid" : "~(s3.id;json)",
+"student" : "~(s3.lastfirst;json)",
+"specialProgram" : "~(g1.name;json)",
+"entryDate" : "~(date;json)",
+"schoolName" : "~(s4.name;json)"
 },
 [/tlist_sql]
 {}

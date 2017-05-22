@@ -14,7 +14,7 @@ AND schoolid = c2.schoolid)
 ~[if.is.a.school]AND c1.schoolid = ~[v.curschoolid][/if.is.a.school]
 ]
     {
-      "dcid" : "~(c2.dcid)"
+      "dcid" : "~(c2.dcid;json)"
     },
 [/tlist_sql]
     {}

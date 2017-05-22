@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+<!-- non framed -->
+<head>
+<title>Database Query</title>
+~[wc:commonscripts]
+<link href="/images/css/screen.css" rel="stylesheet" media="screen">
+<link href="/images/css/print.css" rel="stylesheet" media="print">
+
+</head>
+
+<body>
+~[wc:admin_header_css]
+<!-- breadcrumb start --><a href="/admin/home.html" target="_top">Home</a> &gt;Database Query<!-- breadcrumb end -->
+~[wc:admin_navigation_css]
+<!-- start of content and bounding box -->
+<h1 id="DatabaseQuery">Database Query </h1>
+<div id="error"></div>
+<div class="box-round">
+	<div class="box-round" id ="instructions">
+		<h2>Instructions:<br></h2>
+			<h3>This tool will let you make a select query from any table that the PS account can access. The standard query can select 5 fields from a table. 
+			 This is done by filling out up to five fields, one table name, and up to 4 comparators to narrow down the search. If you are more comfortable with 
+			 SQL you can specify your query with the Advanced Query. This is done by selecting up to five fields (as in the standard query) and filling out the
+			 rest of your parameters in the From field.</h3>
+	</div>
+	<div class="box-round" id="Query">
+		<Table>
+			<tbody>
+				<tr><td>SELECT</td>
+					<td><input type = "text" id = "columnA" value = "" />,</td><td><input type = "text" id = "columnB" value = "" />,</td>
+					<td><input type = "text" id = "columnC" value = "" />,</td><td><input type = "text" id = "columnD" value = "" />,</td>
+					<td><input type = "text" id = "columnE" value = "" /></td></tr>
+				<tr><td>FROM</td>
+					<td colspan = "5"><input type = "text" id = "table" value = "" size = "150"/></td></tr>
+				<tr><td>WHERE</td>
+					<td><input type = "text" id = "filterA" value = "" /></td><td>(<input type = "text" id = "comparatorA" value = ""/>)</td><td><input type = "text" id = "filterB" value = ""/></td></tr>
+				<tr><td>AND</td>
+					<td><input type = "text" id = "filterC" value = "" /></td><td>(<input type = "text" id = "comparatorB" value = ""/>)</td><td><input type = "text" id = "filterD" value = ""/></td></tr>
+				<tr><td>AND</td>
+					<td><input type = "text" id = "filterE" value = "" /></td><td>(<input type = "text" id = "comparatorC" value = ""/>)</td><td><input type = "text" id = "filterF" value = ""/></td></tr>
+				<tr><td>OR</td>
+					<td><input type = "text" id = "filterG" value = "" /></td><td>(<input type = "text" id = "comparatorD" value = ""/>)</td><td><input type = "text" id = "filterH" value = ""/></td></tr>
+			</tbody>
+		</Table>
+		<Table>
+			<tbody>
+				<td><button type = "button" id = "querySelector">Submit Query</button>     <button type = "button" id = "advancedQuerySelector">Submit Advanced Query</button></td>
+			</tbody>
+		</Table>
+	</div>
+	<div  id="Table">
+</div>
+
+<script>
+var powerTools = powerTools || {
+    databaseQuery: {
+    	queryInfo: {columnA:"ID",columnB:"ID",columnC:"ID",columnD:"ID",columnE:"ID", table:"ps.students", filterA:"1", filterB:"1",filterC:"1",filterD:"1",filterE:"1",filterF:"1",filterG:"1",filterH:"1",comparatorA:"=",comparatorB:"=",comparatorC:"=", comparatorD:"="},
+    	queryreturn: [],
+    	querySize: {columns:0},
+    	errors: [],
+    	displayError: function(error) {
+            for (var i = 0; i < powerTools.databaseQuery.errors.length; i++) {
+              if (error == powerTools.databaseQuery.errors[i]) {
+                return;
+              }
+            }
+           powerTools.databaseQuery.errors.push(error);
+            $j('#error').append(
+              '<table class="linkDescList"><tbody><th style="color:red">' + error + '</th></tbody></table>'
+            );
+          },
+		runQuery: function() {
+			powerTools.databaseQuery.queryInfo.columnA = 'ID';
+			powerTools.databaseQuery.queryInfo.columnB = 'ID';
+			powerTools.databaseQuery.queryInfo.columnC = 'ID';
+			powerTools.databaseQuery.queryInfo.columnD = 'ID';
+			powerTools.databaseQuery.queryInfo.columnE = 'ID';
+			if($j('#columnA').val() != ''){
+				powerTools.databaseQuery.queryInfo.columnA = $j('#columnA').val();
+				powerTools.databaseQuery.querySize.columns += 1;
+				if($j('#columnB').val() != ''){
+					powerTools.databaseQuery.queryInfo.columnB = $j('#columnB').val();
+					powerTools.databaseQuery.querySize.columns += 1;
+					if($j('#columnC').val() != ''){
+						powerTools.databaseQuery.queryInfo.columnC = $j('#columnC').val();
+						powerTools.databaseQuery.querySize.columns += 1;
+						if($j('#columnD').val() != ''){
+							powerTools.databaseQuery.queryInfo.columnD = $j('#columnD').val();
+							powerTools.databaseQuery.querySize.columns += 1;
+							if($j('#columnE').val() != ''){
+								powerTools.databaseQuery.queryInfo.columnE = $j('#columnE').val();
+								powerTools.databaseQuery.querySize.columns += 1;
+							}
+						}
+					}
+				}
+			}
+			powerTools.databaseQuery.queryInfo.table = $j('#table').val();
+			powerTools.databaseQuery.queryInfo.filterA = $j('#filterA').val();
+			powerTools.databaseQuery.queryInfo.filterB = $j('#filterB').val();
+			powerTools.databaseQuery.queryInfo.filterC = $j('#filterC').val();
+			powerTools.databaseQuery.queryInfo.filterD = $j('#filterD').val();
+			powerTools.databaseQuery.queryInfo.filterE = $j('#filterE').val();
+			powerTools.databaseQuery.queryInfo.filterF = $j('#filterF').val();
+			powerTools.databaseQuery.queryInfo.filterG = $j('#filterG').val();
+			powerTools.databaseQuery.queryInfo.filterH = $j('#filterH').val();
+			if($j('#filterA').val() == ''){
+				powerTools.databaseQuery.queryInfo.filterA = '1';
+				powerTools.databaseQuery.queryInfo.filterB = '1';
+			}
+			if($j('#filterC').val() == ''){
+				powerTools.databaseQuery.queryInfo.filterC = '1';
+				powerTools.databaseQuery.queryInfo.filterD = '1';
+			}
+			if($j('#filterE').val() == ''){
+				powerTools.databaseQuery.queryInfo.filterE = '1';
+				powerTools.databaseQuery.queryInfo.filterF = '1';
+			}
+			if($j('#filterG').val() == ''){
+				powerTools.databaseQuery.queryInfo.filterG = '1';
+				powerTools.databaseQuery.queryInfo.filterH = '1';
+			}
+			powerTools.databaseQuery.queryInfo.comparatorA = $j('#comparatorA').val();
+			powerTools.databaseQuery.queryInfo.comparatorB = $j('#comparatorB').val();
+			powerTools.databaseQuery.queryInfo.comparatorC = $j('#comparatorC').val();
+			powerTools.databaseQuery.queryInfo.comparatorC = $j('#comparatorD').val();
+			if($j('#comparatorA').val() == ''){
+				powerTools.databaseQuery.queryInfo.comparatorA = "=";
+			}
+			if($j('#comparatorB').val() == ''){
+				powerTools.databaseQuery.queryInfo.comparatorB = "=";
+			}
+			if($j('#comparatorC').val() == ''){
+				powerTools.databaseQuery.queryInfo.comparatorC = "=";
+			}
+			if($j('#comparatorD').val() == ''){
+				powerTools.databaseQuery.queryInfo.comparatorD = ">";
+			}
+			$j.each(powerTools.databaseQuery.queryInfo, function(key, value){
+				eval("powerTools.databaseQuery.queryInfo." + key + "= powerTools.databaseQuery.queryInfo." + key +".replace('%','%25')");
+			});
+		    $j.getJSON('/admin/tech/PowerTools/json/databaseQuery/runQuery.json?' +
+		      'columnA=' + powerTools.databaseQuery.queryInfo.columnA + '&columnB=' + powerTools.databaseQuery.queryInfo.columnB +  '&columnC=' + powerTools.databaseQuery.queryInfo.columnC +  '&columnD=' + powerTools.databaseQuery.queryInfo.columnD +  '&columnE=' + powerTools.databaseQuery.queryInfo.columnE + 
+		      '&table=' + powerTools.databaseQuery.queryInfo.table + 
+		      '&filterA=' + powerTools.databaseQuery.queryInfo.filterA + '&filterB=' + powerTools.databaseQuery.queryInfo.filterB +
+		      '&filterC=' + powerTools.databaseQuery.queryInfo.filterC + '&filterD=' + powerTools.databaseQuery.queryInfo.filterD + 
+		      '&filterE=' + powerTools.databaseQuery.queryInfo.filterE + '&filterF=' + powerTools.databaseQuery.queryInfo.filterF +
+		      '&filterG=' + powerTools.databaseQuery.queryInfo.filterG + '&filterH=' + powerTools.databaseQuery.queryInfo.filterH +
+		      '&comparatorA=' + powerTools.databaseQuery.queryInfo.comparatorA + '&comparatorB=' + powerTools.databaseQuery.queryInfo.comparatorB +
+		      '&comparatorC=' + powerTools.databaseQuery.queryInfo.comparatorC + '&comparatorD=' + powerTools.databaseQuery.queryInfo.comparatorD, function(result){
+		    	result.pop();
+		    	if(result.length == 0){
+		    		powerTools.databaseQuery.displayError("The Query Returned Zero Results");
+		    	}
+		    	powerTools.databaseQuery.queryreturn = result;
+		      }).done(function() {
+		      powerTools.databaseQuery.fillTable();
+		    });
+		  },
+	  runAdvancedQuery: function() {
+			powerTools.databaseQuery.queryInfo.columnA = 'ID';
+			powerTools.databaseQuery.queryInfo.columnB = 'ID';
+			powerTools.databaseQuery.queryInfo.columnC = 'ID';
+			powerTools.databaseQuery.queryInfo.columnD = 'ID';
+			powerTools.databaseQuery.queryInfo.columnE = 'ID';
+			if($j('#columnA').val() != ''){
+				powerTools.databaseQuery.queryInfo.columnA = $j('#columnA').val();
+				powerTools.databaseQuery.querySize.columns += 1;
+				if($j('#columnB').val() != ''){
+					powerTools.databaseQuery.queryInfo.columnB = $j('#columnB').val();
+					powerTools.databaseQuery.querySize.columns += 1;
+					if($j('#columnC').val() != ''){
+						powerTools.databaseQuery.queryInfo.columnC = $j('#columnC').val();
+						powerTools.databaseQuery.querySize.columns += 1;
+						if($j('#columnD').val() != ''){
+							powerTools.databaseQuery.queryInfo.columnD = $j('#columnD').val();
+							powerTools.databaseQuery.querySize.columns += 1;
+							if($j('#columnE').val() != ''){
+								powerTools.databaseQuery.queryInfo.columnE = $j('#columnE').val();
+								powerTools.databaseQuery.querySize.columns += 1;
+							}
+						}
+					}
+				}
+			}
+			powerTools.databaseQuery.queryInfo.table = $j('#table').val();
+			$j.each(powerTools.databaseQuery.queryInfo, function(key, value){
+				eval("powerTools.databaseQuery.queryInfo." + key + "= powerTools.databaseQuery.queryInfo." + key +".replace('%','%25')");
+			});
+		    $j.getJSON('/admin/tech/PowerTools/json/databaseQuery/runAdvancedQuery.json?' +
+		      'columnA=' + powerTools.databaseQuery.queryInfo.columnA + '&columnB=' + powerTools.databaseQuery.queryInfo.columnB +  '&columnC=' + powerTools.databaseQuery.queryInfo.columnC +  '&columnD=' + powerTools.databaseQuery.queryInfo.columnD +  '&columnE=' + powerTools.databaseQuery.queryInfo.columnE + 
+		      '&table=' + powerTools.databaseQuery.queryInfo.table, function(result){
+		    	result.pop();
+		    	if(result.length == 0){
+		    		powerTools.databaseQuery.displayError("The Query Returned Zero Results");
+		    	}
+		    	powerTools.databaseQuery.queryreturn = result;
+		      }).done(function() {
+		      powerTools.databaseQuery.fillTable();
+		    });
+		  },
+		fillTable: function() {
+			$j('#Table').empty();
+			$j('#Table').append(
+		              '<table class = "grid" id = "printTable">' +
+		              '<thead>'
+		            );
+			if(powerTools.databaseQuery.querySize.columns > 0){
+				$j('#printTable').append(
+						'<td>Row</td><td>' + powerTools.databaseQuery.queryInfo.columnA + '</td>' 
+						);
+				if(powerTools.databaseQuery.querySize.columns > 1){
+					$j('#printTable').append(
+							'<td>' + powerTools.databaseQuery.queryInfo.columnB + '</td>'
+							);
+					if(powerTools.databaseQuery.querySize.columns > 2){
+						$j('#printTable').append(
+								'<td>' + powerTools.databaseQuery.queryInfo.columnC + '</td>'
+								);
+						if(powerTools.databaseQuery.querySize.columns > 3){
+							$j('#printTable').append(
+									'<td>' + powerTools.databaseQuery.queryInfo.columnD + '</td>'
+									);
+							if(powerTools.databaseQuery.querySize.columns > 4){
+								$j('#printTable').append(
+										'<td>' + powerTools.databaseQuery.queryInfo.columnE + '</td>'
+										);
+							}
+						}
+					}
+				}
+			}
+			$j('#printTable').append(
+					'</thead>' +
+		            '<tbody>'
+					);
+			for(var i = 0; i < powerTools.databaseQuery.queryreturn.length; i++){
+				 if(powerTools.databaseQuery.querySize.columns > 0){
+					$j('#printTable').append(
+							 '<tr id = "currentRow'+i+'">' +
+							 '<td>' + (i+1) + '</td><td>' + powerTools.databaseQuery.queryreturn[i].A + '</td>' 
+							 );
+					if(powerTools.databaseQuery.querySize.columns > 1){
+						$j('#currentRow'+i+'').append(
+								 '<td>' + powerTools.databaseQuery.queryreturn[i].B + '</td>' 
+								 );
+						if(powerTools.databaseQuery.querySize.columns > 2){
+							$j('#currentRow'+i+'').append(
+									 '<td>' + powerTools.databaseQuery.queryreturn[i].C + '</td>' 
+									 );
+							if(powerTools.databaseQuery.querySize.columns > 3){
+								$j('#currentRow'+i+'').append(
+										 '<td>' + powerTools.databaseQuery.queryreturn[i].D + '</td>' 
+										 );
+								if(powerTools.databaseQuery.querySize.columns > 4){
+									$j('#currentRow'+i+'').append(
+											 '<td>' + powerTools.databaseQuery.queryreturn[i].E + '</td>' 
+											 );
+								}
+							}
+						}
+					}
+
+				 }
+					$j('#printTable').append(
+							 '</tr>'
+							 );
+			}
+			$j('#printTable').append(
+		              '</tbody>' +
+		              '</table>'
+		            );
+			powerTools.databaseQuery.querySize.columns = 0;
+		}  
+    }
+};
+$j(document).ready(function() {
+	$j('#querySelector').on('click', function() {
+		$j('#error').empty();
+		powerTools.databaseQuery.errors.pop();
+		powerTools.databaseQuery.runQuery();
+	});
+	$j('#advancedQuerySelector').on('click', function() {
+		$j('#error').empty();
+		powerTools.databaseQuery.errors.pop();
+		powerTools.databaseQuery.runAdvancedQuery();
+	});
+});
+</script>
+</div>
+<!-- end of content of bounding box -->
+
+~[wc:admin_footer_css]
+
+</body>
+</html><!-- non framed -->

@@ -36,18 +36,18 @@ and s3.schoolid != 0))
 ORDER BY s1.ID
 ]
 {
-"dcid" : "~(r1.dcid)",
-"id" : "~(r1.id)",
-"student" : "~(s1.lastfirst)",
-"studentid" : "~(s1.id)",
-"testName" : "~(t2.testname)",
-"testId" : "~(s3.testid)",
-"studentTestId" : "~(s1.studenttestid)",
-"testScore" : "~(t1.name)",
-"testScoreId" : "~(s1.testscoreid)",
-"testDate" : "~(s3.test_date)",
-"schoolName" : "~(s4.name)",
-"schoolId" : "~(s4.schoolid)"
+"dcid" : "~(r1.dcid;json)",
+"id" : "~(r1.id;json)",
+"student" : "~(s1.lastfirst;json)",
+"studentid" : "~(s1.id;json)",
+"testName" : "~(t2.testname;json)",
+"testId" : "~(s3.testid;json)",
+"studentTestId" : "~(s1.studenttestid;json)",
+"testScore" : "~(t1.name;json)",
+"testScoreId" : "~(s1.testscoreid;json)",
+"testDate" : "~(s3.test_date;json)",
+"schoolName" : "~(s4.name;json)",
+"schoolId" : "~(s4.schoolid;json)"
 },
 [/tlist_sql]
 {}

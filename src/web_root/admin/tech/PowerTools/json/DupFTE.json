@@ -26,10 +26,10 @@ ORDER BY SchoolName
 , f1.name
 ]
 {
-"name" : "~(name)",
-"schoolName" : "~(schoolid)",
-"yearId" : "~(yearid)",
-"count" : "~(count)"
+"name" : "~(name;json)",
+"schoolName" : "~(schoolid;json)",
+"yearId" : "~(yearid;json)",
+"count" : "~(count;json)"
 },
 [/tlist_sql]
 {}

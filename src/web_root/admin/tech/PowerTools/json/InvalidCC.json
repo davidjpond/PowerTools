@@ -25,15 +25,15 @@ WHERE c1.dateenrolled > c1.dateleft
 ORDER BY s1.lastfirst
 ]
 {
-"dcid" : "~(s1.dcid)",
-"studentid" : "~(s1.id)",
-"student" : "~(s1.lastfirst)",
-"schoolName" : "~(s2.name)",
-"courseName" : "~(c3.course_name)",
-"courseNumber" : "~(c1.course_number)",
-"sectionNumber" : "~(c1.section_number)",
-"dateEnrolled" : "~(c1.dateenrolled)",
-"dateLeft" : "~(c1.dateleft)"
+"dcid" : "~(s1.dcid;json)",
+"studentid" : "~(s1.id;json)",
+"student" : "~(s1.lastfirst;json)",
+"schoolName" : "~(s2.name;json)",
+"courseName" : "~(c3.course_name;json)",
+"courseNumber" : "~(c1.course_number;json)",
+"sectionNumber" : "~(c1.section_number;json)",
+"dateEnrolled" : "~(c1.dateenrolled;json)",
+"dateLeft" : "~(c1.dateleft;json)"
 },
 [/tlist_sql]
 {}

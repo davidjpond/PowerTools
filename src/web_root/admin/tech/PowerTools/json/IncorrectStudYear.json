@@ -26,13 +26,13 @@ end
 ORDER BY s1.lastfirst
 	]
 {
-"dcid" : "~(c1.dcid)",
-"student" : "~(s1.lastfirst)",
-"courseSection" : "~(c1.coursesection)",
-"reason" : "~(StudYearBad)",
-"studentid" : "~(c1.studentid)",
-"yearId" : "~(c1.yearid)",
-"studYear" : "~(c1.studyear)"
+"dcid" : "~(c1.dcid;json)",
+"student" : "~(s1.lastfirst;json)",
+"courseSection" : "~(c1.coursesection;json)",
+"reason" : "~(StudYearBad;json)",
+"studentid" : "~(c1.studentid;json)",
+"yearId" : "~(c1.yearid;json)",
+"studYear" : "~(c1.studyear;json)"
 },
 [/tlist_sql]
 {}

@@ -17,7 +17,7 @@ AND storecode = t2.storecode)
 ORDER BY t2.termid
 ]
     {
-      "dcid" : "~(t2.dcid)"
+      "dcid" : "~(t2.dcid;json)"
     },
 [/tlist_sql]
 {}

@@ -18,10 +18,10 @@ ON g3.gradescaleid = g2.dcid
 ]
 
 {
-"dcid" : "~(g2.dcid)",
-"name" : "~(g2.name)",
-"cutoff" : "~(g3.cutoffpercentage)",
-"count" : "~(g3.countitem)"
+"dcid" : "~(g2.dcid;json)",
+"name" : "~(g2.name;json)",
+"cutoff" : "~(g3.cutoffpercentage;json)",
+"count" : "~(g3.countitem;json)"
 },
 [/tlist_sql]
 {}
