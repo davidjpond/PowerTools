@@ -1,9 +1,23 @@
 [
   {
+    "version" : "5.0.7",
+    "changes" : [
+      {
+        "item": "Corrected an issue where Safari would not display the reports"
+      }
+    ]
+  },
+  {
     "version" : "5.0.6",
     "changes" : [
       {
         "item": "Corrected an issue where meeting attendance records would not display in the ADA Troubleshooter"
+      },
+	  {
+        "item": "Corrected an issue where substrings of credittypes would appear as valid in the GPA Valitation tool"
+      },
+	  {
+        "item": "Corrected an issue where grades excluded in the single year special case where only term is selected would erroneously flag the term as the issue instead of the year in the GPA Validation tool"
       }
     ]
   },

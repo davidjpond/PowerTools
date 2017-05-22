@@ -112,7 +112,8 @@
             var current = [];
             var thisYearFlag = null;
             var currentYear;
-            var creditTypeSplit = [];
+            var courseCreditTypeSplit = [];
+			var methodCreditTypeSplit = [];
             var triggers = {
               queryTerms: 0,
               queryGrades: 0,
@@ -152,7 +153,12 @@
                     null || Math.floor(result[i].termid / 100) == currentYear)) {
                     gradePushed += 1;
                   } else {
-                    triggers.queryTerms = 1;
+                	  if(!(isIn(powerTools.gpaValidation.methodInfo.queryTerms, result[i].storecode))){
+                    	triggers.queryTerms = 1;
+                	  }
+                	  if(!(thisYearFlag == null || Math.floor(result[i].termid / 100) == currentYear)){
+                		  triggers.queryYears = 1;
+                	  }
                   }
                   if (isIn(powerTools.gpaValidation.methodInfo.queryGrades, result[i].grade_level)) {
                     gradePushed += 1;
@@ -165,22 +171,26 @@
                   } else {
                     triggers.queryYears = 1;
                   }
-                  creditTypeSplit = result[i].credittype.split(",");
-                  if(result[i].credittype == ""){
-                    if (powerTools.gpaValidation.methodInfo.queryCreditTypes=="") {
-                      gradePushed += 1;
-                    } else{
-                      triggers.queryCreditTypes = 1;
-                    }
+				  /*credittype check*/
+				  if(powerTools.gpaValidation.methodInfo.queryCreditTypes==""){
+					gradePushed += 1;
+				  }
+                  else if(result[i].credittype == ""){
+                    triggers.queryCreditTypes = 1;
                   }
                   else{
-                    for(var j = 0; j < creditTypeSplit.length; j++){
-                      if (isIn(powerTools.gpaValidation.methodInfo.queryCreditTypes, creditTypeSplit[j].trim())) {
-                        gradePushed += 1;
-                        break;
-                      } else if(j == creditTypeSplit.length-1) {
-                        triggers.queryCreditTypes = 1;
-                      }
+					courseCreditTypeSplit = result[i].credittype.split(",");
+					methodCreditTypeSplit = powerTools.gpaValidation.methodInfo.queryCreditTypes.split(",");
+					loop1:
+                    for(var j = 0; j < courseCreditTypeSplit.length; j++){
+						for(var k = 0; k < methodCreditTypeSplit.length; k++){
+						  if (courseCreditTypeSplit[j].trim().toUpperCase()== methodCreditTypeSplit[k].trim().toUpperCase()) {
+							gradePushed += 1;
+							break loop1;
+						  } else if(j == courseCreditTypeSplit.length-1 && k == methodCreditTypeSplit.length-1) {
+							triggers.queryCreditTypes = 1;
+						  }
+						}
                     }
                   }
                   if ((!powerTools.gpaValidation.methodInfo.queryCountGpa || result[i].querycountgpa == 0) &&

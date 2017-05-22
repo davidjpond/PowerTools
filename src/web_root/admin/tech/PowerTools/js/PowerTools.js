@@ -103,8 +103,6 @@ var powerTools = {
     }
   },
   openLoadingBar: function () {
-    console.log('Content Main: ' + $j('#content-main'));
-    console.log('Container: ' + $j('#container'));
     var leftoffset = $j('#content-main').offset().left,
       headerHeight = $j('#container').height();
     loadingDialog();
@@ -144,8 +142,8 @@ var powerTools = {
     $j('#reportInfo').html('<p>' + powerTools.reportData.info + '</p>');
     $j('h1').text(powerTools.reportData.header);
     powerTools.showWizardLink();
-    if ($j('#top_container>select[title="Years Selected"')) {
-      selectedYear = $j('#top_container>select[title="Years Selected"').val();
+    if ($j('#top_container>select[title="Years Selected"]')) {
+      selectedYear = $j('#top_container>select[title="Years Selected"]').val();
     }
     powerTools.loadYUIReport(selectedYear);
   },
